@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/addDepartmentBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="22dp"
+        android:text="اضافة قسم"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/showDepartmentBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="22dp"
+        android:text="الاقسام"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/addStudentBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="22dp"
+        android:text="اضافة طالب"
+        android:textSize="24sp" />
+
+
+    <Button
+        android:id="@+id/showStudentBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="22dp"
+        android:text="الطلاب"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="22dp"
+        android:text="تسجيل خروج"
+        android:textSize="24sp" />
+</LinearLayout>
