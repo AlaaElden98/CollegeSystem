@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowAllStudentInDepartmentActivity"></activity>
+        <activity android:name=".ShowAllStudentActivity"></activity>
         <activity android:name=".ShowDepartmentActivity" />
         <activity android:name=".RecordingDesiresActivity" />
         <activity android:name=".AddDepartmentActivity" />

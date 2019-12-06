@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,50 +23,51 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.model.Department;
+import com.usama.runtime.model.Student;
 
-public class ShowDepartmentActivity extends AppCompatActivity {
-    private RecyclerView departmentList;
-    private DatabaseReference departmentRef;
+public class ShowAllStudentActivity extends AppCompatActivity {
+    private RecyclerView studentList;
+    private DatabaseReference studentRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_department);
+        setContentView(R.layout.activity_show_all_student);
+        studentRef = FirebaseDatabase.getInstance().getReference().child("Student");
 
-        departmentRef = FirebaseDatabase.getInstance().getReference().child("Department");
+        studentList = findViewById(R.id.Student_list);
+        studentList.setLayoutManager(new LinearLayoutManager(this));
 
-        departmentList = findViewById(R.id.department_list);
-        departmentList.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerOptions<Department> options =
-                new FirebaseRecyclerOptions.Builder<Department>()
-                        .setQuery(departmentRef, Department.class)
+        FirebaseRecyclerOptions<Student> options =
+                new FirebaseRecyclerOptions.Builder<Student>()
+                        .setQuery(studentRef, Student.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Department, DepartmentViewHolder> adapter
-                = new FirebaseRecyclerAdapter<Department, DepartmentViewHolder>(options) {
+        FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder> adapter
+                = new FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder,final int position, @NonNull Department model) {
-                holder.departmentNameItem.setText("Name: " + model.getDepartmentName());
-                holder.departmentMinSpecialItem.setText("Min Special: " + model.getDepartmentMinSpecial());
-                holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getDepartmentCapacity());
-                holder.DepartmentMinValueItem.setText("Min Value: " + model.getDepartmentMinValue());
+            protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull Student model) {
+                holder.studentNameItem.setText("Name: " + model.getUserName());
+                holder.studentNationalId.setText("NationalId" + model.getNationalId());
 
-                holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
+                holder.studentNameItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        holder.studentNameItem.setTextColor(Color.RED);
                         String uID = getRef(position).getKey();
 
-                        Intent intent = new Intent(ShowDepartmentActivity.this, ShowAllStudentActivity.class);
+                        Intent intent = new Intent(ShowAllStudentActivity.this, ShowAllStudentActivity.class);
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);
                         Log.d("TAG", uID + " ");
-                        startActivity(intent);                    }
+                        startActivity(intent);
+                    }
                 });
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -78,7 +81,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
 
                         };
                         // alert dialog take a context
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ShowDepartmentActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ShowAllStudentActivity.this);
                         builder.setTitle("Are you sure !! you will delete this department ");
 
                         // here you show the option in dialog yes or no with on click listener
@@ -104,39 +107,33 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                 });
 
             }
-
             @NonNull
             @Override
-            public DepartmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.department_one_item_layout,parent,false);
+            public ShowAllStudentActivity.StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_one_item_layout, parent, false);
 
-                return new DepartmentViewHolder(view);
+                return new ShowAllStudentActivity.StudentViewHolder(view);
             }
         };
-        departmentList.setAdapter(adapter);
+        studentList.setAdapter(adapter);
         adapter.startListening();
 
     }
 
-    private static class DepartmentViewHolder extends RecyclerView.ViewHolder {
-        public TextView departmentNameItem, departmentMinSpecialItem, departmentMinCapacityItem, DepartmentMinValueItem;
-        public Button show_all_department_btn;
+    private static class StudentViewHolder extends RecyclerView.ViewHolder {
+        public TextView studentNameItem,studentNationalId;
 
-        public DepartmentViewHolder(@NonNull View itemView) {
+        public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
-            departmentNameItem = itemView.findViewById(R.id.departmentNameItem);
-            departmentMinSpecialItem = itemView.findViewById(R.id.departmentMinSpecialItem);
-            departmentMinCapacityItem = itemView.findViewById(R.id.departmentMinCapacityItem);
-            DepartmentMinValueItem = itemView.findViewById(R.id.DepartmentMinValueItem);
-            show_all_department_btn = itemView.findViewById(R.id.show_all_department_btn);
-
+            studentNameItem = itemView.findViewById(R.id.studentName);
+            studentNationalId = itemView.findViewById(R.id.studentNationalId);
         }
     }
 
     private void RemoverDepartment(String uID) {
         // first connect with database
         // orderRef = FirebaseDatabase.getInstance().getReference().child("Orders");
-        departmentRef.child(uID).removeValue();
+        studentRef.child(uID).removeValue();
     }
 
 }

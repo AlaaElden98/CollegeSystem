@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class ButtonAdminActivity extends AppCompatActivity {
-    // TODO : show all student in ShowAllStudentDepartmentActivity.class   --> moataz
     Button addDepartmentBtn, showDepartmentBtn, showStudentBtn, addStudentBtn, logoutBtn;
 
     @Override
@@ -48,6 +47,15 @@ public class ButtonAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ButtonAdminActivity.this, ShowDepartmentActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        showStudentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ButtonAdminActivity.this, ShowAllStudentActivity.class);
                 startActivity(intent);
 
             }
