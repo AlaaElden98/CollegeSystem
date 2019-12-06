@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".show_data_department">
+
+    <RelativeLayout
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Student"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/StudentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/r2"
+
+        android:gravity="center"
+        android:text="Student Name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="NotSibling" />
+
+    <TextView
+        android:id="@+id/Studenttnationalid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/StudentName"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Student National ID"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Studentpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Studenttnationalid"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Student Password"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/Studentseatnumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Studentpassword"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Student Seat Number"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/Studentspecialize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Studentseatnumber"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Student Specialize"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/Studenttotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Studentspecialize"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Student Total"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>

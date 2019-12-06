@@ -49,7 +49,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Department, DepartmentViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Department, DepartmentViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder,final int position, @NonNull Department model) {
+            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder,final int position, @NonNull final Department model) {
                 holder.departmentNameItem.setText("Name: " + model.getDepartmentName());
                 holder.departmentMinSpecialItem.setText("Min Special: " + model.getDepartmentMinSpecial());
                 holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getDepartmentCapacity());
@@ -60,13 +60,18 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
 
-                        Intent intent = new Intent(ShowDepartmentActivity.this, ShowAllStudentActivity.class);
+                        Intent intent = new Intent(ShowDepartmentActivity.this, show_data_department.class);
+                        intent.putExtra("Departmentname",model.getDepartmentName());
+                        intent.putExtra("Departmentminspecial",model.getDepartmentMinSpecial());
+                        intent.putExtra("DepartmentCapacity",model.getDepartmentCapacity());
+                        intent.putExtra("Departmentminvalue",model.getDepartmentMinValue());
+
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);
                         Log.d("TAG", uID + " ");
                         startActivity(intent);                    }
                 });
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.Delete_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // display a message
@@ -118,9 +123,10 @@ public class ShowDepartmentActivity extends AppCompatActivity {
 
     }
 
-    private static class DepartmentViewHolder extends RecyclerView.ViewHolder {
+    static class DepartmentViewHolder extends RecyclerView.ViewHolder {
         public TextView departmentNameItem, departmentMinSpecialItem, departmentMinCapacityItem, DepartmentMinValueItem;
         public Button show_all_department_btn;
+        public Button Delete_department_btn;
 
         public DepartmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -129,6 +135,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
             departmentMinCapacityItem = itemView.findViewById(R.id.departmentMinCapacityItem);
             DepartmentMinValueItem = itemView.findViewById(R.id.DepartmentMinValueItem);
             show_all_department_btn = itemView.findViewById(R.id.show_all_department_btn);
+            Delete_department_btn = itemView.findViewById(R.id.Delete_department_btn);
 
         }
     }

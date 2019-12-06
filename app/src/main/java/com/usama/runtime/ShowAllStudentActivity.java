@@ -52,24 +52,31 @@ public class ShowAllStudentActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull Student model) {
+            protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull final Student model) {
                 holder.studentNameItem.setText("Name: " + model.getUserName());
-                holder.studentNationalId.setText("NationalId" + model.getNationalId());
+                holder.studentNationalId.setText("NationalId:" + model.getNationalId());
 
-                holder.studentNameItem.setOnClickListener(new View.OnClickListener() {
+                holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        holder.studentNameItem.setTextColor(Color.RED);
+                       // holder.studentNameItem.setTextColor(Color.RED);
                         String uID = getRef(position).getKey();
 
-                        Intent intent = new Intent(ShowAllStudentActivity.this, ShowAllStudentActivity.class);
+                        Intent intent = new Intent(ShowAllStudentActivity.this, show_data_student.class);
+                        intent.putExtra("getUserName",model.getUserName());
+                        intent.putExtra("getNationalId",model.getNationalId());
+                        intent.putExtra("getPassword",model.getPassword());
+                        intent.putExtra("getSeatNumber",model.getSeatNumber());
+                        intent.putExtra("getSpecialize",model.getSpecialize());
+                        intent.putExtra("getTotal",model.getTotal());
+
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);
                         Log.d("TAG", uID + " ");
                         startActivity(intent);
                     }
                 });
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.Delete_student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // display a message
@@ -122,11 +129,15 @@ public class ShowAllStudentActivity extends AppCompatActivity {
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
         public TextView studentNameItem,studentNationalId;
-
+        public Button show_all_Student_btn;
+        public Button Delete_student_btn;
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
             studentNameItem = itemView.findViewById(R.id.studentName);
             studentNationalId = itemView.findViewById(R.id.studentNationalId);
+            show_all_Student_btn = itemView.findViewById(R.id.show_all_Student_btn);
+            Delete_student_btn = itemView.findViewById(R.id.Delete_student_btn);
+
         }
     }
 

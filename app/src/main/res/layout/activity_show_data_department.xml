@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".show_data_department">
+
+    <RelativeLayout
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Department"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+    </RelativeLayout>
+
+         <TextView
+            android:id="@+id/departmentNameItem11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+             android:layout_below="@+id/r2"
+
+            android:gravity="center"
+            android:text="Department Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="NotSibling" />
+
+        <TextView
+            android:id="@+id/departmentMinSpecialItem11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departmentNameItem11"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="department Min Special"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/departmentMinCapacityItem11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departmentMinSpecialItem11"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Department Min Capacity"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/DepartmentMinValueItem11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departmentMinCapacityItem11"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Department Min Value"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>

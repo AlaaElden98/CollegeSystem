@@ -72,6 +72,18 @@
             android:text="Show all details of this department "
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
+        <Button
+            android:id="@+id/Delete_department_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/show_all_department_btn"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/holo_red_dark"
+            android:text="Delete this department "
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
