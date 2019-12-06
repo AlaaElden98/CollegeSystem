@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class ButtonAdminActivity extends AppCompatActivity {
+    // TODO : show all student in ShowAllStudentDepartmentActivity.class   --> moataz
     Button addDepartmentBtn, showDepartmentBtn, showStudentBtn, addStudentBtn, logoutBtn;
 
     @Override
