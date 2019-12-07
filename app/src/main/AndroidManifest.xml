@@ -16,7 +16,7 @@
         <activity android:name=".show_data_department" />
         <activity android:name=".ShowAllStudentActivity" />
         <activity android:name=".ShowDepartmentActivity" />
-        <activity android:name=".RecordingDesiresActivity" />
+        <activity android:name=".RecordingDesiresDepartment.RecordingDesiresActivity" />
         <activity android:name=".AddDepartmentActivity" />
         <activity android:name=".AddStudentActivity" />
         <activity android:name=".ButtonAdminActivity" />

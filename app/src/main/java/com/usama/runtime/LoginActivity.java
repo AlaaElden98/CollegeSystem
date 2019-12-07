@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.usama.runtime.RecordingDesiresDepartment.RecordingDesiresActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -115,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, RecordingDesiresActivity.class);
+                                intent.putExtra("studentNationalId",nationalid);
                                 //make this to make the user data public in all classes to use it
                                 startActivity(intent);
                             }

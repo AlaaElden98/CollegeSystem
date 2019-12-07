@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
 
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation 'com.github.rey5137:material:1.2.5'
 

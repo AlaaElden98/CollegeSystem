@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 public class ButtonAdminActivity extends AppCompatActivity {
+
+    // TODO : ANYONE MAKE A STUDENT ACTIVITY THAT INCLUDE FIELDS I SEND A PHOTO IN GROUP
+
     Button addDepartmentBtn, showDepartmentBtn, showStudentBtn, addStudentBtn, logoutBtn;
 
     @Override
