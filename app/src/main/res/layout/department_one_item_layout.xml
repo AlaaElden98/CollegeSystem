@@ -69,9 +69,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/white"
-            android:text="Show all details of this department "
+            android:text="Edit department"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
+
         <Button
             android:id="@+id/Delete_department_btn"
             android:layout_width="match_parent"

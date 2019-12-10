@@ -2,20 +2,14 @@ package com.usama.runtime.RecordingDesiresDepartment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class RecordingDesiresActivity extends AppCompatActivity {
@@ -39,12 +32,16 @@ public class RecordingDesiresActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public List<String> arrayList;
+    Button button;
+
+    int arabic = 0 ;
+    int english = 0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording_desires);
-        retriveArrayListOfDepartmentName();
+        retrieveArrayListOfDepartmentName();
 
 
         recyclerView = findViewById(R.id.desiresRecyclerView);
@@ -56,16 +53,13 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        Button button = findViewById(R.id.confirmDesiresOfDepartment);
+        button = findViewById(R.id.confirmDesiresOfDepartment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 putDesiresInDatabase();
-//                System.out.println(arrayList);
-//                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-//                DatabaseReference eventIdRef = rootRef.child("Student").child("Desires");
-//                eventIdRef.setValue(arrayList);
+
             }
         });
 
@@ -103,10 +97,7 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         }
     };
 
-
-    // this method return arrayList of string include department name to use in your fucken Collections.swap
-    // i spend 24 hours to make this Stupid method
-    private void retriveArrayListOfDepartmentName() {
+    private void retrieveArrayListOfDepartmentName() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference eventIdRef = rootRef.child("Department");
         arrayList = new ArrayList<>();

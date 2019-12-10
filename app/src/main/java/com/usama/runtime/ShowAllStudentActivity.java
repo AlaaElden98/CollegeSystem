@@ -26,6 +26,9 @@ import com.usama.runtime.model.Department;
 import com.usama.runtime.model.Student;
 
 public class ShowAllStudentActivity extends AppCompatActivity {
+
+    // TODO :  MAKE EDIT IN ALL INFO
+
     private RecyclerView studentList;
     private DatabaseReference studentRef;
 
@@ -59,16 +62,16 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                 holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // holder.studentNameItem.setTextColor(Color.RED);
+                        // holder.studentNameItem.setTextColor(Color.RED);
                         String uID = getRef(position).getKey();
 
                         Intent intent = new Intent(ShowAllStudentActivity.this, show_data_student.class);
-                        intent.putExtra("getUserName",model.getUserName());
-                        intent.putExtra("getNationalId",model.getNationalId());
-                        intent.putExtra("getPassword",model.getPassword());
-                        intent.putExtra("getSeatNumber",model.getSeatNumber());
-                        intent.putExtra("getSpecialize",model.getSpecialize());
-                        intent.putExtra("getTotal",model.getTotal());
+                        intent.putExtra("getUserName", model.getUserName());
+                        intent.putExtra("getNationalId", model.getNationalId());
+                        intent.putExtra("getPassword", model.getPassword());
+                        intent.putExtra("getSeatNumber", model.getSeatNumber());
+                        intent.putExtra("getSpecialize", model.getSpecialize());
+                        intent.putExtra("getTotal", model.getTotal());
 
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);
@@ -114,6 +117,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                 });
 
             }
+
             @NonNull
             @Override
             public ShowAllStudentActivity.StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -128,9 +132,10 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentNameItem,studentNationalId;
+        public TextView studentNameItem, studentNationalId;
         public Button show_all_Student_btn;
         public Button Delete_student_btn;
+
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
             studentNameItem = itemView.findViewById(R.id.studentName);

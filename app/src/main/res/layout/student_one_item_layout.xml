@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:textColor="@android:color/white"
-
             android:text="Hello"
+
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -28,16 +28,15 @@
             android:id="@+id/studentNationalId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/studentName"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:textColor="@android:color/white"
 
-            android:layout_below="@+id/studentName"
             android:paddingBottom="10dp"
             android:text="Hello"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
-
 
 
         <Button
@@ -49,9 +48,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/white"
-            android:text="Show all details of this student "
+            android:text="Edit department"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
+
         <Button
             android:id="@+id/Delete_student_btn"
             android:layout_width="match_parent"

@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button LoginButton;
     private ProgressDialog loadingBar;
     private TextView AdminLink, NotAdminLink;
-    private String parentDbName = "Users";
+    private String parentDbName = "Student";
 
 
     @Override

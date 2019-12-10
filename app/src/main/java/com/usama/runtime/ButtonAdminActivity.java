@@ -9,8 +9,7 @@ import android.widget.Button;
 
 public class ButtonAdminActivity extends AppCompatActivity {
 
-    // TODO : ANYONE MAKE A STUDENT ACTIVITY THAT INCLUDE FIELDS I SEND A PHOTO IN GROUP
-
+    // TODO : MAKE VALIDATION OF LOGIN AND REGISTER
     Button addDepartmentBtn, showDepartmentBtn, showStudentBtn, addStudentBtn, logoutBtn;
 
     @Override

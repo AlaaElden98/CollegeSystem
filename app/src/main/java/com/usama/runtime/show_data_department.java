@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 public class show_data_department extends AppCompatActivity {
 
+    // TODO: MAKE EDIT IN ALL INFO
+
     TextView departmentNameItem112, departmentMinSpecialItem112, departmentMinCapacityItem112, DepartmentMinValueItem112;
 
     @Override

@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class AddDepartmentActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     Button buttonAddDepartment;
-    EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinValue, getDepartmentMinSpecial;
+    EditText getDepartmentCapacity, getDepartmentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,6 @@ public class AddDepartmentActivity extends AppCompatActivity {
 
         getDepartmentName = findViewById(R.id.getDepartmentName);
         getDepartmentCapacity = findViewById(R.id.getDepartmentCapacity);
-        getDepartmentMinValue = findViewById(R.id.getDepartmentMinValue);
-        getDepartmentMinSpecial = findViewById(R.id.getDepartmentMinSpecial);
         buttonAddDepartment = findViewById(R.id.buttonAddDepartment);
         loadingBar = new ProgressDialog(this);
 
@@ -45,15 +43,12 @@ public class AddDepartmentActivity extends AppCompatActivity {
                 addDepartment();
             }
         });
-
     }
 
     private void addDepartment() {
         String departmentName = getDepartmentName.getText().toString().trim();
         String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
-        String departmentMinValue = getDepartmentMinValue.getText().toString().trim();
-        String depMinSpecial = getDepartmentMinSpecial.getText().toString().trim();
-        
+
 
             // wait to check is phone number is available in database
             loadingBar.setTitle("Create Account");
@@ -61,12 +56,12 @@ public class AddDepartmentActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            ValidatePhoneNumber(departmentName, departmentCapacity, departmentMinValue, depMinSpecial);
+            ValidatePhoneNumber(departmentName, departmentCapacity);
             
 
     }
 
-    private void ValidatePhoneNumber(final String departmentName, final String departmentCapacity, final String departmentMinValue, final String departmentMinSpecial) {
+    private void ValidatePhoneNumber(final String departmentName, final String departmentCapacity) {
 
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -82,8 +77,6 @@ public class AddDepartmentActivity extends AppCompatActivity {
                     HashMap<String, Object> studentDataMap = new HashMap<>();
                     studentDataMap.put("departmentName", departmentName);
                     studentDataMap.put("departmentCapacity", departmentCapacity);
-                    studentDataMap.put("departmentMinValue", departmentMinValue);
-                    studentDataMap.put("departmentMinSpecial", departmentMinSpecial);
 
                     RootRef.child("Department").child(departmentName).updateChildren(studentDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
