@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:689981026184:android:7796f9895dcd5d72c4543d",
+        "mobilesdk_app_id": "1:689981026184:android:5624479a92c3ef0dc4543d",
         "android_client_info": {
           "package_name": "com.usama.runtime"
         }
       },
       "oauth_client": [
         {
-          "client_id": "689981026184-luqs40umiiongm5k2vbjjes41teb0sij.apps.googleusercontent.com",
+          "client_id": "689981026184-9lofrm2fqd6h69qk9rq0grul6ehr2047.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.usama.runtime",

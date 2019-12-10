@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button LoginButton;
     private ProgressDialog loadingBar;
     private TextView AdminLink, NotAdminLink;
-    private String parentDbName = "Student";
+    private String parentDbName = "Users";
 
 
     @Override
@@ -102,7 +103,10 @@ public class LoginActivity extends AppCompatActivity {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.child(parentDbName).child(nationalid).exists()) {
+                    Log.d("TAG","Test");
+
                     if (nationalid.equals(nationalid)) {
                         if (password.equals(password)) {
                             if (parentDbName.equals("Admins")) {
@@ -116,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, RecordingDesiresActivity.class);
-                                intent.putExtra("studentNationalId",nationalid);
+                                intent.putExtra("studentNationalId", nationalid);
                                 //make this to make the user data public in all classes to use it
                                 startActivity(intent);
                             }
@@ -130,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                     loadingBar.dismiss();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
