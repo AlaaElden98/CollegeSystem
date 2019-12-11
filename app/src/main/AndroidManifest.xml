@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnteringStudent.EntringStudentInfo"></activity>
         <activity android:name=".show_data_student" />
         <activity android:name=".show_data_department" />
         <activity android:name=".ShowAllStudentActivity" />

@@ -34,8 +34,8 @@ public class RecordingDesiresActivity extends AppCompatActivity {
     public List<String> arrayList;
     Button button;
 
-    int arabic = 0 ;
-    int english = 0 ;
+    int arabic = 0;
+    int english = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +82,15 @@ public class RecordingDesiresActivity extends AppCompatActivity {
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
             Collections.swap(arrayList, fromPosition, toPosition);
-
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
             return false;
         }
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
         }
     };
 
@@ -118,8 +115,5 @@ public class RecordingDesiresActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
     }
-
-
 }

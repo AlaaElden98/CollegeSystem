@@ -109,19 +109,4 @@ public class AddDepartmentActivity extends AppCompatActivity {
         });
 
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
