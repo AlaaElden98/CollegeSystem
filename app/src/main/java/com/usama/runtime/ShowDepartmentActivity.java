@@ -54,13 +54,11 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                 holder.departmentMinSpecialItem.setText("Min Special: " + model.getDepartmentMinSpecial());
                 holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getDepartmentCapacity());
                 holder.DepartmentMinValueItem.setText("Min Value: " + model.getDepartmentMinValue());
-
                 holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
-
-                        Intent intent = new Intent(ShowDepartmentActivity.this, show_data_department.class);
+                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
                         intent.putExtra("Departmentname",model.getDepartmentName());
                         intent.putExtra("Departmentminspecial",model.getDepartmentMinSpecial());
                         intent.putExtra("DepartmentCapacity",model.getDepartmentCapacity());

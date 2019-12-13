@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".show_data_student" />
-        <activity android:name=".show_data_department" />
+        <activity android:name=".EditDepartmentData" />
         <activity android:name=".ShowAllStudentActivity" />
         <activity android:name=".ShowDepartmentActivity" />
         <activity android:name=".RecordingDesiresDepartment.RecordingDesiresActivity" />
