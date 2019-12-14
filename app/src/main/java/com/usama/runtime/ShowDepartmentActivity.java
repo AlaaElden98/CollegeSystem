@@ -49,7 +49,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Department, DepartmentViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Department, DepartmentViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder,final int position, @NonNull final Department model) {
+            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder, final int position, @NonNull final Department model) {
                 holder.departmentNameItem.setText("Name: " + model.getDepartmentName());
                 holder.departmentMinSpecialItem.setText("Min Special: " + model.getDepartmentMinSpecial());
                 holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getDepartmentCapacity());
@@ -59,15 +59,13 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
                         Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
-                        intent.putExtra("Departmentname",model.getDepartmentName());
-                        intent.putExtra("Departmentminspecial",model.getDepartmentMinSpecial());
-                        intent.putExtra("DepartmentCapacity",model.getDepartmentCapacity());
-                        intent.putExtra("Departmentminvalue",model.getDepartmentMinValue());
+                        intent.putExtra("DepartmentName", model.getDepartmentName());
 
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);
                         Log.d("TAG", uID + " ");
-                        startActivity(intent);                    }
+                        startActivity(intent);
+                    }
                 });
                 holder.Delete_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -111,7 +109,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
             @NonNull
             @Override
             public DepartmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.department_one_item_layout,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.department_one_item_layout, parent, false);
 
                 return new DepartmentViewHolder(view);
             }

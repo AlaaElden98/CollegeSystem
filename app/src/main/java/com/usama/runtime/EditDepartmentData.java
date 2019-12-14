@@ -2,6 +2,7 @@ package com.usama.runtime;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ public class EditDepartmentData extends AppCompatActivity {
 
     // TODO: MAKE EDIT IN ALL INFO << Done<< Alaa
     Button buttonEditDepartment;
-    EditText getDepartmentName,getDepartmentCapacity;
+    EditText getDepartmentName, getDepartmentCapacity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,13 @@ public class EditDepartmentData extends AppCompatActivity {
         setContentView(R.layout.activity_edit_department_data);
         getDepartmentName = findViewById(R.id.getDepartmentName);
         getDepartmentCapacity = findViewById(R.id.getDepartmentCapacity);
-        buttonEditDepartment = findViewById(R.id.buttonAddDepartment);
+        buttonEditDepartment = findViewById(R.id.buttonEditDepartment);
         buttonEditDepartment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editDepartment();
+                Intent intent = new Intent(EditDepartmentData.this, ShowDepartmentActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -35,7 +38,7 @@ public class EditDepartmentData extends AppCompatActivity {
     private void editDepartment() {
         String departmentName = getDepartmentName.getText().toString().trim();
         String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
-        String departmentOldName =getIntent().getStringExtra("getDepartmentName");
+        String departmentOldName = getIntent().getStringExtra("DepartmentName");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = database.getReference();

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.usama.runtime.BarCodePackageForTest.BarCodeActivity;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Student;
 
@@ -32,7 +34,7 @@ public class RecordingDesiresActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public List<String> arrayList;
-    Button button;
+    Button button, goToTakeBarcode;
 
     int arabic = 0;
     int english = 0;
@@ -43,6 +45,14 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recording_desires);
         retrieveArrayListOfDepartmentName();
 
+
+        goToTakeBarcode = findViewById(R.id.goToTakeBarcode);
+        goToTakeBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RecordingDesiresActivity.this, BarCodeActivity.class));
+            }
+        });
 
         recyclerView = findViewById(R.id.desiresRecyclerView);
 
