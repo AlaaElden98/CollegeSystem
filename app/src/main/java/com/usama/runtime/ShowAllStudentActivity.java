@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.usama.runtime.model.Department;
 import com.usama.runtime.model.Student;
 
 public class ShowAllStudentActivity extends AppCompatActivity {
@@ -58,6 +55,10 @@ public class ShowAllStudentActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull final Student model) {
                 holder.studentNameItem.setText("Name: " + model.getUserName());
                 holder.studentNationalId.setText("NationalId:" + model.getNationalId());
+                holder.studentpassword.setText("Password : " + model.getPassword());
+                holder.studentseatnumber.setText("Seat Number:" + model.getSeatNumber());
+                holder.studentspecialize.setText("Specialize: " + model.getSpecialize());
+                holder.studenttotal.setText("Total:" + model.getTotal());
 
                 holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -65,7 +66,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                         // holder.studentNameItem.setTextColor(Color.RED);
                         String uID = getRef(position).getKey();
 
-                        Intent intent = new Intent(ShowAllStudentActivity.this, show_data_student.class);
+                        Intent intent = new Intent(ShowAllStudentActivity.this, EditStudentData.class);
                         intent.putExtra("getUserName", model.getUserName());
                         intent.putExtra("getNationalId", model.getNationalId());
                         intent.putExtra("getPassword", model.getPassword());
@@ -132,7 +133,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentNameItem, studentNationalId;
+        public TextView studentNameItem, studentNationalId,studentpassword, studentseatnumber,studentspecialize, studenttotal;
         public Button show_all_Student_btn;
         public Button Delete_student_btn;
 
@@ -140,6 +141,10 @@ public class ShowAllStudentActivity extends AppCompatActivity {
             super(itemView);
             studentNameItem = itemView.findViewById(R.id.studentName);
             studentNationalId = itemView.findViewById(R.id.studentNationalId);
+            studentpassword = itemView.findViewById(R.id.studentpassowrd);
+            studentseatnumber = itemView.findViewById(R.id.studentseatNumber);
+            studentspecialize = itemView.findViewById(R.id.studentspecialize);
+            studenttotal = itemView.findViewById(R.id.studenttotal);
             show_all_Student_btn = itemView.findViewById(R.id.show_all_Student_btn);
             Delete_student_btn = itemView.findViewById(R.id.Delete_student_btn);
 
