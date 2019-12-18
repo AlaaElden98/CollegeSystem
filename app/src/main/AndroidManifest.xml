@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".BarCodePackageForTest.BarCodeActivity"></activity>
-        <activity android:name=".show_data_student" />
+        <activity android:name=".EditStudentData" />
         <activity android:name=".EditDepartmentData" />
         <activity android:name=".ShowAllStudentActivity" />
         <activity android:name=".ShowDepartmentActivity" />

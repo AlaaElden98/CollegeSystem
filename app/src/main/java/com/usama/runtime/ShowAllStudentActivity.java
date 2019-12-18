@@ -56,8 +56,8 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                 = new FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull final Student model) {
-                holder.studentNameItem.setText("Name: " + model.getName());
-                holder.studentNationalId.setText("NationalId:" + model.getNational_id());
+                holder.studentNameItem.setText("Name: " + model.getUserName());
+                holder.studentNationalId.setText("NationalId:" + model.getNationalId());
 
                 holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -66,9 +66,11 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                         String uID = getRef(position).getKey();
 
                         Intent intent = new Intent(ShowAllStudentActivity.this, show_data_student.class);
-                        intent.putExtra("getUserName", model.getName());
-                        intent.putExtra("getNationalId", model.getNational_id());
-                        intent.putExtra("getPassword", model.getNt_ID());
+                        intent.putExtra("getUserName", model.getUserName());
+                        intent.putExtra("getNationalId", model.getNationalId());
+                        intent.putExtra("getPassword", model.getPassword());
+                        intent.putExtra("getSeatNumber", model.getSeatNumber());
+                        intent.putExtra("getSpecialize", model.getSpecialize());
                         intent.putExtra("getTotal", model.getTotal());
 
                         // here you send the user id to the ShowAllStudentActivity
@@ -130,7 +132,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentNameItem, studentNationalId;
+        public TextView studentNameItem, studentNationalId,studentpassword, studentseatnumber,studentspecialize, studenttotal;
         public Button show_all_Student_btn;
         public Button Delete_student_btn;
 

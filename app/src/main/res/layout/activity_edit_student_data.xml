@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center"
+
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Student"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/studentuserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_top"
+        android:hint="Student Name"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/studentnationalId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bottom"
+        android:layout_below="@+id/studentuserName"
+        android:hint="Student National Id"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/studentseatNumber"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/studentnationalId"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_top"
+        android:hint="Student SeatNumber"
+        android:padding="15dp" />
+    <EditText
+        android:id="@+id/studentspecialize"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/studentseatNumber"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_top"
+        android:hint="student Specialize"
+        android:padding="15dp" />
+    <EditText
+        android:id="@+id/studentpassword"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/studentspecialize"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_top"
+        android:hint="student Password"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/studenttotal"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/studentpassword"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_top"
+        android:hint="student Total"
+        android:inputType="number"
+        android:padding="15dp" />
+
+    <Button
+        android:id="@+id/updatedestudentdata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/studenttotal"
+        android:background="@drawable/button"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textColor="#FE5295"
+        android:textSize="17sp" />
+
+</RelativeLayout>
