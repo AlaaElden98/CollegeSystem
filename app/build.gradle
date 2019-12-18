@@ -42,13 +42,13 @@ dependencies {
     implementation 'com.github.rey5137:material:1.2.5'
 
 
-
     // dependency to barcode activity for test only
     implementation 'com.karumi:dexter:5.0.0'
     implementation 'com.otaliastudios:cameraview:1.0.0'
     implementation 'com.github.nisrulz:qreader:2.1.2'
-
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
     implementation 'com.google.firebase:firebase-ml-vision-barcode-model:16.0.2'
 
+    // library
+    implementation 'io.paperdb:paperdb:2.6'
 }

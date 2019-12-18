@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg">
 
 
@@ -48,15 +49,35 @@
             android:padding="15dp" />
 
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/login_sitting_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_bottom"
-            android:hint="Password"
+            android:hint="Setting_number"
             android:inputType="textPassword"
             android:padding="15dp" />
 
 
+        <LinearLayout
+            android:id="@+id/linear_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_password_input"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/remember_me_chkb"
+                style="@style/Material.Drawable.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:gravity="center_vertical"
+                android:text="Remember me"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:cbd_strokeColor="@color/colorPrimaryDark" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/login_btn"
