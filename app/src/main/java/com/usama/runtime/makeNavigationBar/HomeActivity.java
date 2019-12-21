@@ -3,16 +3,10 @@ package com.usama.runtime.makeNavigationBar;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.BarCodePackageForTest.BarCodeActivity;
 import com.usama.runtime.LoginActivity;
 import com.usama.runtime.R;
@@ -23,7 +17,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -97,8 +90,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (id == R.id.nav_department_desires) {
+
             Intent intent = new Intent(HomeActivity.this, RecordingDesiresActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_barcode) {
             Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
             startActivity(intent);

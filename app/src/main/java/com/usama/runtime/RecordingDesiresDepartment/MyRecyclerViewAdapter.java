@@ -12,24 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.usama.runtime.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAGG = "RecyclerAdapter";
-    final List<String> departmentList;
-    LayoutInflater layoutInflater;
-    View view;
+     List<String> departmentList=new ArrayList<>();
 
-    public MyRecyclerViewAdapter(List<String> departmentList) {
-        this.departmentList = departmentList;
-    }
+
 
     @NonNull
     @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        layoutInflater = LayoutInflater.from(parent.getContext());
-        view = layoutInflater.inflate(R.layout.activity_recording_desires_item, parent, false);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+       View view = layoutInflater.inflate(R.layout.activity_recording_desires_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -37,6 +35,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.textView.setText(departmentList.get(position));
+
+    }
+
+    public void setList (List <String> departmentList){
+        this.departmentList=departmentList;
+        notifyDataSetChanged();
 
     }
 

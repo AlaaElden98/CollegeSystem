@@ -1,12 +1,6 @@
 package com.usama.runtime.RecordingDesiresDepartment;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,39 +8,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.usama.runtime.BarCodePackageForTest.BarCodeActivity;
 import com.usama.runtime.R;
-import com.usama.runtime.model.Student;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class RecordingDesiresActivity extends AppCompatActivity {
-
     MyRecyclerViewAdapter adapter;
-
     private RecyclerView recyclerView;
-    final static List<String> arrayList = new ArrayList<>();
-
     Button button;
-
-
+    List<String> arrayList=new ArrayList<>();
     // variable to use in shared preference
-    public static final String MT_NATIONAL_ID = "MyNationalId";
+    public static final String MY_NATIONAL_ID = "MyNationalId";
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        retrieveArrayListOfDepartmentName();
-    }
+
+    MainActivityViewModel mainActivityViewModel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +45,28 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.desiresRecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d("CHECK", arrayList.size() + "");
-        adapter = new MyRecyclerViewAdapter(arrayList);
+
+        adapter = new MyRecyclerViewAdapter();
+
 
         recyclerView.setAdapter(adapter);
+
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+        mainActivityViewModel.getArrayOfDepartmentName();
+
+
+        mainActivityViewModel.departmentNameData.observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> list) {
+                arrayList.addAll(list);
+                adapter.setList(list);
+            }
+        });
+
+//        Log.d("CHECK", arrayList.size() + "");
+
+
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -77,6 +83,7 @@ public class RecordingDesiresActivity extends AppCompatActivity {
 
     }
 
+
     private void putDesiresInDatabase() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("student_desires");
@@ -85,7 +92,7 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         HashMap<String, Object> studentMap = new HashMap<>();
         Log.d("CHECKIN", arrayList.size() + "");
         studentMap.put("desires", arrayList);
-        SharedPreferences prefs = getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
         String nationalId = prefs.getString("nationalId", "1");//"No name defined" is the default value.
         System.out.println(nationalId);
 
@@ -111,25 +118,5 @@ public class RecordingDesiresActivity extends AppCompatActivity {
         }
     };
 
-    private void retrieveArrayListOfDepartmentName() {
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference eventIdRef = rootRef.child("departments");
-        eventIdRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String plate = snapshot.child("name").getValue().toString();
-                    arrayList.add(plate);
-                    Log.d("test", plate);
-//                    for (int i = 0; i < arrayList.size(); i++) {
-//                        System.out.println(arrayList.get(i));
-//                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
 }

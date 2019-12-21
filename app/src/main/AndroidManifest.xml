@@ -18,10 +18,10 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".BarCodePackageForTest.BarCodeActivity" />
         <activity android:name=".EditStudentData" />
+        <activity android:name=".RecordingDesiresDepartment.RecordingDesiresActivity"/>
         <activity android:name=".EditDepartmentData" />
         <activity android:name=".ShowAllStudentActivity" />
         <activity android:name=".ShowDepartmentActivity" />
-        <activity android:name=".RecordingDesiresDepartment.RecordingDesiresActivity" />
         <activity android:name=".AddDepartmentActivity" />
         <activity android:name=".AddStudentActivity" />
         <activity android:name=".ButtonAdminActivity" />
@@ -33,9 +33,9 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+<!--        <meta-data-->
+<!--            android:name="preloaded_fonts"-->
+<!--            android:resource="@array/preloaded_fonts" />-->
     </application>
 
 </manifest>
