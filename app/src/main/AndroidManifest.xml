@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BarCodePackageForTest.BarCodeActivity"></activity>
+        <activity
+            android:name=".makeNavigationBar.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".BarCodePackageForTest.BarCodeActivity" />
         <activity android:name=".EditStudentData" />
         <activity android:name=".EditDepartmentData" />
         <activity android:name=".ShowAllStudentActivity" />
@@ -28,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

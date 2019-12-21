@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/bg"
         android:padding="10dp">
 
         <TextView
@@ -68,9 +68,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:color/white"
             android:text="Edit department"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
             android:textSize="16sp" />
 
         <Button
@@ -81,9 +81,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:color/holo_red_dark"
+            android:background="@drawable/button"
+            android:textColor="#FFFFFF"
             android:text="Delete this department "
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
     </RelativeLayout>

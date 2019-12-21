@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddDepartmentActivity">
+    tools:context=".AddDepartmentActivity"
+    android:background="@drawable/backdep">
 
     <LinearLayout
         android:id="@+id/input_group"
@@ -24,6 +25,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
             android:hint="Department Name"
+            android:textColor="#FFFFFF"
             android:inputType="text"
             android:padding="15dp" />
 
@@ -35,7 +37,10 @@
             android:background="@drawable/edit_text_top"
             android:hint="Department Capacity"
             android:inputType="number"
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:textColor="#FFFFFF"
+
+            />
 
 
         <Button
@@ -47,7 +52,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:text="Add Department"
             android:textAllCaps="false"
-            android:textColor="#FE5295"
+            android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
 

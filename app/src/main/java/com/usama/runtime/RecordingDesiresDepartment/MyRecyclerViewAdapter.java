@@ -16,8 +16,10 @@ import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerAdapter";
-    List<String> departmentList;
+    private static final String TAGG = "RecyclerAdapter";
+    final List<String> departmentList;
+    LayoutInflater layoutInflater;
+    View view;
 
     public MyRecyclerViewAdapter(List<String> departmentList) {
         this.departmentList = departmentList;
@@ -26,8 +28,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @NonNull
     @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.activity_recording_desires_item, parent, false);
+        layoutInflater = LayoutInflater.from(parent.getContext());
+        view = layoutInflater.inflate(R.layout.activity_recording_desires_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

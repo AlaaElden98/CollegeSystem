@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditDepartmentData">
+    tools:context=".EditDepartmentData"
+    android:background="@drawable/backdep">
 
     <LinearLayout
         android:id="@+id/input_group"
@@ -47,7 +48,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:text="Edit Department"
             android:textAllCaps="false"
-            android:textColor="#FE5295"
+            android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
 

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/backdep"
+
+    >
 
 
     <LinearLayout
@@ -24,7 +27,9 @@
             android:background="@drawable/edit_text_top"
             android:hint="Username"
             android:inputType="textPersonName"
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:textColor="#FFFFFF"
+            />
         <EditText
             android:id="@+id/etPasswordAddStudent"
             android:layout_width="match_parent"
@@ -32,6 +37,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
             android:hint="Password"
+            android:textColor="#FFFFFF"
             android:padding="15dp" />
 
         <EditText
@@ -41,7 +47,9 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
             android:hint="SeatNumber"
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:textColor="#FFFFFF"
+            />
 
 
         <EditText
@@ -60,6 +68,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_bottom"
             android:hint="Total"
+            android:textColor="#FFFFFF"
             android:padding="15dp" />
 
         <EditText
@@ -69,6 +78,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_bottom"
             android:hint="Specialize"
+            android:textColor="#FFFFFF"
             android:padding="15dp" />
 
         <Button
@@ -80,7 +90,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:text="Add Student"
             android:textAllCaps="false"
-            android:textColor="#FE5295"
+            android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
 

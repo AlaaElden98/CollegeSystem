@@ -18,8 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:text="Hello"
-
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -31,62 +29,45 @@
             android:layout_below="@+id/studentName"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-
             android:paddingBottom="10dp"
-            android:text="Hello"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+
         <TextView
-            android:id="@+id/studentpassowrd"
+            android:id="@+id/studentSeatNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/studentNationalId"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-
             android:paddingBottom="10dp"
-            android:text="Hello"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+
         <TextView
-            android:id="@+id/studentseatNumber"
+            android:id="@+id/studentTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/studentpassowrd"
+            android:layout_below="@+id/studentSeatNumber"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-
             android:paddingBottom="10dp"
-            android:text="Hello"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/studentspecialize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/studentseatNumber"
-            android:layout_margin="5dp"
-            android:paddingLeft="15dp"
-
-            android:paddingBottom="10dp"
-            android:text="Hello"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/studenttotal"
+            android:id="@+id/studentPercent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/studentspecialize"
+            android:layout_below="@+id/studentTotal"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-
             android:paddingBottom="10dp"
-            android:text="Hello"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -95,11 +76,11 @@
             android:id="@+id/show_all_Student_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/studenttotal"
+            android:layout_below="@+id/studentPercent"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:color/white"
+            android:background="@drawable/button"
             android:text="Edit Student"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
@@ -112,7 +93,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:color/holo_red_dark"
+            android:background="@drawable/button"
             android:text="Delete this student "
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />

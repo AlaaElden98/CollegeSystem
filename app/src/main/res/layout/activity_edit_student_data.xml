@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:gravity="center"
-
+    android:background="@drawable/backdep"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -87,7 +87,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Update"
         android:textAllCaps="false"
-        android:textColor="#FE5295"
+        android:textColor="#FFFFFF"
         android:textSize="17sp" />
 
 </RelativeLayout>

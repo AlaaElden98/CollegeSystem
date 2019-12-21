@@ -50,16 +50,16 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                 = new FirebaseRecyclerAdapter<Department, DepartmentViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull DepartmentViewHolder holder, final int position, @NonNull final Department model) {
-                holder.departmentNameItem.setText("Name: " + model.getDepartmentName());
-                holder.departmentMinSpecialItem.setText("Min Special: " + model.getDepartmentMinSpecial());
-                holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getDepartmentCapacity());
-                holder.DepartmentMinValueItem.setText("Min Value: " + model.getDepartmentMinValue());
+                holder.departmentNameItem.setText("Name: " + model.getName());
+                holder.departmentMinSpecialItem.setText("Min Special: " + model.getMin_special());
+                holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getCapacity());
+                holder.DepartmentMinValueItem.setText("Min Value: " + model.getMin_total());
                 holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
                         Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
-                        intent.putExtra("DepartmentName", model.getDepartmentName());
+                        intent.putExtra("DepartmentName", model.getName());
 
                         // here you send the user id to the ShowAllStudentActivity
                         intent.putExtra("uid", uID);

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,11 +24,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.Prevalent.Prevalent;
 import com.usama.runtime.RecordingDesiresDepartment.RecordingDesiresActivity;
+import com.usama.runtime.makeNavigationBar.HomeActivity;
 import com.usama.runtime.model.Student;
 
 import io.paperdb.Paper;
 
+
 public class LoginActivity extends AppCompatActivity {
+
+    public static Student usersData;
 
     private EditText login_nationalId, login_sitting_number;
     private Button LoginButton;
@@ -35,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextView AdminLink, NotAdminLink;
     private String parentDbName = "students";
     private CheckBox chkBoxRememberMe;
+
+    // variable to use in shared preference
+    public static final String MT_NATIONAL_ID = "MyNationalId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (dataSnapshot.child(parentDbName).child(national_id).exists()) {
 
 
-                    Student usersData = dataSnapshot.child(parentDbName).child(national_id).getValue(Student.class);
+                    usersData = dataSnapshot.child(parentDbName).child(national_id).getValue(Student.class);
                     Log.d("TAG", "Data" + usersData);
                     if (usersData.getNational_id().equals(national_id)) {
                         if (usersData.getNt_ID().equals(nt_ID)) {
@@ -204,8 +212,15 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, RecordingDesiresActivity.class);
-                                intent.putExtra("studentNationalId", national_id);
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+
+                                // MY_PREFS_NAME - a static String variable like:
+                                //public static final String MY_PREFS_NAME = "MyPrefsFile";
+                                SharedPreferences.Editor editor = getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE).edit();
+                                editor.putString("nationalId", national_id);
+                                editor.apply();
+
                                 //make this to make the user data public in all classes to use it
                                 Prevalent.CurrentOnlineStudent = usersData;
                                 startActivity(intent);

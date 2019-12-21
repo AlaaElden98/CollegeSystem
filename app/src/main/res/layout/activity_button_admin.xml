@@ -4,34 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/backoption"
+    >
 
     <Button
         android:id="@+id/addDepartmentBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="22dp"
+        android:padding="12dp"
         android:text="اضافة قسم"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        />
 
     <Button
         android:id="@+id/showDepartmentBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="22dp"
+        android:padding="12dp"
         android:text="الاقسام"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        />
 
     <Button
         android:id="@+id/addStudentBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="22dp"
+        android:padding="12dp"
         android:text="اضافة طالب"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        />
 
 
     <Button
@@ -39,16 +50,22 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="22dp"
+        android:padding="12dp"
         android:text="الطلاب"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:background="@drawable/button"
+        android:textColor="#FFFFFF"
+        />
 
     <Button
         android:id="@+id/logoutBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="22dp"
+        android:padding="12dp"
         android:text="تسجيل خروج"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        />
 </LinearLayout>

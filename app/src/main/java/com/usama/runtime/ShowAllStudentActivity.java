@@ -36,7 +36,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_student);
-        studentRef = FirebaseDatabase.getInstance().getReference().child("Student");
+        studentRef = FirebaseDatabase.getInstance().getReference().child("students");
 
         studentList = findViewById(R.id.Student_list);
         studentList.setLayoutManager(new LinearLayoutManager(this));
@@ -57,28 +57,29 @@ public class ShowAllStudentActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull final Student model) {
                 holder.studentNameItem.setText("Name: " + model.getName());
-                holder.studentNationalId.setText("NationalId:" + model.getNational_id());
+                holder.studentNationalId.setText("NationalId: " + model.getNational_id());
+                holder.studentseatnumber.setText("Student SeatNumber : " + model.getNt_ID());
+                holder.studentTotal.setText("Student Total degree  : " + model.getTotal());
 
-//                holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        // holder.studentNameItem.setTextColor(Color.RED);
-//                        String uID = getRef(position).getKey();
-//
-//                        Intent intent = new Intent(ShowAllStudentActivity.this, show_data_student.class);
-//                        intent.putExtra("getUserName", model.getUserName());
-//                        intent.putExtra("getNationalId", model.getNationalId());
-//                        intent.putExtra("getPassword", model.getPassword());
-//                        intent.putExtra("getSeatNumber", model.getSeatNumber());
-//                        intent.putExtra("getSpecialize", model.getSpecialize());
-//                        intent.putExtra("getTotal", model.getTotal());
-//
-//                        // here you send the user id to the ShowAllStudentActivity
-//                        intent.putExtra("uid", uID);
-//                        Log.d("TAG", uID + " ");
-//                        startActivity(intent);
-//                    }
-//                });
+
+                holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // holder.studentNameItem.setTextColor(Color.RED);
+                        String uID = getRef(position).getKey();
+
+                        Intent intent = new Intent(ShowAllStudentActivity.this, EditStudentData.class);
+                        intent.putExtra("getUserName", model.getName());
+                        intent.putExtra("getNationalId", model.getNational_id());
+                        intent.putExtra("getSeatNumber", model.getNt_ID());
+                        intent.putExtra("getTotal", model.getTotal());
+
+                        // here you send the user id to the ShowAllStudentActivity
+                        intent.putExtra("uid", uID);
+                        Log.d("TAG", uID + " ");
+                        startActivity(intent);
+                    }
+                });
                 holder.Delete_student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -132,7 +133,8 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentNameItem, studentNationalId,studentpassword, studentseatnumber,studentspecialize, studenttotal;
+        public TextView studentNameItem, studentNationalId, studentseatnumber, studentTotal, studentPercent;
+
         public Button show_all_Student_btn;
         public Button Delete_student_btn;
 
@@ -140,6 +142,9 @@ public class ShowAllStudentActivity extends AppCompatActivity {
             super(itemView);
             studentNameItem = itemView.findViewById(R.id.studentName);
             studentNationalId = itemView.findViewById(R.id.studentNationalId);
+            studentseatnumber = itemView.findViewById(R.id.studentSeatNumber);
+            studentTotal = itemView.findViewById(R.id.studentTotal);
+            studentPercent = itemView.findViewById(R.id.studentPercent);
             show_all_Student_btn = itemView.findViewById(R.id.show_all_Student_btn);
             Delete_student_btn = itemView.findViewById(R.id.Delete_student_btn);
 

@@ -1,47 +1,56 @@
 package com.usama.runtime.model;
 
 public class Department {
-    private String departmentCapacity, departmentMinSpecial, departmentMinValue, departmentName;
+    private String capacity, id, min_special, min_total, name;
 
     public Department() {
     }
 
-    public Department(String departmentCapacity, String departmentMinSpecial, String departmentMinValue, String departmentName) {
-        this.departmentCapacity = departmentCapacity;
-        this.departmentMinSpecial = departmentMinSpecial;
-        this.departmentMinValue = departmentMinValue;
-        this.departmentName = departmentName;
+    public Department(String capacity, String id, String min_special, String min_total, String name) {
+        this.capacity = capacity;
+        this.id = id;
+        this.min_special = min_special;
+        this.min_total = min_total;
+        this.name = name;
     }
 
-    public String getDepartmentCapacity() {
-        return departmentCapacity;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setDepartmentCapacity(String departmentCapacity) {
-        this.departmentCapacity = departmentCapacity;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
-    public String getDepartmentMinSpecial() {
-        return departmentMinSpecial;
+    public String getId() {
+        return id;
     }
 
-    public void setDepartmentMinSpecial(String departmentMinSpecial) {
-        this.departmentMinSpecial = departmentMinSpecial;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getDepartmentMinValue() {
-        return departmentMinValue;
+    public String getMin_special() {
+        return min_special;
     }
 
-    public void setDepartmentMinValue(String departmentMinValue) {
-        this.departmentMinValue = departmentMinValue;
+    public void setMin_special(String min_special) {
+        this.min_special = min_special;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getMin_total() {
+        return min_total;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setMin_total(String min_total) {
+        this.min_total = min_total;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
