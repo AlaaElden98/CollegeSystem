@@ -1,7 +1,10 @@
 package com.usama.runtime.BarCodePackage;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +30,18 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.usama.runtime.ButtonAdminActivity;
+import com.usama.runtime.EditStudentData;
 import com.usama.runtime.R;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class BarCodeActivity extends AppCompatActivity {
     TextView txt_result;
@@ -48,12 +58,31 @@ public class BarCodeActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String nationalId;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_code);
-
+       //create shared preferences called My prefs
+        final SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        // get the time now
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        final String currentDateandTime = sdf.format(new Date());
         btnDone = findViewById(R.id.btnDone);
+        //Convert time from string to localtime
+        LocalTime wait=LocalTime.parse( sharedpreferences.getString("TIMENOW", "").toString());
+        LocalTime now=LocalTime.parse(currentDateandTime);
+        //LocalTime wait=LocalTime.parse( "14:50:50");
+        //LocalTime now=LocalTime.parse("15:50:50");
+        //Toast.makeText(BarCodeActivity.this, sharedpreferences.getString("TIMENOW", "").toString(), Toast.LENGTH_SHORT).show();
+        //if pass two hours from user clicked make the button Done is work if not don't make that button work
+        if (wait.isBefore(now)){
+            Toast.makeText(BarCodeActivity.this, wait.toString(), Toast.LENGTH_SHORT).show();
+            btnDone.setEnabled(true);
+        }else{
+            btnDone.setEnabled(false);
+            Toast.makeText(BarCodeActivity.this, wait.toString(), Toast.LENGTH_SHORT).show();
+        }
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,10 +91,21 @@ public class BarCodeActivity extends AppCompatActivity {
                 saveAttendOnDataBase();
 
 
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                final String currentDateandTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("TIMENOW", currentDateandTime);
+                editor.commit();
+
+                Intent intent = new Intent(BarCodeActivity.this, ButtonAdminActivity.class);
+                startActivity(intent);
+
                 // TODO : HANDEL THIS --> WE NEED LOCK THE THE ACTIVITY FROM OUTSIDE HERE
                 btnDone.setEnabled(false);
-                new CountDownTimer(500000, 10) { //Set Timer for 5 seconds
+                /*new CountDownTimer(500000, 10) { //Set Timer for 5 seconds
                     public void onTick(long millisUntilFinished) {
+                        //Toast.makeText(BarCodeActivity.this, currentDateandTime , Toast.LENGTH_SHORT).show();
+
                         Toast.makeText(BarCodeActivity.this, "you can't take QR again :) ", Toast.LENGTH_SHORT).show();
                     }
 
@@ -73,7 +113,8 @@ public class BarCodeActivity extends AppCompatActivity {
                     public void onFinish() {
                         btnDone.setEnabled(true);
                     }
-                }.start();
+
+                }.start();*/
             }
         });
         // request permission
@@ -91,7 +132,7 @@ public class BarCodeActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onPermissionRationaleShouldBeShown(com.karumi.dexter.listener.PermissionRequest permission, PermissionToken token) {
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
 
                     }
 
@@ -109,6 +150,10 @@ public class BarCodeActivity extends AppCompatActivity {
                     studentMap = new HashMap<>();
                     studentMap.put(result, 1);
                     rootRef.updateChildren(studentMap);
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                     String currentDateandTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));
+
+                    //Toast.makeText(BarCodeActivity.this, currentDateandTime , Toast.LENGTH_SHORT).show();
                     Toast.makeText(BarCodeActivity.this, "Thanks ", Toast.LENGTH_SHORT).show();
 
                     // TODO : WE NEED LOCK THIS PAGE MINIMUM 1 HOUR
