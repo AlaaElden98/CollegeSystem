@@ -7,10 +7,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 
 import com.google.android.material.navigation.NavigationView;
-import com.usama.runtime.BarCodePackageForTest.BarCodeActivity;
-import com.usama.runtime.LoginActivity;
+import com.usama.runtime.BarCodePackage.BarCodeActivity;
+import com.usama.runtime.loginPackage.AdminOrDoctorLoginActivity;
 import com.usama.runtime.R;
 import com.usama.runtime.RecordingDesiresDepartment.RecordingDesiresActivity;
+import com.usama.runtime.loginPackage.MainActivity;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -103,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();

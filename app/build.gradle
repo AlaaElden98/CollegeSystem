@@ -57,9 +57,9 @@ dependencies {
     // library
     implementation 'io.paperdb:paperdb:2.6'
 
+    // animation
     def lottieVersion = "3.0.7"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-
 
 
 }

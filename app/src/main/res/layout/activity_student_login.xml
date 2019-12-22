@@ -32,7 +32,7 @@
             android:layout_height="300dp"
             app:lottie_rawRes="@raw/books_animi"
             app:lottie_autoPlay="true"
-        />
+            />
     </LinearLayout>
 
 
@@ -104,43 +104,11 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Login"
+            android:text="Login Student"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="17sp" />
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/admin_panel_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/white"
-                android:text="An Admin ? "
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                />
-
-
-            <TextView
-                android:id="@+id/not_admin_panel_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I'm not an Admin?"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-
-
-                />
-        </RelativeLayout>
 
     </LinearLayout>
 

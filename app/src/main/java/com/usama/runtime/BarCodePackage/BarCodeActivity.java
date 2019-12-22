@@ -1,4 +1,4 @@
-package com.usama.runtime.BarCodePackageForTest;
+package com.usama.runtime.BarCodePackage;
 
 import android.Manifest;
 import android.content.SharedPreferences;

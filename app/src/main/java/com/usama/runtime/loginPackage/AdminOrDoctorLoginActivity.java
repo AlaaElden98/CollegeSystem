@@ -1,4 +1,4 @@
-package com.usama.runtime;
+package com.usama.runtime.loginPackage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,23 +22,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.usama.runtime.ButtonAdminActivity;
 import com.usama.runtime.Prevalent.Prevalent;
+import com.usama.runtime.R;
 import com.usama.runtime.RecordingDesiresDepartment.RecordingDesiresActivity;
+import com.usama.runtime.addNewPosts.AddNewPostActivity;
 import com.usama.runtime.makeNavigationBar.HomeActivity;
+import com.usama.runtime.model.Admin;
 import com.usama.runtime.model.Student;
 
 import io.paperdb.Paper;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class AdminOrDoctorLoginActivity extends AppCompatActivity {
 
-    public static Student usersData;
+    public static Admin adminData;
 
-    private EditText login_nationalId, login_sitting_number;
+    private EditText login_name_et, login_password_et;
     private Button LoginButton;
     private ProgressDialog loadingBar;
     private TextView AdminLink, NotAdminLink;
-    private String parentDbName = "students";
+    private String parentDbName = "Doctors";
     private CheckBox chkBoxRememberMe;
 
     // variable to use in shared preference
@@ -47,11 +51,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_admin_or_doctor_login);
 
         LoginButton = findViewById(R.id.login_btn);
-        login_nationalId = findViewById(R.id.login_nationalId);
-        login_sitting_number = findViewById(R.id.login_sitting_number);
+        login_name_et = findViewById(R.id.login_name_et);
+        login_password_et = findViewById(R.id.login_password_et);
         AdminLink = findViewById(R.id.admin_panel_link);
         NotAdminLink = findViewById(R.id.not_admin_panel_link);
 
@@ -66,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginStudent();
+                LoginDoctor();
             }
         });
 
@@ -84,10 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         NotAdminLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginButton.setText("Login Student");
+                LoginButton.setText("Login Doctors");
                 AdminLink.setVisibility(View.VISIBLE);
                 NotAdminLink.setVisibility(View.INVISIBLE);
-                parentDbName = "students";
+                parentDbName = "Doctors";
             }
         });
 
@@ -123,29 +127,29 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // here child phone is a unique object
                 if (dataSnapshot.child(parentDbName).child(studentNationalIdKey).exists()) {
-                    Student usersData = dataSnapshot.child(parentDbName).child(studentNationalIdKey).getValue(Student.class);
+                    Admin adminData = dataSnapshot.child(parentDbName).child(studentNationalIdKey).getValue(Admin.class);
 
                     // retrieve the user data
-                    if (usersData.getNational_id().equals(studentNationalIdKey)) {
-                        if (usersData.getNt_ID().equals(studentSittingNumberKey)) {
-                            Toast.makeText(LoginActivity.this, "you are already login  ... ", Toast.LENGTH_LONG).show();
+                    if (adminData.getName().equals(studentNationalIdKey)) {
+                        if (adminData.getPassword().equals(studentSittingNumberKey)) {
+                            Toast.makeText(AdminOrDoctorLoginActivity.this, "you are already login  ... ", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
 
-                            Intent intent = new Intent(LoginActivity.this, RecordingDesiresActivity.class);
+                            Intent intent = new Intent(AdminOrDoctorLoginActivity.this, AdminOrDoctorLoginActivity.class);
 
 
                             // this line to make sure the app doesn't crash when cloth it and open again
                             // because we use paper library
-                            Prevalent.CurrentOnlineStudent = usersData;
+                            Prevalent.CurrentOnlineAdmin = adminData;
                             startActivity(intent);
                         } else {
                             loadingBar.dismiss();
-                            Toast.makeText(LoginActivity.this, "Password is incorrect ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminOrDoctorLoginActivity.this, "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminOrDoctorLoginActivity.this, "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();
                 }
             }
@@ -158,13 +162,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void LoginStudent() {
-        String nationalID = login_nationalId.getText().toString();
-        String sittingNumber = login_sitting_number.getText().toString();
+    private void LoginDoctor() {
+        String name = login_name_et.getText().toString();
+        String password = login_password_et.getText().toString();
 
-        if (TextUtils.isEmpty(nationalID)) {
+        if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, "Please write your National ID....", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(sittingNumber)) {
+        } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please write your sitting Number....", Toast.LENGTH_SHORT).show();
         } else {
             // wait to check is phone number is available in database
@@ -173,17 +177,17 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            AllowAccessToAccount(nationalID, sittingNumber);
+            AllowAccessToAccount(name, password);
 
         }
     }
 
-    private void AllowAccessToAccount(final String national_id, final String nt_ID) {
+    private void AllowAccessToAccount(final String name, final String password) {
         if (chkBoxRememberMe.isChecked()) {
             // check box return two values true or false :)
             // method write take two parameter is key and value
-            Paper.book().write(Prevalent.StudentNationalIdKey, national_id);
-            Paper.book().write(Prevalent.StudentSittingNumberKey, nt_ID);
+            Paper.book().write(Prevalent.AdminNameKey, name);
+            Paper.book().write(Prevalent.AdminPasswordKey, password);
         }
 
 
@@ -195,44 +199,44 @@ public class LoginActivity extends AppCompatActivity {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(parentDbName).child(national_id).exists()) {
+                if (dataSnapshot.child(parentDbName).child(name).exists()) {
 
 
-                    usersData = dataSnapshot.child(parentDbName).child(national_id).getValue(Student.class);
-                    Log.d("TAG", "Data" + usersData);
-                    if (usersData.getNational_id().equals(national_id)) {
-                        if (usersData.getNt_ID().equals(nt_ID)) {
+                    adminData = dataSnapshot.child(parentDbName).child(name).getValue(Admin.class);
+                    Log.d("TAG", "Data" + adminData);
+                    if (adminData.getName().equals(name)) {
+                        if (adminData.getPassword().equals(password)) {
                             if (parentDbName.equals("Admins")) {
-                                Toast.makeText(LoginActivity.this, "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AdminOrDoctorLoginActivity.this, "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, ButtonAdminActivity.class);
+                                Intent intent = new Intent(AdminOrDoctorLoginActivity.this, ButtonAdminActivity.class);
                                 startActivity(intent);
-                            } else if (parentDbName.equals("students")) {
-                                Toast.makeText(LoginActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
+                            } else if (parentDbName.equals("Doctors")) {
+                                Toast.makeText(AdminOrDoctorLoginActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                Intent intent = new Intent(AdminOrDoctorLoginActivity.this, AddNewPostActivity.class);
 
 
                                 // MY_PREFS_NAME - a static String variable like:
                                 //public static final String MY_PREFS_NAME = "MyPrefsFile";
                                 SharedPreferences.Editor editor = getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE).edit();
-                                editor.putString("nationalId", national_id);
+                                editor.putString("nationalId", name);
                                 editor.apply();
 
                                 //make this to make the user data public in all classes to use it
-                                Prevalent.CurrentOnlineStudent = usersData;
+                                Prevalent.CurrentOnlineAdmin = adminData;
                                 startActivity(intent);
                             }
                         } else {
                             loadingBar.dismiss();
-                            Toast.makeText(LoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminOrDoctorLoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Account with this " + national_id + " number do not exists.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminOrDoctorLoginActivity.this, "Account with this " + name + " number do not exists.", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }
