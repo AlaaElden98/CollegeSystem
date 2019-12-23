@@ -86,63 +86,66 @@ public class StudentLoginFragment extends Fragment {
 
         if (StudentNationalIdKey != "" && StudentSittingNumberKey != "") {
             if (!TextUtils.isEmpty(StudentNationalIdKey) && !TextUtils.isEmpty(StudentSittingNumberKey)) {
-                AllowAccess(StudentNationalIdKey, StudentSittingNumberKey);
+//                AllowAccess(StudentNationalIdKey, StudentSittingNumberKey);
+                Navigation.findNavController(getView()).navigate(StudentLoginFragmentDirections.actionStudentLoginFragmentToHomeFragment());
 
-                loadingBar.setTitle("Already Login");
-                loadingBar.setMessage("please wait .. ");
-                loadingBar.setCanceledOnTouchOutside(false);
-                loadingBar.show();
+//                loadingBar.setTitle("Already Login");
+//                loadingBar.setMessage("please wait .. ");
+//                loadingBar.setCanceledOnTouchOutside(false);
+//                loadingBar.show();
 
             }
         }
     }
 
-    private void AllowAccess(final String studentNationalIdKey, final String studentSittingNumberKey) {
-        final DatabaseReference RootRef;
+//    private void AllowAccess(final String studentNationalIdKey, final String studentSittingNumberKey) {
+//        final DatabaseReference RootRef;
+//
+//        RootRef = FirebaseDatabase.getInstance().getReference();
+//
+//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                // here child phone is a unique object
+//                if (dataSnapshot.child("students").child(studentNationalIdKey).exists()) {
+//                    Student usersData = dataSnapshot.child("students").child(studentNationalIdKey).getValue(Student.class);
+//
+//                    // retrieve the user data
+//                    if (usersData.getNational_id().equals(studentNationalIdKey)) {
+//                        if (usersData.getNt_ID().equals(studentSittingNumberKey)) {
+//                            Toast.makeText(getActivity(), "you are already login  ... ", Toast.LENGTH_LONG).show();
+//                            loadingBar.dismiss();
+//
+//                            Prevalent.CurrentOnlineStudent = usersData;
+//
+////                            Intent intent = new Intent(getActivity(), AdminOrDoctorLoginFragment.class);
+//                            Navigation.findNavController(getView()).navigate(StudentLoginFragmentDirections.actionStudentLoginFragmentToHomeFragment());
+//
+//
+//                            // this line to make sure the app doesn't crash when cloth it and open again
+//                            // because we use paper library
+//
+////                            startActivity(intent);
+//                        } else {
+//                            loadingBar.dismiss();
+//                            Toast.makeText(getActivity(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                } else {
+//                    Toast.makeText(getActivity(), "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
+//                    loadingBar.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
-        RootRef = FirebaseDatabase.getInstance().getReference();
 
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // here child phone is a unique object
-                if (dataSnapshot.child("students").child(studentNationalIdKey).exists()) {
-                    Student usersData = dataSnapshot.child("students").child(studentNationalIdKey).getValue(Student.class);
-
-                    // retrieve the user data
-                    if (usersData.getNational_id().equals(studentNationalIdKey)) {
-                        if (usersData.getNt_ID().equals(studentSittingNumberKey)) {
-                            Toast.makeText(getActivity(), "you are already login  ... ", Toast.LENGTH_LONG).show();
-                            loadingBar.dismiss();
-
-                            Prevalent.CurrentOnlineStudent = usersData;
-
-//                            Intent intent = new Intent(getActivity(), AdminOrDoctorLoginFragment.class);
-                            Navigation.findNavController(getView()).navigate(StudentLoginFragmentDirections.actionStudentLoginFragmentToHomeFragment());
-
-
-                            // this line to make sure the app doesn't crash when cloth it and open again
-                            // because we use paper library
-
-//                            startActivity(intent);
-                        } else {
-                            loadingBar.dismiss();
-                            Toast.makeText(getActivity(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
-                    loadingBar.dismiss();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void LoginStudent() {
         String nationalID = login_nationalId.getText().toString();

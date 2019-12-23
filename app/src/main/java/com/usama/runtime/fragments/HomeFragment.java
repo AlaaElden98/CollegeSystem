@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     // make data base reference to retrieve all data
 
-    private DatabaseReference ProductsRef;
+    private DatabaseReference postsRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -69,8 +69,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         super.onActivityCreated(savedInstanceState);
 
         // make an instance in database
-        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postsRef.keepSynced(true);
 
         Toolbar toolbar = getView().findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         super.onStart();
         //can retrieve all data
         FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
-                .setQuery(ProductsRef, Posts.class)
+                .setQuery(postsRef, Posts.class)
                 .build();
 
         FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
