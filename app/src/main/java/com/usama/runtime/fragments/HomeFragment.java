@@ -75,9 +75,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         Toolbar toolbar = getView().findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-
         Paper.init(getActivity());
 
         DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);

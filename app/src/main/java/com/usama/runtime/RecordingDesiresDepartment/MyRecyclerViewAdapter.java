@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-    private static final String TAGG = "RecyclerAdapter";
     List<String> departmentList = new ArrayList<>();
 
 
