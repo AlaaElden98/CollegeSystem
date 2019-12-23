@@ -1,15 +1,19 @@
-package com.usama.runtime.loginPackage;
+package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,12 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.CheckBox;
 import com.usama.runtime.Prevalent.Prevalent;
 import com.usama.runtime.R;
-import com.usama.runtime.makeNavigationBar.HomeActivity;
 import com.usama.runtime.model.Student;
 
 import io.paperdb.Paper;
 
-public class StudentLoginActivity extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
+
+public class StudentLoginFragment extends Fragment {
+    private OnFragmentInteractionListener mListener;
     public static Student studentData;
     private EditText login_nationalId, login_sitting_number;
     private Button LoginButton;
@@ -38,19 +44,35 @@ public class StudentLoginActivity extends AppCompatActivity {
     public static final String MT_NATIONAL_ID = "MyNationalId";
 
 
+    public StudentLoginFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_login);
+    }
 
-        LoginButton = findViewById(R.id.login_btn);
-        login_nationalId = findViewById(R.id.login_nationalId);
-        login_sitting_number = findViewById(R.id.login_sitting_number);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_student_login, container, false);
+    }
 
-        loadingBar = new ProgressDialog(this);
-        chkBoxRememberMe = findViewById(R.id.remember_me_chkb);
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LoginButton = getView().findViewById(R.id.login_btn);
+        login_nationalId = getView().findViewById(R.id.login_nationalId);
+        login_sitting_number = getView().findViewById(R.id.login_sitting_number);
+
+        loadingBar = new ProgressDialog(getContext());
+        chkBoxRememberMe = getView().findViewById(R.id.remember_me_chkb);
         // paper library
-        Paper.init(this);
+        Paper.init(getContext());
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +95,6 @@ public class StudentLoginActivity extends AppCompatActivity {
 
             }
         }
-
-
     }
 
     private void AllowAccess(final String studentNationalIdKey, final String studentSittingNumberKey) {
@@ -92,24 +112,27 @@ public class StudentLoginActivity extends AppCompatActivity {
                     // retrieve the user data
                     if (usersData.getNational_id().equals(studentNationalIdKey)) {
                         if (usersData.getNt_ID().equals(studentSittingNumberKey)) {
-                            Toast.makeText(StudentLoginActivity.this, "you are already login  ... ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "you are already login  ... ", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
 
-                            Intent intent = new Intent(StudentLoginActivity.this, HomeActivity.class);
+                            Prevalent.CurrentOnlineStudent = usersData;
+
+//                            Intent intent = new Intent(getActivity(), AdminOrDoctorLoginFragment.class);
+                            Navigation.findNavController(getView()).navigate(StudentLoginFragmentDirections.actionStudentLoginFragmentToHomeFragment());
 
 
                             // this line to make sure the app doesn't crash when cloth it and open again
                             // because we use paper library
-                            Prevalent.CurrentOnlineStudent = usersData;
-                            startActivity(intent);
+
+//                            startActivity(intent);
                         } else {
                             loadingBar.dismiss();
-                            Toast.makeText(StudentLoginActivity.this, "Password is incorrect ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 } else {
-                    Toast.makeText(StudentLoginActivity.this, "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Account with this " + studentNationalIdKey + " number do not exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();
                 }
             }
@@ -126,9 +149,9 @@ public class StudentLoginActivity extends AppCompatActivity {
         String sittingNumber = login_sitting_number.getText().toString();
 
         if (TextUtils.isEmpty(nationalID)) {
-            Toast.makeText(this, "Please write your National ID....", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please write your National ID....", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(sittingNumber)) {
-            Toast.makeText(this, "Please write your sitting Number....", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please write your sitting Number....", Toast.LENGTH_SHORT).show();
         } else {
             // wait to check is phone number is available in database
             loadingBar.setTitle("Login Account");
@@ -166,29 +189,31 @@ public class StudentLoginActivity extends AppCompatActivity {
                     if (studentData.getNational_id().equals(national_id)) {
                         if (studentData.getNt_ID().equals(nt_ID)) {
 
-                            Toast.makeText(StudentLoginActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "logged in Successfully...", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
-                            Intent intent = new Intent(StudentLoginActivity.this, HomeActivity.class);
+//                            Intent intent = new Intent(getActivity(), AdminOrDoctorLoginFragment.class);
 
 
                             // MY_PREFS_NAME - a static String variable like:
                             //public static final String MY_PREFS_NAME = "MyPrefsFile";
-                            SharedPreferences.Editor editor = getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE).edit();
                             editor.putString("nationalId", national_id);
                             editor.apply();
 
                             //make this to make the user data public in all classes to use it
                             Prevalent.CurrentOnlineStudent = studentData;
-                            startActivity(intent);
+                            Navigation.findNavController(getView()).navigate(StudentLoginFragmentDirections.actionStudentLoginFragmentToHomeFragment());
+
+//                            startActivity(intent);
                         } else {
                             loadingBar.dismiss();
-                            Toast.makeText(StudentLoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Password is incorrect.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 } else {
-                    Toast.makeText(StudentLoginActivity.this, "Account with this " + national_id + " number do not exists.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Account with this " + national_id + " number do not exists.", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }
@@ -198,5 +223,11 @@ public class StudentLoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

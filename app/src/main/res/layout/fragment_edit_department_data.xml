@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backdep">
@@ -17,43 +18,34 @@
 
 
         <EditText
-            android:id="@+id/nameOfProfessor"
+            android:id="@+id/getDepartmentName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Name Of Professor"
-            android:padding="15dp"
-            android:textColor="#FFFFFF" />
+            android:hint="Department Name"
+            android:inputType="text"
+            android:padding="15dp" />
 
         <EditText
-            android:id="@+id/nameOfSubject"
+            android:id="@+id/getDepartmentCapacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Name Of Subject"
-            android:padding="15dp"
-            android:textColor="#FFFFFF" />
+            android:hint="Department Capacity"
+            android:inputType="number"
+            android:padding="15dp" />
 
-        <EditText
-            android:id="@+id/descriptionOfTopic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
-            android:hint="Topic"
-            android:padding="15dp"
-            android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/addPostBtn"
+            android:id="@+id/buttonEditDepartment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Add Post"
+            android:text="Edit Department"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />

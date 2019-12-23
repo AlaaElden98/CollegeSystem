@@ -9,9 +9,9 @@ public class Prevalent {
     public static final String StudentNationalIdKey = "StudentNationalId";
     public static final String StudentSittingNumberKey = "StudentSittingNumber";
 
-    public static Admin CurrentOnlineAdmin;
+    public static Admin CurrentOnlineAdminOrDoctor;
 
-    public static final String AdminNameKey = "AdminName";
-    public static final String AdminPasswordKey = "AdminPassword";
+    public static final String NameKey = "Name";
+    public static final String PasswordKey = "Password";
 
 }

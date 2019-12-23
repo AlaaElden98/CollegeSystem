@@ -1,4 +1,4 @@
-package com.usama.runtime.RecordingDesiresDepartment;
+package com.usama.runtime.viewModel;
 
 import android.util.Log;
 
@@ -34,7 +34,7 @@ public class MainActivityViewModel extends ViewModel {
                 arrayList=new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String plate = snapshot.child("name").getValue().toString();
-                     arrayList.add(plate);
+                    arrayList.add(plate);
 
                     Log.d("test", plate);
                 }

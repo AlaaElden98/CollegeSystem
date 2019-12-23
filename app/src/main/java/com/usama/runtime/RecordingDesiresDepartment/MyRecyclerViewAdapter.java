@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-
     private static final String TAGG = "RecyclerAdapter";
-     List<String> departmentList=new ArrayList<>();
-
+    List<String> departmentList = new ArrayList<>();
 
 
     @NonNull
@@ -27,7 +25,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-       View view = layoutInflater.inflate(R.layout.activity_recording_desires_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.fragment_recording_desires_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -38,8 +36,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     }
 
-    public void setList (List <String> departmentList){
-        this.departmentList=departmentList;
+    public void setList(List<String> departmentList) {
+        this.departmentList = departmentList;
         notifyDataSetChanged();
 
     }

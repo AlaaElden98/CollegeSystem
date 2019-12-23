@@ -1,13 +1,17 @@
-package com.usama.runtime.addNewPosts;
+package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class AddNewPostActivity extends AppCompatActivity {
+public class AddNewPostFragment extends Fragment {
     private String professorName, subject, description, timetostring;
     private Button addPostBtn;
     private EditText nameOfProfessor, nameOfSubject, descriptionOfTopic;
@@ -30,17 +34,34 @@ public class AddNewPostActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctors_add_new_posts);
+    public AddNewPostFragment() {
+        // Required empty public constructor
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_add_new_post, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         postRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-        addPostBtn = findViewById(R.id.addPostBtn);
-        nameOfProfessor = findViewById(R.id.nameOfProfessor);
-        nameOfSubject = findViewById(R.id.nameOfSubject);
-        descriptionOfTopic = findViewById(R.id.descriptionOfTopic);
-        loadingBar = new ProgressDialog(this);
+        addPostBtn = getView().findViewById(R.id.addPostBtn);
+        nameOfProfessor = getView().findViewById(R.id.nameOfProfessor);
+        nameOfSubject = getView().findViewById(R.id.nameOfSubject);
+        descriptionOfTopic = getView().findViewById(R.id.descriptionOfTopic);
+        loadingBar = new ProgressDialog(getActivity());
 
 
         addPostBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,17 +72,18 @@ public class AddNewPostActivity extends AppCompatActivity {
         });
     }
 
+
     private void ValidatePostData() {
         professorName = nameOfProfessor.getText().toString();
         subject = nameOfSubject.getText().toString();
         description = descriptionOfTopic.getText().toString();
 
         if (TextUtils.isEmpty(professorName)) {
-            Toast.makeText(this, "Please write Your Name sir...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please write Your Name sir...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(subject)) {
-            Toast.makeText(this, "Please write Name of subject...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please write Name of subject...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(description)) {
-            Toast.makeText(this, "Please write Description...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please write Description...", Toast.LENGTH_SHORT).show();
         } else {
             StoreProductInformation();
         }
@@ -78,10 +100,10 @@ public class AddNewPostActivity extends AppCompatActivity {
         Date currentTime = Calendar.getInstance().getTime();
         timetostring = currentTime.toString();
 
-        SaveProductInfoToDatabase();
+        SavePostInfoToDatabase();
     }
 
-    private void SaveProductInfoToDatabase() {
+    private void SavePostInfoToDatabase() {
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("name", professorName);
         postMap.put("dataAndTime", timetostring);
@@ -93,17 +115,23 @@ public class AddNewPostActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(AddNewPostActivity.this, AddNewPostActivity.class);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getActivity(), AddNewPostActivity.class);
+//                            startActivity(intent);
 
                             loadingBar.dismiss();
-                            Toast.makeText(AddNewPostActivity.this, "Post is added successfully..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Post is added successfully..", Toast.LENGTH_SHORT).show();
                         } else {
                             loadingBar.dismiss();
                             String message = task.getException().toString();
-                            Toast.makeText(AddNewPostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error: " + message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

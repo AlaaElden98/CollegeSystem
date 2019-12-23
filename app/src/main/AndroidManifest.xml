@@ -12,29 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".addNewPosts.AddNewPostActivity"></activity>
-        <activity android:name=".loginPackage.StudentLoginActivity" />
-        <activity android:name=".loginPackage.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".makeNavigationBar.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BarCodePackage.BarCodeActivity" />
-        <activity android:name=".EditStudentData" />
-        <activity android:name=".RecordingDesiresDepartment.RecordingDesiresActivity" />
-        <activity android:name=".EditDepartmentData" />
-        <activity android:name=".ShowAllStudentActivity" />
-        <activity android:name=".ShowDepartmentActivity" />
-        <activity android:name=".AddDepartmentActivity" />
-        <activity android:name=".AddStudentActivity" />
-        <activity android:name=".ButtonAdminActivity" />
-        <activity android:name=".loginPackage.AdminOrDoctorLoginActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

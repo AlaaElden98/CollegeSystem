@@ -1,23 +1,25 @@
-package com.usama.runtime.BarCodePackage;
+package com.usama.runtime.fragments;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +32,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.usama.runtime.ButtonAdminActivity;
-import com.usama.runtime.EditStudentData;
 import com.usama.runtime.R;
 
 import java.time.LocalTime;
@@ -39,11 +39,13 @@ import java.util.HashMap;
 
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-public class BarCodeActivity extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
+
+public class BarCodeFragment extends Fragment {
     TextView txt_result;
     private SurfaceView surfaceView;
     QREader qrEader;
@@ -58,35 +60,52 @@ public class BarCodeActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String nationalId;
 
+    public BarCodeFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_bar_code, container, false);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_code);
-       //create shared preferences called My prefs
-        final SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //create shared preferences called My prefs
+        final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
         // get the time now
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         final String currentDateandTime = sdf.format(new Date());
-        btnDone = findViewById(R.id.btnDone);
+        btnDone = getView().findViewById(R.id.btnDone);
         //Convert time from string to localtime
-        LocalTime wait=LocalTime.parse( sharedpreferences.getString("TIMENOW", "").toString());
-        LocalTime now=LocalTime.parse(currentDateandTime);
+        LocalTime wait = LocalTime.parse(sharedpreferences.getString("TIMENOW", "").toString());
+        LocalTime now = LocalTime.parse(currentDateandTime);
         //LocalTime wait=LocalTime.parse( "14:50:50");
         //LocalTime now=LocalTime.parse("15:50:50");
-        //Toast.makeText(BarCodeActivity.this, sharedpreferences.getString("TIMENOW", "").toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(BarCodeFragment.this, sharedpreferences.getString("TIMENOW", "").toString(), Toast.LENGTH_SHORT).show();
         //if pass two hours from user clicked make the button Done is work if not don't make that button work
-        if (wait.isBefore(now)){
-            Toast.makeText(BarCodeActivity.this, wait.toString(), Toast.LENGTH_SHORT).show();
+        if (wait.isBefore(now)) {
+            Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
             btnDone.setEnabled(true);
-        }else{
+        } else {
             btnDone.setEnabled(false);
-            Toast.makeText(BarCodeActivity.this, wait.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
         }
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefs = getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
+                prefs = getActivity().getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
                 nationalId = prefs.getString("nationalId", "1");//"No name defined" is the default value.
                 saveAttendOnDataBase();
 
@@ -97,28 +116,14 @@ public class BarCodeActivity extends AppCompatActivity {
                 editor.putString("TIMENOW", currentDateandTime);
                 editor.commit();
 
-                Intent intent = new Intent(BarCodeActivity.this, ButtonAdminActivity.class);
+                Intent intent = new Intent(getActivity(), ButtonAdminFragment.class);
                 startActivity(intent);
 
-                // TODO : HANDEL THIS --> WE NEED LOCK THE THE ACTIVITY FROM OUTSIDE HERE
                 btnDone.setEnabled(false);
-                /*new CountDownTimer(500000, 10) { //Set Timer for 5 seconds
-                    public void onTick(long millisUntilFinished) {
-                        //Toast.makeText(BarCodeActivity.this, currentDateandTime , Toast.LENGTH_SHORT).show();
-
-                        Toast.makeText(BarCodeActivity.this, "you can't take QR again :) ", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        btnDone.setEnabled(true);
-                    }
-
-                }.start();*/
             }
         });
         // request permission
-        Dexter.withActivity(this)
+        Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {
                     @Override
@@ -128,7 +133,7 @@ public class BarCodeActivity extends AppCompatActivity {
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(BarCodeActivity.this, "You must accept permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "You must accept permission", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -137,8 +142,8 @@ public class BarCodeActivity extends AppCompatActivity {
                     }
 
                 }).check();
-    }
 
+    }
 
     private void saveAttendOnDataBase() {
         rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(nationalId);
@@ -151,10 +156,10 @@ public class BarCodeActivity extends AppCompatActivity {
                     studentMap.put(result, 1);
                     rootRef.updateChildren(studentMap);
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                     String currentDateandTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));
+                    String currentDateandTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));
 
-                    //Toast.makeText(BarCodeActivity.this, currentDateandTime , Toast.LENGTH_SHORT).show();
-                    Toast.makeText(BarCodeActivity.this, "Thanks ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BarCodeFragment.this, currentDateandTime , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thanks ", Toast.LENGTH_SHORT).show();
 
                     // TODO : WE NEED LOCK THIS PAGE MINIMUM 1 HOUR
 
@@ -167,7 +172,7 @@ public class BarCodeActivity extends AppCompatActivity {
                     studentMap.put(result, plate);
                     rootRef.updateChildren(studentMap);
 
-                    Toast.makeText(BarCodeActivity.this, "Thanks:)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thanks:)", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -175,7 +180,7 @@ public class BarCodeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BarCodeActivity.this, "check your QR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "check your QR", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -183,8 +188,8 @@ public class BarCodeActivity extends AppCompatActivity {
 
 
     private void setUpCamera() {
-        txt_result = findViewById(R.id.code_info);
-        btn_on_off = findViewById(R.id.btn_enable_disable);
+        txt_result = getView().findViewById(R.id.code_info);
+        btn_on_off = getView().findViewById(R.id.btn_enable_disable);
 
         btn_on_off.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,12 +203,13 @@ public class BarCodeActivity extends AppCompatActivity {
                 }
             }
         });
-        surfaceView = findViewById(R.id.cameraView);
+        surfaceView = getView().findViewById(R.id.cameraView);
         setUpQREader();
     }
 
+
     private void setUpQREader() {
-        qrEader = new QREader.Builder(this, surfaceView, new QRDataListener() {
+        qrEader = new QREader.Builder(getActivity(), surfaceView, new QRDataListener() {
             @Override
             public void onDetected(final String data) {
                 txt_result.post(new Runnable() {
@@ -222,9 +228,9 @@ public class BarCodeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        Dexter.withActivity(this)
+        Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {
                     @Override
@@ -236,7 +242,7 @@ public class BarCodeActivity extends AppCompatActivity {
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(BarCodeActivity.this, "You must accept permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "You must accept permission", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -249,9 +255,9 @@ public class BarCodeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        Dexter.withActivity(this)
+        Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {
                     @Override
@@ -264,7 +270,7 @@ public class BarCodeActivity extends AppCompatActivity {
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(BarCodeActivity.this, "You must accept permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "You must accept permission", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -274,50 +280,10 @@ public class BarCodeActivity extends AppCompatActivity {
 
                 }).check();
     }
+
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 }
-
-/*
-*
-*         rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance");
-        Log.d("TAG", result);
-
-        Log.d("TAG", nationalId);
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.child("students_attendance").child(result).exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        int plate = Integer.parseInt(String.valueOf(snapshot.child(result).getValue()));
-                        plate++;
-                        Log.d("TAG", "name of subject = " + plate);
-                        studentMap = new HashMap<>();
-                        studentMap.put(result, plate);
-                        rootRef.child(nationalId).updateChildren(studentMap);
-
-                    }
-                } else {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("students_attendance");
-
-                    studentMap = new HashMap<>();
-                    Log.d("CHECKIN", result);
-                    studentMap.put(result, 1);
-                    SharedPreferences prefs = getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
-                    nationalId = prefs.getString("nationalId", "1");//"No name defined" is the default value.
-                    System.out.println(nationalId);
-
-
-                    ref.child(nationalId).updateChildren(studentMap);
-
-                    Toast.makeText(MainActivity.this, "Your Desires update successfully.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-*
-* */

@@ -9,16 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark"
         android:padding="10dp">
+
+        <TextView
+            android:id="@+id/studentId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:paddingLeft="15dp"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/studentName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/studentId"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:textColor="@android:color/white"
+            android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -30,7 +40,7 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="@android:color/white"
+            android:textColor="#000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -43,7 +53,7 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="@android:color/white"
+            android:textColor="#000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -56,40 +66,15 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="@android:color/white"
+            android:textColor="#000"
             android:textSize="16sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/studentPercent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/studentTotal"
-            android:layout_margin="5dp"
-            android:paddingLeft="15dp"
-            android:paddingBottom="10dp"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/show_all_Student_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/studentPercent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button"
-            android:text="Edit Student"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
 
         <Button
             android:id="@+id/Delete_student_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/show_all_Student_btn"
+            android:layout_below="@+id/studentTotal"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"

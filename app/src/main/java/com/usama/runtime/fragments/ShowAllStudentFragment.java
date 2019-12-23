@@ -1,17 +1,14 @@
-package com.usama.runtime;
+package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +19,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.usama.runtime.model.Department;
+import com.usama.runtime.R;
 import com.usama.runtime.model.Student;
 
-public class ShowAllStudentActivity extends AppCompatActivity {
+public class ShowAllStudentFragment extends Fragment {
 
     // TODO :  MAKE EDIT IN ALL INFO
 
@@ -33,53 +30,45 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     private DatabaseReference studentRef;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_all_student);
-        studentRef = FirebaseDatabase.getInstance().getReference().child("students");
-
-        studentList = findViewById(R.id.Student_list);
-        studentList.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     @Override
-    protected void onStart() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        studentRef = FirebaseDatabase.getInstance().getReference().child("students");
+
+        studentList = getView().findViewById(R.id.Student_list);
+        studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_show_all_student, container, false);
+    }
+
+    @Override
+    public void onStart() {
         super.onStart();
         FirebaseRecyclerOptions<Student> options =
                 new FirebaseRecyclerOptions.Builder<Student>()
                         .setQuery(studentRef, Student.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder> adapter
-                = new FirebaseRecyclerAdapter<Student, ShowAllStudentActivity.StudentViewHolder>(options) {
+        FirebaseRecyclerAdapter<Student, ShowAllStudentFragment.StudentViewHolder> adapter
+                = new FirebaseRecyclerAdapter<Student, ShowAllStudentFragment.StudentViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final StudentViewHolder holder, final int position, @NonNull final Student model) {
+                holder.studentId.setText("ID" + model.getId());
                 holder.studentNameItem.setText("Name: " + model.getName());
                 holder.studentNationalId.setText("NationalId: " + model.getNational_id());
-                holder.studentseatnumber.setText("Student SeatNumber : " + model.getNt_ID());
+                holder.studentSeatNumber.setText("Student SeatNumber : " + model.getNt_ID());
                 holder.studentTotal.setText("Student Total degree  : " + model.getTotal());
 
 
-                holder.show_all_Student_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // holder.studentNameItem.setTextColor(Color.RED);
-                        String uID = getRef(position).getKey();
-
-                        Intent intent = new Intent(ShowAllStudentActivity.this, EditStudentData.class);
-                        intent.putExtra("getUserName", model.getName());
-                        intent.putExtra("getNationalId", model.getNational_id());
-                        intent.putExtra("getSeatNumber", model.getNt_ID());
-                        intent.putExtra("getTotal", model.getTotal());
-
-                        // here you send the user id to the ShowAllStudentActivity
-                        intent.putExtra("uid", uID);
-                        Log.d("TAG", uID + " ");
-                        startActivity(intent);
-                    }
-                });
                 holder.Delete_student_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -92,7 +81,7 @@ public class ShowAllStudentActivity extends AppCompatActivity {
 
                         };
                         // alert dialog take a context
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ShowAllStudentActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("Are you sure !! you will delete this department ");
 
                         // here you show the option in dialog yes or no with on click listener
@@ -109,7 +98,6 @@ public class ShowAllStudentActivity extends AppCompatActivity {
                                     RemoverDepartment(uID);
                                     // else if the user chick in the no button
                                 } else {
-                                    finish();
                                 }
                             }
                         });
@@ -121,10 +109,10 @@ public class ShowAllStudentActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public ShowAllStudentActivity.StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public ShowAllStudentFragment.StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_one_item_layout, parent, false);
 
-                return new ShowAllStudentActivity.StudentViewHolder(view);
+                return new ShowAllStudentFragment.StudentViewHolder(view);
             }
         };
         studentList.setAdapter(adapter);
@@ -133,19 +121,18 @@ public class ShowAllStudentActivity extends AppCompatActivity {
     }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentNameItem, studentNationalId, studentseatnumber, studentTotal, studentPercent;
+        public TextView studentId, studentNameItem, studentNationalId, studentSeatNumber, studentTotal;
 
-        public Button show_all_Student_btn;
         public Button Delete_student_btn;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            studentId = itemView.findViewById(R.id.studentId);
             studentNameItem = itemView.findViewById(R.id.studentName);
             studentNationalId = itemView.findViewById(R.id.studentNationalId);
-            studentseatnumber = itemView.findViewById(R.id.studentSeatNumber);
+            studentSeatNumber = itemView.findViewById(R.id.studentSeatNumber);
             studentTotal = itemView.findViewById(R.id.studentTotal);
-            studentPercent = itemView.findViewById(R.id.studentPercent);
-            show_all_Student_btn = itemView.findViewById(R.id.show_all_Student_btn);
             Delete_student_btn = itemView.findViewById(R.id.Delete_student_btn);
 
         }

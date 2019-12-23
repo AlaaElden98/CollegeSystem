@@ -1,15 +1,16 @@
-package com.usama.runtime;
+package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,26 +21,45 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.usama.runtime.R;
 import com.usama.runtime.model.Department;
 
-public class ShowDepartmentActivity extends AppCompatActivity {
+public class ShowDepartmentFragment extends Fragment {
     private RecyclerView departmentList;
     private DatabaseReference departmentRef;
 
+    public ShowDepartmentFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_department);
-
-        departmentRef = FirebaseDatabase.getInstance().getReference().child("Department");
-
-        departmentList = findViewById(R.id.department_list);
-        departmentList.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
     @Override
-    protected void onStart() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_show_department, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        departmentRef = FirebaseDatabase.getInstance().getReference().child("departments");
+
+        departmentList = getView().findViewById(R.id.department_list);
+        departmentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+    }
+
+
+    @Override
+    public void onStart() {
         super.onStart();
         FirebaseRecyclerOptions<Department> options =
                 new FirebaseRecyclerOptions.Builder<Department>()
@@ -52,19 +72,21 @@ public class ShowDepartmentActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull DepartmentViewHolder holder, final int position, @NonNull final Department model) {
                 holder.departmentNameItem.setText("Name: " + model.getName());
                 holder.departmentMinSpecialItem.setText("Min Special: " + model.getMin_special());
-                holder.departmentMinCapacityItem.setText("Min Capacity: : " + model.getCapacity());
+                holder.departmentMinCapacityItem.setText("Capacity: : " + model.getCapacity());
                 holder.DepartmentMinValueItem.setText("Min Value: " + model.getMin_total());
                 holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
-                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
-                        intent.putExtra("DepartmentName", model.getName());
 
-                        // here you send the user id to the ShowAllStudentActivity
-                        intent.putExtra("uid", uID);
-                        Log.d("TAG", uID + " ");
-                        startActivity(intent);
+                        Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections.actionShowDepartmentFragmentToEditDepartmentDataFragment().setUID(uID));
+//                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
+//                        intent.putExtra("DepartmentName", model.getName());
+//
+//                        // here you send the user id to the ShowAllStudentFragment
+//                        intent.putExtra("uid", uID);
+//                        Log.d("TAG", uID + " ");
+//                        startActivity(intent);
                     }
                 });
                 holder.Delete_department_btn.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +101,7 @@ public class ShowDepartmentActivity extends AppCompatActivity {
 
                         };
                         // alert dialog take a context
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ShowDepartmentActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("Are you sure !! you will delete this department ");
 
                         // here you show the option in dialog yes or no with on click listener
@@ -96,7 +118,6 @@ public class ShowDepartmentActivity extends AppCompatActivity {
                                     RemoverDepartment(uID);
                                     // else if the user chick in the no button
                                 } else {
-                                    finish();
                                 }
                             }
                         });
@@ -141,5 +162,8 @@ public class ShowDepartmentActivity extends AppCompatActivity {
         // orderRef = FirebaseDatabase.getInstance().getReference().child("Orders");
         departmentRef.child(uID).removeValue();
     }
-
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 }
