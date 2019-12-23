@@ -8,14 +8,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
+import com.usama.runtime.model.Posts;
+import com.usama.runtime.viewHolder.PostsViewHolder;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +34,15 @@ import android.view.ViewGroup;
 
 import io.paperdb.Paper;
 
+
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+
+    // make data base reference to retrieve all data
+
+    private DatabaseReference ProductsRef;
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -51,6 +67,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // make an instance in database
+        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
+
         Toolbar toolbar = getView().findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
 
@@ -69,8 +90,44 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        recyclerView = getView().findViewById(R.id.recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //can retrieve all data
+        FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
+                .setQuery(ProductsRef, Posts.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull Posts posts) {
+                        holder.txtPostSubject.setText(posts.getSubject());
+                        holder.txtPostDescription.setText(posts.getDescription());
+                        holder.txtPostDoctorName.setText(posts.getName());
+                        holder.dateAndTime.setText(posts.getDataAndTime());
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
+                        PostsViewHolder holder = new PostsViewHolder(view);
+                        return holder;
+                    }
+                };
+        // add adapter in recyclerView
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
