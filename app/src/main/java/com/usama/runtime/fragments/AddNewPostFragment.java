@@ -2,11 +2,18 @@ package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -52,7 +59,9 @@ public class AddNewPostFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_new_post, container, false);
     }
-
+   // final String CHANNEL_1_ID="channel1";
+    //final String CHANNEL_2_ID="channel2";
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -70,6 +79,7 @@ public class AddNewPostFragment extends Fragment {
                 ValidatePostData();
             }
         });
+
     }
 
 
@@ -88,6 +98,20 @@ public class AddNewPostFragment extends Fragment {
             StoreProductInformation();
         }
 
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel1 =new NotificationChannel(
+                    CHANNEL_1_ID,"Channel 1", NotificationManager.IMPORTANCE_HIGH
+            );
+            channel1.setDescription( "this is channel 1" );
+            NotificationChannel channel2 =new NotificationChannel(
+                    CHANNEL_2_ID,"Channel 2", NotificationManager.IMPORTANCE_LOW
+            );
+            channel2.setDescription( "this is channel 2" );
+//            NotificationManager manager =getFragmentManager(AddNewPostFragment.this);
+  //          manager.createNotificationChannel( channel1 );
+    //        manager.createNotificationChannel( channel2 );
+           // Notification notification =new NotificationCompat.Builder( this,CHANNEL_1_ID ).set
+        }*/
 
     }
 
@@ -102,14 +126,15 @@ public class AddNewPostFragment extends Fragment {
 
         SavePostInfoToDatabase();
     }
-
+//private final int NOTIFICATION_ID=001;
+  //  private final String CHANNEL_ID ="personsl_notificstion";
     private void SavePostInfoToDatabase() {
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("name", professorName);
         postMap.put("dataAndTime", timetostring);
         postMap.put("subject", subject);
         postMap.put("description", description);
-
+String message="this is a notification";
         postRef.child(professorName).updateChildren(postMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -128,6 +153,17 @@ public class AddNewPostFragment extends Fragment {
                     }
                 });
 
+     /*   NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
+        builder.setSmallIcon(R.drawable.ic_menu_manage);
+        builder.setContentTitle("Simple Notification");
+        builder.setContentText("this is a simple notification");
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+        NotificationManagerCompat notificationManager = (NotificationManager) NotificationManagerCompat.from(getActivity());
+
+        notificationManager.notify(0, builder.build());
+*/
     }
 
     public interface OnFragmentInteractionListener {
