@@ -147,6 +147,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 //            Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
 //            startActivity(intent);
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToBarCodeFragment());
+        }
+            else if (id == R.id.attendance_counter) {
+//            Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
+//            startActivity(intent);
+                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToAttendanceCounterFragment());
         } else if (id == R.id.nav_news) {
 
         } else if (id == R.id.nav_logout) {

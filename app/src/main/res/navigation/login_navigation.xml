@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_homeFragment_to_barCodeFragment"
             app:destination="@id/barCodeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_attendanceCounterFragment"
+            app:destination="@id/attendanceCounterFragment" />
     </fragment>
     <fragment
         android:id="@+id/recordingDesiresFragment"
@@ -62,6 +65,11 @@
         android:name="com.usama.runtime.fragments.BarCodeFragment"
         android:label="fragment_bar_code"
         tools:layout="@layout/fragment_bar_code" />
+    <fragment
+        android:id="@+id/attendanceCounterFragment"
+        android:name="com.usama.runtime.fragments.attendance_counter"
+        android:label="fragment_attendence_counter"
+        tools:layout="@layout/fragment_attendance_counter" />
     <fragment
         android:id="@+id/addDepartmentFragment"
         android:name="com.usama.runtime.fragments.AddDepartmentFragment"
