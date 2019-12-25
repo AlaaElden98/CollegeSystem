@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +39,7 @@ public class RecordingDesiresFragment extends Fragment {
 
     MyRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-    Button button;
+    Button confirmDesiresBtn;
     List<String> arrayList=new ArrayList<>();
     // variable to use in shared preference
     public static final String MY_NATIONAL_ID = "MyNationalId";
@@ -70,7 +71,7 @@ public class RecordingDesiresFragment extends Fragment {
             public void onChanged(List<String> list) {
                 arrayList.addAll(list);
                 adapter.setList(list);
-            }
+                }
         });
     }
 
@@ -99,22 +100,20 @@ public class RecordingDesiresFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        button = getView().findViewById(R.id.confirmDesiresOfDepartment);
-        button.setOnClickListener(new View.OnClickListener() {
+        confirmDesiresBtn = getView().findViewById(R.id.confirmDesiresOfDepartment);
+        confirmDesiresBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 putDesiresInDatabase();
+                Navigation.findNavController(getView()).navigate(RecordingDesiresFragmentDirections.actionRecordingDesiresFragmentToHomeFragment());
 
             }
         });
 
     }
     private void putDesiresInDatabase() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("student_desires");
-
-
         HashMap<String, Object> studentMap = new HashMap<>();
         Log.d("CHECKIN", arrayList.size() + "");
         studentMap.put("desires", arrayList);

@@ -56,12 +56,20 @@
         android:id="@+id/recordingDesiresFragment"
         android:name="com.usama.runtime.fragments.RecordingDesiresFragment"
         android:label="fragment_recording_desires"
-        tools:layout="@layout/fragment_recording_desires" />
+        tools:layout="@layout/fragment_recording_desires" >
+        <action
+            android:id="@+id/action_recordingDesiresFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/barCodeFragment"
         android:name="com.usama.runtime.fragments.BarCodeFragment"
         android:label="fragment_bar_code"
-        tools:layout="@layout/fragment_bar_code" />
+        tools:layout="@layout/fragment_bar_code" >
+        <action
+            android:id="@+id/action_barCodeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addDepartmentFragment"
         android:name="com.usama.runtime.fragments.AddDepartmentFragment"

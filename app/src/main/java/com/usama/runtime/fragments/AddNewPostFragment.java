@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,12 +23,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 public class AddNewPostFragment extends Fragment {
-    private String professorName, subject, description, timetostring;
+    private String professorName, subject, description, saveCurrentDate, saveCurrentTime , postTimeAndDate;
     private Button addPostBtn;
     private EditText nameOfProfessor, nameOfSubject, descriptionOfTopic;
     private DatabaseReference postRef;
@@ -97,8 +99,9 @@ public class AddNewPostFragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
-        Date currentTime = Calendar.getInstance().getTime();
-        timetostring = currentTime.toString();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("E, dd MMM .. HH : mm ");
+        postTimeAndDate = currentDate.format(calendar.getTime());
 
         SavePostInfoToDatabase();
     }
@@ -106,7 +109,7 @@ public class AddNewPostFragment extends Fragment {
     private void SavePostInfoToDatabase() {
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("name", professorName);
-        postMap.put("dataAndTime", timetostring);
+        postMap.put("dataAndTime", postTimeAndDate);
         postMap.put("subject", subject);
         postMap.put("description", description);
 
