@@ -1,5 +1,6 @@
 package com.usama.runtime.fragments;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,28 +12,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Posts;
+import com.usama.runtime.model.Student;
 import com.usama.runtime.viewHolder.PostsViewHolder;
+import com.usama.runtime.viewModel.HomeActivityViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 import io.paperdb.Paper;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,7 +55,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     private DatabaseReference postsRef;
     private RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
+
+
+    // TODO : PROCESS TO MAKE FINAL DESIRES
+    private HomeActivityViewModel homeActivityViewModel;
+    private SharedPreferences prefs;
+    private DatabaseReference desiresReference , studentRefrence ;
+    private String nationalId, finalDesiers ,studentName;
+    private static final String MY_NATIONAL_ID = "MyNationalId";
+    private Student studentData;
 
 
     public HomeFragment() {
@@ -91,6 +114,49 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
+
+        // TODO : VIEW MODEL TO MAKE FINAL DESIRES
+        homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+
+        prefs = getActivity().getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
+        nationalId = prefs.getString("nationalId", "29811230201908");//"No name defined" is the default value.
+
+
+        studentRefrence = FirebaseDatabase.getInstance().getReference().getRef().child("students");
+        studentRefrence.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                studentData = dataSnapshot.child(nationalId).getValue(Student.class);
+                studentName = studentData.getName();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        homeActivityViewModel.getFinalDesires(nationalId);
+        homeActivityViewModel.finalSelectedDesirsd.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+                finalDesiers = s;
+//                Log.d("TAGFROMHOME", finalDesiers);
+                if (finalDesiers != null) {
+                    desiresReference = FirebaseDatabase.getInstance().getReference().child("student_department");
+                    HashMap<String, Object> desiresMap = new HashMap<>();
+                    desiresMap.put(nationalId, studentName);
+                    desiresReference.child(finalDesiers).updateChildren(desiresMap);
+
+                    // update student child in firebase to add his final desires
+                    HashMap<String, Object> departmentMap = new HashMap<>();
+                    departmentMap.put("department", finalDesiers);
+                    studentRefrence.child(nationalId).updateChildren(departmentMap);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -141,8 +207,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
 
         if (id == R.id.nav_department_desires) {
-            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToRecordingDesiresFragment());
-
+            if (finalDesiers == null) {
+                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToRecordingDesiresFragment());
+            }else {
+                Toast.makeText(getActivity(), "Wait until showing your department , thanks ", Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.nav_barcode) {
 //            Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
 //            startActivity(intent);

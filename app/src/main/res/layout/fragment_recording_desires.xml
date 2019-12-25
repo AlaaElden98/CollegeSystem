@@ -5,10 +5,12 @@
     android:background="@drawable/desires"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/desiresRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
 
         <Button
             android:id="@+id/confirmDesiresOfDepartment"
@@ -20,24 +22,6 @@
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="italic" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:gravity="center"
-            android:text="Arranging your desires"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/desiresRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

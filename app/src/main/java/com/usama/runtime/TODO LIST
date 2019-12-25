@@ -1,7 +1,7 @@
-1 - TODO : finish process on desires and show outPut
+1 - TODO : finish process on desires and show outPut  --> (Done)
 2 - TODO : Send a notification to all student doctors add post
 3 - TODO : when student press on button on recording desires --> close this fragment and show (The result of desires has not yet appeared)
-        and when admin make a process on recording send a notification to all student and show result in Fragment (RecordingDesires)
+       and when admin make a process on recording send a notification to all student and show result in Fragment (RecordingDesires)
 
 4 - TODO : make a fragment in doctors fragment to show all posts and give access to delete a post he put
 5 - TODO : Student can show number of lecture attendance in terms
