@@ -245,6 +245,8 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                                 Prevalent.CurrentOnlineAdminOrDoctor = adminData;
                                 Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAddNewPostFragment());
 //                                startActivity(intent);
+
+
                             }
                         } else {
                             loadingBar.dismiss();
