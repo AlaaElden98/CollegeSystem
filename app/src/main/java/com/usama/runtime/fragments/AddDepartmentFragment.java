@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +23,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
 
 import java.util.HashMap;
 
+
 public class AddDepartmentFragment extends Fragment {
     private ProgressDialog loadingBar;
-    Button buttonAddDepartment;
-    EditText getDepartmentCapacity, getDepartmentName;
+    private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal;
+    private String selectedSubject;
 
     public AddDepartmentFragment() {
         // Required empty public constructor
@@ -56,7 +58,22 @@ public class AddDepartmentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         getDepartmentName = getView().findViewById(R.id.getDepartmentName);
         getDepartmentCapacity = getView().findViewById(R.id.getDepartmentCapacity);
-        buttonAddDepartment = getView().findViewById(R.id.buttonAddDepartment);
+        Button buttonAddDepartment = getView().findViewById(R.id.buttonAddDepartment);
+        MaterialSpinner subjectSpinner = getView().findViewById(R.id.spinner_choose_subject);
+        getDepartmentMinSpecial = getView().findViewById(R.id.getDepartmentMinSpecial);
+        getDepartmentMinTotal = getView().findViewById(R.id.getDepartmentMinTotal);
+
+
+        subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
+        subjectSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                selectedSubject = item.toString();
+                Log.d("SpinnerTAG", selectedSubject);
+            }
+        });
+
+
         loadingBar = new ProgressDialog(getActivity());
 
         buttonAddDepartment.setOnClickListener(new View.OnClickListener() {
@@ -72,20 +89,24 @@ public class AddDepartmentFragment extends Fragment {
     private void addDepartment() {
         String departmentName = getDepartmentName.getText().toString().trim();
         String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
+        String departmentMinTotal = getDepartmentMinTotal.getText().toString().trim();
+        String departmentMinSpecial = getDepartmentMinSpecial.getText().toString().trim();
 
+        if (selectedSubject == null)
+            selectedSubject = "without";
 
-            // wait to check is phone number is available in database
-            loadingBar.setTitle("Create Account");
-            loadingBar.setMessage("please wait , while we are checking the credentials .");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
+        // wait to check is phone number is available in database
+        loadingBar.setTitle("Create Account");
+        loadingBar.setMessage("please wait , while we are checking the credentials .");
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
 
-            ValidatePhoneNumber(departmentName, departmentCapacity);
-            
+        ValidatePhoneNumber(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial, selectedSubject);
+
 
     }
 
-    private void ValidatePhoneNumber(final String departmentName, final String departmentCapacity) {
+    private void ValidatePhoneNumber(final String departmentName, final String departmentCapacity, final String departmentMinTotal, final String departmentMinSpecial, final String selectedSubject) {
 
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -96,13 +117,17 @@ public class AddDepartmentFragment extends Fragment {
                 // if this national id  valid create a new account
                 // i make a national id a unique field in database
 
-                if (!(dataSnapshot.child("Department").child(departmentName).exists())) {
+                if (!(dataSnapshot.child("departments").child(departmentName).exists())) {
                     // use hashMap to store data into the database (firebase)
                     HashMap<String, Object> studentDataMap = new HashMap<>();
                     studentDataMap.put("departmentName", departmentName);
                     studentDataMap.put("departmentCapacity", departmentCapacity);
+                    studentDataMap.put("departmentMinTotal", departmentMinTotal);
+                    studentDataMap.put("departmentSpecialSubject", selectedSubject);
+                    studentDataMap.put("departmentMinSpecial", departmentMinSpecial);
 
-                    RootRef.child("Department").child(departmentName).updateChildren(studentDataMap)
+
+                    RootRef.child("departments").child(departmentName).updateChildren(studentDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

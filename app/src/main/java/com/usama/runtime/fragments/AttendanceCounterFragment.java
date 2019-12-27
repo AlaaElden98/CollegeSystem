@@ -1,9 +1,11 @@
 package com.usama.runtime.fragments;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.usama.runtime.Attendance.AttendanceAdapter;
 import com.usama.runtime.R;
+import com.usama.runtime.fragments.attendanceAdapter.AttendanceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,7 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class attendance_counter extends Fragment {
-
+public class AttendanceCounterFragment extends Fragment {
     AttendanceAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -37,7 +38,7 @@ public class attendance_counter extends Fragment {
     List<String> arrayList=new ArrayList<>();
     public static final String MY_NATIONAL_ID = "MyNationalId";
 
-    public attendance_counter() {
+    public AttendanceCounterFragment() {
         // Required empty public constructor
     }
 

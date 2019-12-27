@@ -33,7 +33,7 @@ public class MainActivityViewModel extends ViewModel {
                 //arrayList.clear();
                 arrayList=new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String plate = snapshot.child("name").getValue().toString();
+                    String plate = snapshot.child("departmentName").getValue().toString();
                     arrayList.add(plate);
 
                     Log.d("test", plate);

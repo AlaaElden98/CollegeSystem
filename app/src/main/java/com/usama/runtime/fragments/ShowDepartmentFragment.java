@@ -53,8 +53,6 @@ public class ShowDepartmentFragment extends Fragment {
 
         departmentList = getView().findViewById(R.id.department_list);
         departmentList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
     }
 
 
@@ -69,17 +67,26 @@ public class ShowDepartmentFragment extends Fragment {
         FirebaseRecyclerAdapter<Department, DepartmentViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Department, DepartmentViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull DepartmentViewHolder holder, final int position, @NonNull final Department model) {
-                holder.departmentNameItem.setText("Name: " + model.getName());
-                holder.departmentMinSpecialItem.setText("Min Special: " + model.getMin_special());
-                holder.departmentMinCapacityItem.setText("Capacity: : " + model.getCapacity());
-                holder.DepartmentMinValueItem.setText("Min Value: " + model.getMin_total());
+            protected void onBindViewHolder(@NonNull final DepartmentViewHolder holder, final int position, @NonNull final Department model) {
+                holder.departmentNameItem.setText("Name : " + model.getDepartmentName());
+                holder.departmentMinSpecialItem.setText("Min Special : " + model.getDepartmentMinSpecial());
+                holder.departmentMinCapacityItem.setText("Capacity: " + model.getDepartmentCapacity());
+                holder.DepartmentMinTotal.setText("Min Total: " + model.getDepartmentMinTotal());
+                holder.DepartmentSpecialSubject.setText("Special Subject: " + model.getDepartmentSpecialSubject());
                 holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String uID = getRef(position).getKey();
+                        String capacity = model.getDepartmentCapacity();
+                        String total = model.getDepartmentMinTotal();
+                        String subject = model.getDepartmentSpecialSubject();
+                        String name = model.getDepartmentName();
+                        String minSpecial = model.getDepartmentMinSpecial();
 
-                        Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections.actionShowDepartmentFragmentToEditDepartmentDataFragment().setUID(uID));
+
+                        Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections
+                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name,capacity,minSpecial,total,subject)
+                                .setUID(uID));
 //                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
 //                        intent.putExtra("DepartmentName", model.getName());
 //
@@ -141,16 +148,17 @@ public class ShowDepartmentFragment extends Fragment {
     }
 
     static class DepartmentViewHolder extends RecyclerView.ViewHolder {
-        public TextView departmentNameItem, departmentMinSpecialItem, departmentMinCapacityItem, DepartmentMinValueItem;
-        public Button show_all_department_btn;
-        public Button Delete_department_btn;
+        TextView departmentNameItem, departmentMinSpecialItem, departmentMinCapacityItem, DepartmentMinTotal, DepartmentSpecialSubject;
+        Button show_all_department_btn;
+        Button Delete_department_btn;
 
-        public DepartmentViewHolder(@NonNull View itemView) {
+        DepartmentViewHolder(@NonNull View itemView) {
             super(itemView);
             departmentNameItem = itemView.findViewById(R.id.departmentNameItem);
-            departmentMinSpecialItem = itemView.findViewById(R.id.departmentMinSpecialItem);
             departmentMinCapacityItem = itemView.findViewById(R.id.departmentMinCapacityItem);
-            DepartmentMinValueItem = itemView.findViewById(R.id.DepartmentMinValueItem);
+            departmentMinSpecialItem = itemView.findViewById(R.id.departmentMinSpecialItem);
+            DepartmentMinTotal = itemView.findViewById(R.id.DepartmentMinTotal);
+            DepartmentSpecialSubject = itemView.findViewById(R.id.DepartmentSpecialSubject);
             show_all_department_btn = itemView.findViewById(R.id.show_all_department_btn);
             Delete_department_btn = itemView.findViewById(R.id.Delete_department_btn);
 
@@ -162,6 +170,7 @@ public class ShowDepartmentFragment extends Fragment {
         // orderRef = FirebaseDatabase.getInstance().getReference().child("Orders");
         departmentRef.child(uID).removeValue();
     }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

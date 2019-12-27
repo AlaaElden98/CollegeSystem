@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-    List<String> departmentList = new ArrayList<>();
+    private List<String> departmentList = new ArrayList<>();
 
 
     @NonNull
@@ -49,7 +49,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.tv_name);
@@ -57,10 +57,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             itemView.setOnClickListener(this);
 
         }
-
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), departmentList.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
         }
     }
 }

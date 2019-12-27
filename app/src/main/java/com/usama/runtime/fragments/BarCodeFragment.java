@@ -83,31 +83,33 @@ public class BarCodeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-try{
-    //create shared preferences called My prefs
+        try {
+            //create shared preferences called My prefs
 
-    final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
-    // get the time now
-    final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-    final String currentDateandTime = sdf.format(new Date());
-    btnDone = getView().findViewById(R.id.btnDone);
-    //Convert time from string to localtime
-    LocalTime wait = LocalTime.parse(sharedpreferences.getString("TIMENOW", "").toString());
-    LocalTime now = LocalTime.parse(currentDateandTime);
-    //LocalTime wait=LocalTime.parse( "14:50:50");
-    //LocalTime now=LocalTime.parse("15:50:50");
-    //Toast.makeText(BarCodeFragment.this, sharedpreferences.getString("TIMENOW", "").toString(), Toast.LENGTH_SHORT).show();
-    //if pass two hours from user clicked make the button Done is work if not don't make that button work
-    if (wait.isBefore(now)) {
-        Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
-        btnDone.setEnabled(true);
-    } else {
-        btnDone.setEnabled(false);
-        Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
-    }
-}catch (Exception e){
-    Toast.makeText(getActivity(), "WELCOME", Toast.LENGTH_SHORT).show();
-}
+            final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            // get the time now
+            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            final String currentDateandTime = sdf.format(new Date());
+            btnDone = getView().findViewById(R.id.btnDone);
+            //Convert time from string to localtime
+            LocalTime wait = LocalTime.parse(sharedpreferences.getString("TIMENOW", "").toString());
+            LocalTime now = LocalTime.parse(currentDateandTime);
+            //LocalTime wait=LocalTime.parse( "14:50:50");
+            //LocalTime now=LocalTime.parse("15:50:50");
+            //Toast.makeText(BarCodeFragment.this, sharedpreferences.getString("TIMENOW", "").toString(), Toast.LENGTH_SHORT).show();
+            //if pass two hours from user clicked make the button Done is work if not don't make that button work
+            if (wait.isBefore(now)) {
+                Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
+                btnDone.setEnabled(true);
+            } else {
+                btnDone.setEnabled(false);
+                Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "WELCOME", Toast.LENGTH_SHORT).show();
+        }
+
+
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +118,7 @@ try{
                 saveAttendOnDataBase();
 
                 final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
 
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
                 final String currentDateandTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));

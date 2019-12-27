@@ -30,22 +30,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/departmentMinSpecialItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/departmentNameItem"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="department Min Special"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/departmentMinCapacityItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/departmentMinSpecialItem"
+            android:layout_below="@+id/departmentNameItem"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Department Min Capacity"
@@ -53,15 +41,41 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-
         <TextView
-            android:id="@+id/DepartmentMinValueItem"
+            android:id="@+id/DepartmentMinTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/departmentMinCapacityItem"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Department Min Value"
+            android:text="Department Min Total"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/departmentMinSpecialItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DepartmentMinTotal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="department Min Special"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+
+        <TextView
+            android:id="@+id/DepartmentSpecialSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departmentMinSpecialItem"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Department Special subject"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -71,7 +85,7 @@
             android:id="@+id/show_all_department_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/DepartmentMinValueItem"
+            android:layout_below="@+id/DepartmentSpecialSubject"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"

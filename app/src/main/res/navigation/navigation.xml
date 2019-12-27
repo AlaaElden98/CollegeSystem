@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/attendanceCounterFragment"
-        android:name="com.usama.runtime.fragments.attendance_counter"
+        android:name="com.usama.runtime.fragments.AttendanceCounterFragment"
         android:label="fragment_attendence_counter"
         tools:layout="@layout/fragment_attendance_counter" />
     <fragment
@@ -131,6 +131,19 @@
         <action
             android:id="@+id/action_editDepartmentDataFragment_to_showDepartmentFragment"
             app:destination="@id/showDepartmentFragment" />
+        <argument
+            android:name="departmentName"
+            app:argType="string" />
+        <argument
+            android:name="departmentCapacity"
+            app:argType="string" />
+        <argument
+            android:name="departmentMinSpecial"
+            app:argType="string" />
+        <argument android:name="departmentMinTotal"
+            app:argType="string" />
+        <argument android:name="departmentSpecialSubject"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showAllStudentFragment"

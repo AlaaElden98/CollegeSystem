@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backdep">
@@ -8,7 +9,6 @@
         android:id="@+id/input_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="50dp"
@@ -23,9 +23,9 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
             android:hint="Department Name"
-            android:textColor="#FFFFFF"
             android:inputType="text"
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/getDepartmentCapacity"
@@ -40,12 +40,64 @@
 
             />
 
+        <EditText
+            android:id="@+id/getDepartmentMinTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/edit_text_top"
+            android:hint="Department Min Total"
+            android:inputType="number"
+            android:padding="15dp"
+            android:textColor="#FFFFFF" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/getDepartmentMinSpecial"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/edit_text_top"
+                android:hint="Min Special"
+                android:inputType="number"
+                android:padding="15dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!--            if you want change anything here check this library
+            https://github.com/jaredrummler/MaterialSpinner-->
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinner_choose_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.8"
+                android:hint="choose language"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:ms_background_color="#11000000" />
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/buttonAddDepartment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="20dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="Add Department"

@@ -5,19 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+
+import java.util.HashMap;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class EditDepartmentDataFragment extends Fragment {
     // TODO: MAKE EDIT IN ALL INFO << Done<< Alaa
-    Button buttonEditDepartment;
-    EditText getDepartmentName, getDepartmentCapacity;
+    private Button buttonEditDepartment;
+    private TextView getDepartmentName;
+    private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial;
+    private String selectedSubject;
 
     public EditDepartmentDataFragment() {
         // Required empty public constructor
@@ -39,9 +53,37 @@ public class EditDepartmentDataFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getDepartmentName = getView().findViewById(R.id.getDepartmentName);
-        getDepartmentCapacity = getView().findViewById(R.id.getDepartmentCapacity);
-        buttonEditDepartment = getView().findViewById(R.id.buttonEditDepartment);
+        EditDepartmentDataFragmentArgs args = EditDepartmentDataFragmentArgs.fromBundle(getArguments());
+        String name = args.getDepartmentName();
+        String capacity = args.getDepartmentCapacity();
+        String total = args.getDepartmentMinTotal();
+        String minSpecial = args.getDepartmentMinSpecial();
+        String specialSubject = args.getDepartmentSpecialSubject();
+
+
+        getDepartmentName = getView().findViewById(R.id.editDepartmentName);
+        getDepartmentCapacity = getView().findViewById(R.id.editDepartmentCapacity);
+        getDepartmentMinTotal = getView().findViewById(R.id.editDepartmentMinTotal);
+        getDepartmentMinSpecial = getView().findViewById(R.id.editDepartmentMinSpecial);
+        buttonEditDepartment = getView().findViewById(R.id.editButtonEditDepartment);
+        MaterialSpinner subjectSpinner = getView().findViewById(R.id.edit_spinner_choose_subject);
+        subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
+
+        subjectSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                selectedSubject = item.toString();
+                Log.d("SpinnerTAG", selectedSubject);
+            }
+        });
+
+        getDepartmentName.setText(name);
+        getDepartmentCapacity.setText(capacity);
+        getDepartmentMinTotal.setText(total);
+        getDepartmentMinSpecial.setText(minSpecial);
+        subjectSpinner.setText(specialSubject);
+
+
         buttonEditDepartment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,23 +99,32 @@ public class EditDepartmentDataFragment extends Fragment {
     private void editDepartment() {
 
 
-//        String departmentName = getDepartmentName.getText().toString().trim();
-//        String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
-//        String departmentOldName = getIntent().getStringExtra("DepartmentName");
-//
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference mDatabaseRef = database.getReference();
-//
-//        mDatabaseRef.child("Department").child(departmentOldName).child("departmentName").setValue(departmentName);
-//        mDatabaseRef.child("Department").child(departmentOldName).child("departmentCapacity").setValue(departmentCapacity);
-//
-//
-//    }
-//
-//
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+        String departmentName = getDepartmentName.getText().toString().trim();
+        String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
+        String departmentMinTotal = getDepartmentMinTotal.getText().toString().trim();
+        String departmentMinSpecial = getDepartmentMinSpecial.getText().toString().trim();
+
+        if (selectedSubject == null) {
+            selectedSubject = "nothing";
+        }
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("departments");
+        HashMap<String, Object> studentMap = new HashMap<>();
+        studentMap.put("departmentCapacity", departmentCapacity);
+        studentMap.put("departmentMinSpecial", departmentMinSpecial);
+        studentMap.put("departmentMinTotal", departmentMinTotal);
+//        studentMap.put("departmentName", departmentName);
+        studentMap.put("departmentSpecialSubject", selectedSubject);
+
+
+        ref.child(departmentName).updateChildren(studentMap);
+
+        Toast.makeText(getActivity(), "Your Department update successfully.", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

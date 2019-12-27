@@ -59,17 +59,17 @@ public class HomeActivityViewModel extends ViewModel {
                 depReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (int i = 0 ; i < arrayOfDesires.size();i++){
+                        for (int i = 0; i < arrayOfDesires.size(); i++) {
                             currentDesires = arrayOfDesires.get(i);
 
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                String dep = snapshot.child("name").getValue().toString();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String dep = snapshot.child("departmentName").getValue().toString();
 //                                Log.d("TAG",  "   currentDesires " +  currentDesires +"   "+ dep + "   department " );
-                                if (dep.contains(currentDesires)){
+                                if (dep.contains(currentDesires)) {
 //                                    Log.d("TAG",  "if ");
                                     Department department = snapshot.getValue(Department.class);
-                                    capacityOfDepartment = Integer.parseInt(department.getCapacity());
-                                    totalOfDepartment = Integer.parseInt(department.getMin_total());
+                                    capacityOfDepartment = Integer.parseInt(department.getDepartmentCapacity());
+                                    totalOfDepartment = Integer.parseInt(department.getDepartmentMinTotal());
 
 //                                    Log.d("TAGStudentTotal", studentTotal + "");
 //                                    Log.d("TAGTotalOfDepartment", totalOfDepartment + "");
