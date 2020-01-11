@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark">
+        android:background="@drawable/bg">
 
         <TextView
 
@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="All Student"
-            android:textColor="#fff"
+            android:text="All Students"
+            android:textColor="#dbcdc3"
             android:textSize="25sp" />
 
     </RelativeLayout>
@@ -28,6 +28,7 @@
         android:id="@+id/Student_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#dbcdc3"
         android:layout_below="@+id/r2">
 
     </androidx.recyclerview.widget.RecyclerView>

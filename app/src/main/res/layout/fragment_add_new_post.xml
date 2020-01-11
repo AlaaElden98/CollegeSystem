@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backdep">
+    android:background="@drawable/same">
 
     <LinearLayout
         android:id="@+id/input_group"
@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/nameOfProfessor"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
@@ -28,7 +28,7 @@
 
         <EditText
             android:id="@+id/nameOfSubject"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
@@ -38,7 +38,7 @@
 
         <EditText
             android:id="@+id/descriptionOfTopic"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
@@ -48,7 +48,7 @@
 
         <Button
             android:id="@+id/addPostBtn"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/button"

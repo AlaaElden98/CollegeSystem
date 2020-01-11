@@ -30,7 +30,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            app:lottie_rawRes="@raw/books_animi"
+            app:lottie_rawRes="@raw/animi3"
             app:lottie_autoPlay="true"
             />
     </LinearLayout>
@@ -48,33 +48,37 @@
         android:orientation="vertical">
 
 
-        <EditText
-            android:id="@+id/login_nationalId"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_text_top"
-            android:hint="National ID"
-            android:inputType="number"
-            android:textColor="#FFFFFF"
-            android:padding="15dp"
-            android:layout_marginBottom="15dp"
-
-
-            />
-
-        <EditText
-            android:id="@+id/login_sitting_number"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/edit_text_bottom"
-            android:hint="Setting_number"
-            android:inputType="number"
-            android:padding="15dp"
-            android:layout_marginBottom="15dp"
+            android:hint="National ID">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_nationalId"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:padding="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            />
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Seat Number">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_sitting_number"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:padding="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/linear_layout_1"

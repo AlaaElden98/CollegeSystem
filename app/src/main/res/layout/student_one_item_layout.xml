@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:textColor="#000"
+            android:textColor="#dbcdc3"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_below="@id/studentId"
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
-            android:textColor="#000"
+            android:textColor="#dbcdc3"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="#000"
+            android:textColor="#dbcdc3"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="#000"
+            android:textColor="#dbcdc3"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
             android:layout_margin="5dp"
             android:paddingLeft="15dp"
             android:paddingBottom="10dp"
-            android:textColor="#000"
+            android:textColor="#dbcdc3"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/button"
             android:text="Delete this student "
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
             android:textSize="16sp" />
 
     </RelativeLayout>

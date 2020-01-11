@@ -29,8 +29,9 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            app:lottie_rawRes="@raw/finalprof"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/books_animi" />
+            />
     </LinearLayout>
 
 
@@ -45,36 +46,37 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
-        <EditText
-            android:id="@+id/login_name_et"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/edit_text_top"
-            android:hint="Name"
-            android:inputType="number"
-            android:padding="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-
-
-            />
-
-        <EditText
-            android:id="@+id/login_password_et"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/edit_text_bottom"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:hint="Name">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_name_et"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:padding="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_password_et"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/linear_layout_1"
@@ -104,7 +106,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Doctor Login"
+            android:text="Professor Login"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="17sp" />
