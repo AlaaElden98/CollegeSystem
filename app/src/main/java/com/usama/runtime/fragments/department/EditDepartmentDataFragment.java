@@ -1,11 +1,9 @@
-package com.usama.runtime.fragments;
+package com.usama.runtime.fragments.department;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,13 +22,12 @@ import com.usama.runtime.R;
 
 import java.util.HashMap;
 
-import static android.content.Context.MODE_PRIVATE;
 
 public class EditDepartmentDataFragment extends Fragment {
     // TODO: MAKE EDIT IN ALL INFO << Done<< Alaa
     private Button buttonEditDepartment;
     private TextView getDepartmentName;
-    private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial;
+    private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial ,getDepartmentDescription ;
     private String selectedSubject;
 
     public EditDepartmentDataFragment() {
@@ -59,12 +56,13 @@ public class EditDepartmentDataFragment extends Fragment {
         String total = args.getDepartmentMinTotal();
         String minSpecial = args.getDepartmentMinSpecial();
         String specialSubject = args.getDepartmentSpecialSubject();
-
+        String dec = args.getDepartmentDescription();
 
         getDepartmentName = getView().findViewById(R.id.editDepartmentName);
         getDepartmentCapacity = getView().findViewById(R.id.editDepartmentCapacity);
         getDepartmentMinTotal = getView().findViewById(R.id.editDepartmentMinTotal);
         getDepartmentMinSpecial = getView().findViewById(R.id.editDepartmentMinSpecial);
+        getDepartmentDescription = getView().findViewById(R.id.editDepartmentDescription);
         buttonEditDepartment = getView().findViewById(R.id.editButtonEditDepartment);
         MaterialSpinner subjectSpinner = getView().findViewById(R.id.edit_spinner_choose_subject);
         subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
@@ -82,6 +80,7 @@ public class EditDepartmentDataFragment extends Fragment {
         getDepartmentMinTotal.setText(total);
         getDepartmentMinSpecial.setText(minSpecial);
         subjectSpinner.setText(specialSubject);
+        getDepartmentDescription.setText(dec);
 
 
         buttonEditDepartment.setOnClickListener(new View.OnClickListener() {

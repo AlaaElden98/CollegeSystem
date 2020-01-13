@@ -71,7 +71,7 @@ public class RecordingDesiresFragment extends Fragment {
             public void onChanged(List<String> list) {
                 arrayList.addAll(list);
                 adapter.setList(list);
-                }
+            }
         });
     }
 

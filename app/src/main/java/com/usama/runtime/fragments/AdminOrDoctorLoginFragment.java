@@ -49,7 +49,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
     private CheckBox chkBoxRememberMe;
 
     // variable to use in shared preference
-    public static final String MT_NATIONAL_ID = "MyNationalId";
+    public static final String DoctorName = "DoctorName";
 
 
     public AdminOrDoctorLoginFragment() {
@@ -153,13 +153,10 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                             Toast.makeText(getActivity(), "you are already login  ... ", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
 
-//                            Intent intent = new Intent(getActivity(), AdminOrDoctorLoginFragment.class);
-
 
                             // this line to make sure the app doesn't crash when cloth it and open again
                             // because we use paper library
                             Prevalent.CurrentOnlineAdminOrDoctor = adminData;
-//                            startActivity(intent);
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getActivity(), "Password is incorrect ", Toast.LENGTH_LONG).show();
@@ -237,8 +234,9 @@ public class AdminOrDoctorLoginFragment extends Fragment {
 
                                 // MY_PREFS_NAME - a static String variable like:
                                 //public static final String MY_PREFS_NAME = "MyPrefsFile";
-                                SharedPreferences.Editor editor = getActivity().getSharedPreferences(MT_NATIONAL_ID, MODE_PRIVATE).edit();
-                                editor.putString("nationalId", name);
+                                SharedPreferences.Editor editor = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE).edit();
+                                editor.putString("DoctorName", name);
+                                Log.d("TAGADMIN",name);
                                 editor.apply();
 
                                 //make this to make the user data public in all classes to use it

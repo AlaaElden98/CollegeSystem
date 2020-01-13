@@ -1,4 +1,4 @@
-package com.usama.runtime.fragments;
+package com.usama.runtime.fragments.department;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,11 +81,12 @@ public class ShowDepartmentFragment extends Fragment {
                         String total = model.getDepartmentMinTotal();
                         String subject = model.getDepartmentSpecialSubject();
                         String name = model.getDepartmentName();
+                        String dec = model.getDepartmentDescription();
                         String minSpecial = model.getDepartmentMinSpecial();
 
 
                         Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections
-                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name,capacity,minSpecial,total,subject)
+                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name,capacity,minSpecial,total,subject,dec)
                                 .setUID(uID));
 //                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
 //                        intent.putExtra("DepartmentName", model.getName());

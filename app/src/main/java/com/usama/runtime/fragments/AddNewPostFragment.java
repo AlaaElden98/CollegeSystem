@@ -12,6 +12,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaRouter;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,12 +37,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class AddNewPostFragment extends Fragment {
-    private String professorName, subject, description, saveCurrentDate, saveCurrentTime , postTimeAndDate;
+    private String subject, description, postTimeAndDate;
     private Button addPostBtn;
-    private EditText nameOfProfessor, nameOfSubject, descriptionOfTopic;
+    private EditText nameOfSubject, descriptionOfTopic;
+    private TextView nameOfProfessor;
     private DatabaseReference postRef;
     private ProgressDialog loadingBar;
+    String nameOfDoctor ;
+    private static final String DoctorName = "DoctorName";
 
 
     public AddNewPostFragment() {
@@ -61,7 +68,8 @@ public class AddNewPostFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_new_post, container, false);
     }
-   // final String CHANNEL_1_ID="channel1";
+
+    // final String CHANNEL_1_ID="channel1";
     //final String CHANNEL_2_ID="channel2";
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -75,6 +83,11 @@ public class AddNewPostFragment extends Fragment {
         loadingBar = new ProgressDialog(getActivity());
 
 
+        SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
+
+        nameOfDoctor= prefs.getString("DoctorName", "No Name");//"No name defined" is the default value.
+        nameOfProfessor.setText(nameOfDoctor);
+
         addPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,13 +99,10 @@ public class AddNewPostFragment extends Fragment {
 
 
     private void ValidatePostData() {
-        professorName = nameOfProfessor.getText().toString();
         subject = nameOfSubject.getText().toString();
         description = descriptionOfTopic.getText().toString();
 
-        if (TextUtils.isEmpty(professorName)) {
-            Toast.makeText(getActivity(), "Please write Your Name sir...", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(subject)) {
+        if (TextUtils.isEmpty(subject)) {
             Toast.makeText(getActivity(), "Please write Name of subject...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(description)) {
             Toast.makeText(getActivity(), "Please write Description...", Toast.LENGTH_SHORT).show();
@@ -129,16 +139,16 @@ public class AddNewPostFragment extends Fragment {
 
         SavePostInfoToDatabase();
     }
-//private final int NOTIFICATION_ID=001;
-  //  private final String CHANNEL_ID ="personsl_notificstion";
+
+    //private final int NOTIFICATION_ID=001;
+    //  private final String CHANNEL_ID ="personsl_notificstion";
     private void SavePostInfoToDatabase() {
         HashMap<String, Object> postMap = new HashMap<>();
-        postMap.put("name", professorName);
         postMap.put("dataAndTime", postTimeAndDate);
         postMap.put("subject", subject);
         postMap.put("description", description);
-String message="this is a notification";
-        postRef.child(professorName).updateChildren(postMap)
+        String message = "this is a notification";
+        postRef.child(nameOfDoctor).updateChildren(postMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

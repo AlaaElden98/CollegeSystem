@@ -1,4 +1,4 @@
-package com.usama.runtime.fragments;
+package com.usama.runtime.fragments.department;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 public class AddDepartmentFragment extends Fragment {
     private ProgressDialog loadingBar;
-    private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal;
+    private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal , getDepartmentDescription;
     private String selectedSubject;
 
     public AddDepartmentFragment() {
@@ -62,6 +62,7 @@ public class AddDepartmentFragment extends Fragment {
         MaterialSpinner subjectSpinner = getView().findViewById(R.id.spinner_choose_subject);
         getDepartmentMinSpecial = getView().findViewById(R.id.getDepartmentMinSpecial);
         getDepartmentMinTotal = getView().findViewById(R.id.getDepartmentMinTotal);
+        getDepartmentDescription = getView().findViewById(R.id.getDepartmentDescription);
 
 
         subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
@@ -91,6 +92,8 @@ public class AddDepartmentFragment extends Fragment {
         String departmentCapacity = getDepartmentCapacity.getText().toString().trim();
         String departmentMinTotal = getDepartmentMinTotal.getText().toString().trim();
         String departmentMinSpecial = getDepartmentMinSpecial.getText().toString().trim();
+        String departmentDescription = getDepartmentDescription.getText().toString().trim();
+
 
         if (selectedSubject == null)
             selectedSubject = "without";
@@ -101,12 +104,12 @@ public class AddDepartmentFragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
-        ValidatePhoneNumber(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial, selectedSubject);
+        ValidateDepartment(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial,departmentDescription, selectedSubject);
 
 
     }
 
-    private void ValidatePhoneNumber(final String departmentName, final String departmentCapacity, final String departmentMinTotal, final String departmentMinSpecial, final String selectedSubject) {
+    private void ValidateDepartment(final String departmentName, final String departmentCapacity, final String departmentMinTotal, final String departmentMinSpecial, final String departmentDescription, final String selectedSubject) {
 
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -119,15 +122,16 @@ public class AddDepartmentFragment extends Fragment {
 
                 if (!(dataSnapshot.child("departments").child(departmentName).exists())) {
                     // use hashMap to store data into the database (firebase)
-                    HashMap<String, Object> studentDataMap = new HashMap<>();
-                    studentDataMap.put("departmentName", departmentName);
-                    studentDataMap.put("departmentCapacity", departmentCapacity);
-                    studentDataMap.put("departmentMinTotal", departmentMinTotal);
-                    studentDataMap.put("departmentSpecialSubject", selectedSubject);
-                    studentDataMap.put("departmentMinSpecial", departmentMinSpecial);
+                    HashMap<String, Object> departmentDataMap = new HashMap<>();
+                    departmentDataMap.put("departmentName", departmentName);
+                    departmentDataMap.put("departmentCapacity", departmentCapacity);
+                    departmentDataMap.put("departmentMinTotal", departmentMinTotal);
+                    departmentDataMap.put("departmentSpecialSubject", selectedSubject);
+                    departmentDataMap.put("departmentMinSpecial", departmentMinSpecial);
+                    departmentDataMap.put("departmentDescription", departmentDescription);
 
 
-                    RootRef.child("departments").child(departmentName).updateChildren(studentDataMap)
+                    RootRef.child("departments").child(departmentName).updateChildren(departmentDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

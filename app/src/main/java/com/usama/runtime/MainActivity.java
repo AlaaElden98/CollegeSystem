@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.usama.runtime.fragments.AddDepartmentFragment;
+import com.usama.runtime.fragments.department.AddDepartmentFragment;
 import com.usama.runtime.fragments.AdminOrDoctorLoginFragment;
 import com.usama.runtime.fragments.ButtonAdminFragment;
 import com.usama.runtime.fragments.HomeFragment;
-import com.usama.runtime.fragments.ShowDepartmentFragment;
+import com.usama.runtime.fragments.department.ShowDepartmentFragment;
 import com.usama.runtime.fragments.StudentLoginFragment;
 
 

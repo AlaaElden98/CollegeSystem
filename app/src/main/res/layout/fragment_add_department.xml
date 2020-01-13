@@ -93,6 +93,18 @@
         </LinearLayout>
 
 
+        <EditText
+            android:id="@+id/getDepartmentDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/edit_text_top"
+            android:gravity="start"
+            android:hint="Department Description"
+            android:padding="15dp"
+            android:textColor="#FFFFFF" />
+
+
         <Button
             android:id="@+id/buttonAddDepartment"
             android:layout_width="255dp"

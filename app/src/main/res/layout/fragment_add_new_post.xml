@@ -16,11 +16,12 @@
         android:orientation="vertical">
 
 
-        <EditText
+        <TextView
             android:id="@+id/nameOfProfessor"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:gravity="center"
             android:background="@drawable/edit_text_top"
             android:hint="Name Of Professor"
             android:padding="15dp"
@@ -28,7 +29,7 @@
 
         <EditText
             android:id="@+id/nameOfSubject"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
@@ -38,17 +39,18 @@
 
         <EditText
             android:id="@+id/descriptionOfTopic"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
             android:hint="Topic"
+            android:gravity="start"
             android:padding="15dp"
             android:textColor="#000" />
 
         <Button
             android:id="@+id/addPostBtn"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/button"

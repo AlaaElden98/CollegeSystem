@@ -1,17 +1,18 @@
 package com.usama.runtime.model;
 
 public class Department {
-    private String departmentCapacity, departmentMinSpecial, departmentMinTotal, departmentName , departmentSpecialSubject;
+    private String departmentCapacity, departmentMinSpecial, departmentMinTotal, departmentName , departmentSpecialSubject , departmentDescription;
 
-    public Department() {
-    }
-
-    public Department(String departmentCapacity, String departmentMinSpecial, String departmentMinTotal, String departmentName, String departmentSpecialSubject) {
+    public Department(String departmentCapacity, String departmentMinSpecial, String departmentMinTotal, String departmentName, String departmentSpecialSubject, String departmentDescription) {
         this.departmentCapacity = departmentCapacity;
         this.departmentMinSpecial = departmentMinSpecial;
         this.departmentMinTotal = departmentMinTotal;
         this.departmentName = departmentName;
         this.departmentSpecialSubject = departmentSpecialSubject;
+        this.departmentDescription = departmentDescription;
+    }
+
+    public Department() {
     }
 
     public String getDepartmentCapacity() {
@@ -52,5 +53,13 @@ public class Department {
 
     public void setDepartmentSpecialSubject(String departmentSpecialSubject) {
         this.departmentSpecialSubject = departmentSpecialSubject;
+    }
+
+    public String getDepartmentDescription() {
+        return departmentDescription;
+    }
+
+    public void setDepartmentDescription(String departmentDescription) {
+        this.departmentDescription = departmentDescription;
     }
 }

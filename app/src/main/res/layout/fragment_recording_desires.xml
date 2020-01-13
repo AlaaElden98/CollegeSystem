@@ -12,17 +12,17 @@
         android:layout_weight="1"/>
 
 
-        <Button
-            android:id="@+id/confirmDesiresOfDepartment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button"
-            android:text="Done"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_margin="5dp"
-            android:textStyle="italic" />
+    <Button
+        android:id="@+id/confirmDesiresOfDepartment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button"
+        android:text="Done"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:textStyle="italic" />
 
 
 </LinearLayout>

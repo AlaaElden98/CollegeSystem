@@ -40,6 +40,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -51,7 +52,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
-    // make data base reference to retrieve all data
 
     private DatabaseReference postsRef;
     private RecyclerView recyclerView;
@@ -61,11 +61,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     // TODO : PROCESS TO MAKE FINAL DESIRES
     private HomeActivityViewModel homeActivityViewModel;
     private SharedPreferences prefs;
-    private DatabaseReference desiresReference , studentRefrence ;
-    private String nationalId, finalDesiers ,studentName;
+    private DatabaseReference desiresReference, studentRefrence;
+    private String nationalId, finalDesiers, studentName;
     private static final String MY_NATIONAL_ID = "MyNationalId";
     private Student studentData;
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -110,6 +109,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // put header view
+        final View headerView = navigationView.getHeaderView(0);
+        final TextView user_name = headerView.findViewById(R.id.user_profile_name);
         recyclerView = getView().findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -120,7 +122,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
         prefs = getActivity().getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
-        nationalId = prefs.getString("nationalId", "29811230201908");//"No name defined" is the default value.
+        nationalId = prefs.getString("nationalId", "2");//"No name defined" is the default value.
+        Log.d("SharedPrefrence",nationalId);
 
 
         studentRefrence = FirebaseDatabase.getInstance().getReference().getRef().child("students");
@@ -129,6 +132,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 studentData = dataSnapshot.child(nationalId).getValue(Student.class);
                 studentName = studentData.getName();
+                user_name.setText(studentData.getName());
+
+
             }
 
             @Override
@@ -142,7 +148,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             public void onChanged(String s) {
 
                 finalDesiers = s;
-//                Log.d("TAGFROMHOME", finalDesiers);
                 if (finalDesiers != null) {
                     desiresReference = FirebaseDatabase.getInstance().getReference().child("student_department");
                     HashMap<String, Object> desiresMap = new HashMap<>();
@@ -209,18 +214,18 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         if (id == R.id.nav_department_desires) {
             if (finalDesiers == null) {
                 Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToRecordingDesiresFragment());
-            }else {
-                Toast.makeText(getActivity(), "Wait until showing your department , thanks ", Toast.LENGTH_SHORT).show();
+            } else {
+                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToDesiresAcceptedFragment(finalDesiers));
+
             }
         } else if (id == R.id.nav_barcode) {
 //            Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
 //            startActivity(intent);
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToBarCodeFragment());
-        }
-            else if (id == R.id.attendance_counter) {
+        } else if (id == R.id.attendance_counter) {
 //            Intent intent = new Intent(HomeActivity.this, BarCodeActivity.class);
 //            startActivity(intent);
-                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToAttendanceCounterFragment());
+            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToAttendanceCounterFragment());
         } else if (id == R.id.nav_news) {
 
         } else if (id == R.id.nav_logout) {
@@ -228,7 +233,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             Paper.book().destroy();
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToMainFragment());
         }
-
 //        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 //        drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_homeFragment_to_attendanceCounterFragment"
             app:destination="@id/attendanceCounterFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_desiresAcceptedFragment"
+            app:destination="@id/desiresAcceptedFragment" />
     </fragment>
     <fragment
         android:id="@+id/recordingDesiresFragment"
@@ -80,7 +83,7 @@
         tools:layout="@layout/fragment_attendance_counter" />
     <fragment
         android:id="@+id/addDepartmentFragment"
-        android:name="com.usama.runtime.fragments.AddDepartmentFragment"
+        android:name="com.usama.runtime.fragments.department.AddDepartmentFragment"
         android:label="fragment_add_department"
         tools:layout="@layout/fragment_add_department" >
         <action
@@ -112,7 +115,7 @@
         tools:layout="@layout/fragment_add_new_post" />
     <fragment
         android:id="@+id/showDepartmentFragment"
-        android:name="com.usama.runtime.fragments.ShowDepartmentFragment"
+        android:name="com.usama.runtime.fragments.department.ShowDepartmentFragment"
         android:label="fragment_show_department"
         tools:layout="@layout/fragment_show_department" >
         <action
@@ -121,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/editDepartmentDataFragment"
-            android:name="com.usama.runtime.fragments.EditDepartmentDataFragment"
+        android:name="com.usama.runtime.fragments.department.EditDepartmentDataFragment"
         android:label="fragment_edit_department_data"
         tools:layout="@layout/fragment_edit_department_data" >
         <argument
@@ -144,10 +147,22 @@
             app:argType="string" />
         <argument android:name="departmentSpecialSubject"
             app:argType="string" />
+        <argument
+            android:name="departmentDescription"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showAllStudentFragment"
         android:name="com.usama.runtime.fragments.ShowAllStudentFragment"
         android:label="fragment_show_all_student"
         tools:layout="@layout/fragment_show_all_student" />
+    <fragment
+        android:id="@+id/desiresAcceptedFragment"
+        android:name="com.usama.runtime.fragments.DesiresAcceptedFragment"
+        android:label="fragment_desires_accepted"
+        tools:layout="@layout/fragment_desires_accepted" >
+        <argument
+            android:name="finalDesires"
+            app:argType="string" />
+    </fragment>
 </navigation>
