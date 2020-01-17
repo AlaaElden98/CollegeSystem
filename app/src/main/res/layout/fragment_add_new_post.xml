@@ -59,7 +59,17 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
-
+        <Button
+            android:id="@+id/showPostBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/button"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="Show Post"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
 
     </LinearLayout>
 

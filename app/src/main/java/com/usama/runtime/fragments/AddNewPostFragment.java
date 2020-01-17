@@ -6,6 +6,9 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -41,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AddNewPostFragment extends Fragment {
     private String subject, description, postTimeAndDate;
-    private Button addPostBtn;
+    private Button addPostBtn,showPostBtn;
     private EditText nameOfSubject, descriptionOfTopic;
     private TextView nameOfProfessor;
     private DatabaseReference postRef;
@@ -81,6 +84,7 @@ public class AddNewPostFragment extends Fragment {
         nameOfSubject = getView().findViewById(R.id.nameOfSubject);
         descriptionOfTopic = getView().findViewById(R.id.descriptionOfTopic);
         loadingBar = new ProgressDialog(getActivity());
+        showPostBtn= getView().findViewById(R.id.showPostBtn);
 
 
         SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
@@ -92,6 +96,15 @@ public class AddNewPostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ValidatePostData();
+            }
+        });
+        showPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment, new showpostFragment(), "fragment_screen");
+                ft.commit();
             }
         });
 
@@ -139,22 +152,28 @@ public class AddNewPostFragment extends Fragment {
 
         SavePostInfoToDatabase();
     }
+    public  TextView  DoctorName1, Post_subject1, Post_description1, post_date1;
 
     //private final int NOTIFICATION_ID=001;
     //  private final String CHANNEL_ID ="personsl_notificstion";
     private void SavePostInfoToDatabase() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
+
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("dataAndTime", postTimeAndDate);
+        postMap.put("name", prefs.getString("DoctorName", ""));
         postMap.put("subject", subject);
+        postMap.put("id",prefs.getString("DoctorID", ""));
         postMap.put("description", description);
         String message = "this is a notification";
-        postRef.child(nameOfDoctor).updateChildren(postMap)
+        postRef.push().updateChildren(postMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
 //                            Intent intent = new Intent(getActivity(), AddNewPostActivity.class);
 //                            startActivity(intent);
+
 
                             loadingBar.dismiss();
                             Toast.makeText(getActivity(), "Post is added successfully..", Toast.LENGTH_SHORT).show();
@@ -166,17 +185,7 @@ public class AddNewPostFragment extends Fragment {
                     }
                 });
 
-     /*   NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
-        builder.setSmallIcon(R.drawable.ic_menu_manage);
-        builder.setContentTitle("Simple Notification");
-        builder.setContentText("this is a simple notification");
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-
-        NotificationManagerCompat notificationManager = (NotificationManager) NotificationManagerCompat.from(getActivity());
-
-        notificationManager.notify(0, builder.build());
-*/
     }
 
     public interface OnFragmentInteractionListener {

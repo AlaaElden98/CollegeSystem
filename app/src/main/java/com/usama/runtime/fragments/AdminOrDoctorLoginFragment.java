@@ -214,19 +214,24 @@ public class AdminOrDoctorLoginFragment extends Fragment {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.child(parentDbName).child(name).exists()) {
 
 
                     adminData = dataSnapshot.child(parentDbName).child(name).getValue(Admin.class);
                     Log.d("TAG", "Data" + adminData);
+                    SharedPreferences.Editor editor = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE).edit();
                     if (adminData.getName().equals(name)) {
                         if (adminData.getPassword().equals(password)) {
                             if (parentDbName.equals("Admins")) {
+
                                 Toast.makeText(getActivity(), "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
 
                                 Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToButtonAdminFragment());
                             } else if (parentDbName.equals("Doctors")) {
+                                editor.putString("DoctorID",name);
+
                                 Toast.makeText(getActivity(), "logged in Successfully...", Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
 
@@ -234,7 +239,6 @@ public class AdminOrDoctorLoginFragment extends Fragment {
 
                                 // MY_PREFS_NAME - a static String variable like:
                                 //public static final String MY_PREFS_NAME = "MyPrefsFile";
-                                SharedPreferences.Editor editor = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE).edit();
                                 editor.putString("DoctorName", name);
                                 Log.d("TAGADMIN",name);
                                 editor.apply();

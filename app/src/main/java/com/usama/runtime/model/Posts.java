@@ -1,12 +1,13 @@
 package com.usama.runtime.model;
 
 public class Posts {
-    private String name, subject, description, dataAndTime;
+    private String name, subject, description, dataAndTime,id;
 
     public Posts() {
     }
 
-    public Posts(String name, String subject, String description, String dataAndTime) {
+    public Posts(String name, String subject, String description, String dataAndTime,String id) {
+        this.id=id;
         this.name = name;
         this.subject = subject;
         this.description = description;
@@ -19,6 +20,13 @@ public class Posts {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getSubject() {
