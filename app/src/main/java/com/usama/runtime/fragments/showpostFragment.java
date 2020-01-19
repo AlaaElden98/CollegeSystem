@@ -73,6 +73,7 @@ public class showpostFragment extends Fragment {
     public void onStart() {
         super.onStart();
         SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
+        //Query firebasesearch =postRef.orderByChild("id").startAt().endAt(+"\uf8ff");
 
         Query firebasesearch =postRef.orderByChild("id").startAt(prefs.getString("DoctorID", "")).endAt(prefs.getString("DoctorID", "")+"\uf8ff");
 

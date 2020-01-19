@@ -2,10 +2,13 @@ package com.usama.runtime.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,6 +23,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.Query;
 import com.rey.material.widget.CheckBox;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.Prevalent.Prevalent;
 import com.usama.runtime.R;
-import com.usama.runtime.model.Admin;
+import com.usama.runtime.model.Admins;
+import com.usama.runtime.model.Admins;
+import com.usama.runtime.model.Doctors;
+import com.usama.runtime.model.Posts;
 import com.usama.runtime.model.Student;
 
 import io.paperdb.Paper;
@@ -39,7 +48,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AdminOrDoctorLoginFragment extends Fragment {
 
-    public static Admin adminData;
+    public static Admins adminData;
 
     private EditText login_name_et, login_password_et;
     private Button LoginButton;
@@ -145,7 +154,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // here child phone is a unique object
                 if (dataSnapshot.child(parentDbName).child(name).exists()) {
-                    Admin usersData = dataSnapshot.child(parentDbName).child(password).getValue(Admin.class);
+                    Admins usersData = dataSnapshot.child(parentDbName).child(password).getValue(Admins.class);
 
                     // retrieve the Admin data
                     if (usersData.getName().equals(name)) {
@@ -214,13 +223,137 @@ public class AdminOrDoctorLoginFragment extends Fragment {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (parentDbName.equals("Admins")) {
+                    Query firebaseSearch =RootRef.child( parentDbName ).orderByChild("name").equalTo( name );
 
-                if (dataSnapshot.child(parentDbName).child(name).exists()) {
+                    firebaseSearch.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.exists()) {
+                                // dataSnapshot is the "issue" node with all children with id 0
+                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                    // do something with the individual "issues"
+                                    Admins post = issue.getValue( Admins.class);
+                                    if(post.getPassword().equals( password )){
+                                            Toast.makeText(getActivity(), "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_LONG).show();
+                                            loadingBar.dismiss();
+                                            Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToButtonAdminFragment());
+                                    }else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(getActivity(), "Password is incorrect.", Toast.LENGTH_LONG).show();
+
+                                    }
+
+
+                                }
+                            }else {
+                                loadingBar.dismiss();
+                                Toast.makeText(getActivity(), "Account with this " + name + " number do not exists.", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }else if (parentDbName.equals("Doctors")){
+                    final SharedPreferences.Editor editor = getActivity().getSharedPreferences( DoctorName, MODE_PRIVATE ).edit();
+
+                    Query firebaseSearch =RootRef.child( parentDbName ).orderByChild( "name" ).equalTo( name );
+                    firebaseSearch.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                           Toast.makeText(getActivity(), "111111111111111111", Toast.LENGTH_LONG).show();
+                            if (dataSnapshot.exists()) {
+                                // dataSnapshot is the "issue" node with all children with id 0
+                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                    // do something with the individual "issues"
+                                    Doctors post = issue.getValue(Doctors.class);
+
+                                    if(post.getPassword().equals( password )){
+                                        //  else if () {
+
+                                        editor.putString( "DoctorID", name );
+                                        // MY_PREFS_NAME - a static String variable like:
+                                        //public static final String MY_PREFS_NAME = "MyPrefsFile";
+                                        //public static final String MY_PREFS_NAME = "MyPrefsFile";
+                                        editor.putString( "DoctorName", post.getRealname() );
+                                        Log.d( "TAGADMIN", name );
+                                        editor.apply();
+                                        //make this to make the user data public in all classes to use it
+                                        Prevalent.CurrentOnlineAdminOrDoctor = adminData;
+                                        Navigation.findNavController( getView() ).navigate( AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAddNewPostFragment() );
+
+                                        // }
+                                    }else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(getActivity(), "Password is incorrect.", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            }else {
+                                Toast.makeText(getActivity(), "Account with this " + name + " number do not exists.", Toast.LENGTH_LONG).show();
+                                loadingBar.dismiss();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+/*                FirebaseRecyclerOptions<Doctors> options =
+                        new FirebaseRecyclerOptions.Builder<Doctors>()
+                                .setQuery(firebaseSearch, Doctors.class)
+                                .build();
+
+                FirebaseRecyclerAdapter<Doctors, AdminOrDoctorLoginFragment.doctorViewHolder> adapter
+                        = new FirebaseRecyclerAdapter<Doctors, AdminOrDoctorLoginFragment.doctorViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull final AdminOrDoctorLoginFragment.doctorViewHolder holder, final int position, @NonNull final Doctors model) {
+                        if(model.getPassword().equals( "5" )){
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE).edit();
+
+                            editor.putString("DoctorID",name);
+
+
+
+
+                            // MY_PREFS_NAME - a static String variable like:
+                            //public static final String MY_PREFS_NAME = "MyPrefsFile";
+                            editor.putString("DoctorName", name);
+                            Log.d("TAGADMIN",name);
+                            editor.apply();
+
+                            //make this to make the user data public in all classes to use it
+                            Prevalent.CurrentOnlineAdminOrDoctor = adminData;
+                            Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAddNewPostFragment());
+//                                startActivity(intent);
+
+                        }
+
+
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public AdminOrDoctorLoginFragment.doctorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_items_for_doctor, parent, false);
+
+                        return new AdminOrDoctorLoginFragment.doctorViewHolder(view);
+                    }
+                };*/
+                /*if (dataSnapshot.child(parentDbName).child(name).exists()) {
 
 
                     adminData = dataSnapshot.child(parentDbName).child(name).getValue(Admin.class);
                     Log.d("TAG", "Data" + adminData);
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE).edit();
                     if (adminData.getName().equals(name)) {
                         if (adminData.getPassword().equals(password)) {
                             if (parentDbName.equals("Admins")) {
@@ -230,36 +363,14 @@ public class AdminOrDoctorLoginFragment extends Fragment {
 
                                 Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToButtonAdminFragment());
                             } else if (parentDbName.equals("Doctors")) {
-                                editor.putString("DoctorID",name);
-
-                                Toast.makeText(getActivity(), "logged in Successfully...", Toast.LENGTH_LONG).show();
-                                loadingBar.dismiss();
-
-
-
-                                // MY_PREFS_NAME - a static String variable like:
-                                //public static final String MY_PREFS_NAME = "MyPrefsFile";
-                                editor.putString("DoctorName", name);
-                                Log.d("TAGADMIN",name);
-                                editor.apply();
-
-                                //make this to make the user data public in all classes to use it
-                                Prevalent.CurrentOnlineAdminOrDoctor = adminData;
-                                Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAddNewPostFragment());
-//                                startActivity(intent);
-
 
                             }
                         } else {
-                            loadingBar.dismiss();
-                            Toast.makeText(getActivity(), "Password is incorrect.", Toast.LENGTH_LONG).show();
                         }
                     }
 
                 } else {
-                    Toast.makeText(getActivity(), "Account with this " + name + " number do not exists.", Toast.LENGTH_LONG).show();
-                    loadingBar.dismiss();
-                }
+                }*/
             }
 
             @Override
@@ -268,7 +379,15 @@ public class AdminOrDoctorLoginFragment extends Fragment {
             }
         });
     }
+    private static class doctorViewHolder extends RecyclerView.ViewHolder {
 
+
+        public doctorViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+
+        }
+    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

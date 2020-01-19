@@ -1,14 +1,14 @@
 package com.usama.runtime.model;
 
-public class Admin {
+public class Admins {
     String name , password;
 
-    public Admin(String name, String password) {
+    public Admins(String name, String password) {
         this.name = name;
         this.password = password;
     }
 
-    public Admin() {
+    public Admins() {
     }
 
     public String getName() {
