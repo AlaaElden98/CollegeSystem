@@ -27,6 +27,7 @@ import com.rey.material.widget.CheckBox;
 import com.usama.runtime.Prevalent.Prevalent;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Student;
+import com.usama.runtime.utils.KeyboardUtils;
 
 import io.paperdb.Paper;
 
@@ -77,6 +78,7 @@ public class StudentLoginFragment extends Fragment {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                KeyboardUtils.hideSoftKeyboard(requireActivity());
                 LoginStudent();
             }
         });
@@ -144,7 +146,6 @@ public class StudentLoginFragment extends Fragment {
 //            }
 //        });
 //    }
-
 
 
     private void LoginStudent() {
