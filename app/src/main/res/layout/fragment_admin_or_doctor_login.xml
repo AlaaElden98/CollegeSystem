@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_or_doctor_login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg">
@@ -29,9 +30,8 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            app:lottie_rawRes="@raw/finalprof"
             app:lottie_autoPlay="true"
-            />
+            app:lottie_rawRes="@raw/finalprof" />
     </LinearLayout>
 
 
@@ -50,32 +50,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_name_et"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
+                android:layout_marginBottom="15dp"
                 android:inputType="number"
                 android:padding="15dp"
-                android:layout_marginBottom="15dp"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password_et"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:inputType="textPassword"
                 android:padding="15dp"
-                android:layout_marginBottom="15dp"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -100,7 +100,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/login_admin_or_doctor_btn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/admin_panel_link"
+                android:id="@+id/admin_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -130,7 +130,7 @@
 
 
             <TextView
-                android:id="@+id/not_admin_panel_link"
+                android:id="@+id/doctor_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I'm not an Admin?"

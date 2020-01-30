@@ -1,18 +1,18 @@
 package com.usama.runtime.Prevalent;
 
-import com.usama.runtime.model.Admins;
-import com.usama.runtime.model.Admins;
+import com.usama.runtime.model.Doctors;
 import com.usama.runtime.model.Student;
 
 public class Prevalent {
+    // student side to save current info
     public static Student CurrentOnlineStudent;
-
     public static final String StudentNationalIdKey = "StudentNationalId";
     public static final String StudentSittingNumberKey = "StudentSittingNumber";
 
-    public static Admins CurrentOnlineAdminOrDoctor;
 
-    public static final String NameKey = "Name";
-    public static final String PasswordKey = "Password";
+    // admin side to save current info
+    public static Doctors CurrentOnlineAdminOrDoctor;
 
+    public static final String DoctorOrAdminNameKey = "DoctorOrAdminName";
+    public static final String DoctorOrAdminPasswordKey = "DoctorOrAdminPassword";
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:paddingLeft="15dp"
+            android:textColor="#dbcdc3"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/doctor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subject_name"
+            android:layout_margin="5dp"
+            android:paddingLeft="15dp"
+            android:textColor="#dbcdc3"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+
+        <Button
+            android:id="@+id/delete_subject_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctor_name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button"
+            android:text="Delete this Subject "
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

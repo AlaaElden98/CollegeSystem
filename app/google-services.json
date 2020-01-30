@@ -8,6 +8,80 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:689981026184:android:ff3bd4494478dee1c4543d",
+        "android_client_info": {
+          "package_name": "com.elgindy.fcmsendnotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689981026184-3buh3gsssc8ordf50a8799r9cj6k7dsl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgindy.fcmsendnotification",
+            "certificate_hash": "06dc8a2845474d6a55a9c2a8831a94defdcfb6b6"
+          }
+        },
+        {
+          "client_id": "689981026184-jav4jbd7an2b0arnbmpsgaoi5c85h534.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC879isEvIxWhabZ2qBdAyfh-NstlEUKVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689981026184-jav4jbd7an2b0arnbmpsgaoi5c85h534.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689981026184:android:29a49330153ef856c4543d",
+        "android_client_info": {
+          "package_name": "com.elgindy.livedatawithfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689981026184-tevqq2focnttmtvcs397ab0t4c0hd02c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgindy.livedatawithfirebase",
+            "certificate_hash": "06dc8a2845474d6a55a9c2a8831a94defdcfb6b6"
+          }
+        },
+        {
+          "client_id": "689981026184-jav4jbd7an2b0arnbmpsgaoi5c85h534.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC879isEvIxWhabZ2qBdAyfh-NstlEUKVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689981026184-jav4jbd7an2b0arnbmpsgaoi5c85h534.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:689981026184:android:8fe6d03f0e77ca19c4543d",
         "android_client_info": {
           "package_name": "com.elgindy.materialwithtabes"

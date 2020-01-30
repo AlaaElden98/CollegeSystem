@@ -1,14 +1,22 @@
 package com.usama.runtime.model;
 
 public class Doctors {
-    private String name,password,realName;
+    private static Doctors instance = null ;
+    private String name, password;
 
-    public Doctors(String name, String password, String realname) {
+    public Doctors() {
+
+    }
+
+    public Doctors(String name, String password, String realName) {
         this.name = name;
         this.password = password;
-        this.realName = realname;
     }
-    public Doctors() {
+    public static Doctors getInstance() {
+        if (instance == null) {
+            instance = new Doctors();
+        }
+        return instance;
     }
 
     public String getName() {
@@ -26,13 +34,4 @@ public class Doctors {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getRealname() {
-        return realName;
-    }
-
-    public void setRealname(String realname) {
-        this.realName = realname;
-    }
-
 }

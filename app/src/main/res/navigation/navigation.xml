@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.usama.runtime.fragments.MainFragment"
+        android:name="com.usama.runtime.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" >
         <action
@@ -15,10 +15,22 @@
         <action
             android:id="@+id/action_mainFragment_to_adminOrDoctorLoginFragment"
             app:destination="@id/adminOrDoctorLoginFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentLoginFragment"
-        android:name="com.usama.runtime.fragments.StudentLoginFragment"
+        android:name="com.usama.runtime.student.StudentLoginFragment"
         android:label="fragment_student_login"
         tools:layout="@layout/fragment_student_login" >
         <action
@@ -27,19 +39,19 @@
     </fragment>
     <fragment
         android:id="@+id/adminOrDoctorLoginFragment"
-        android:name="com.usama.runtime.fragments.AdminOrDoctorLoginFragment"
+        android:name="com.usama.runtime.AdminOrDoctorLoginFragment"
         android:label="fragment_admin_or_doctor_login"
         tools:layout="@layout/fragment_admin_or_doctor_login" >
         <action
-            android:id="@+id/action_adminOrDoctorLoginFragment_to_buttonAdminFragment"
-            app:destination="@id/buttonAdminFragment" />
+            android:id="@+id/action_adminOrDoctorLoginFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
         <action
-            android:id="@+id/action_adminOrDoctorLoginFragment_to_addNewPostFragment"
-            app:destination="@id/addNewPostFragment" />
+            android:id="@+id/action_adminOrDoctorLoginFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.usama.runtime.fragments.HomeFragment"
+        android:name="com.usama.runtime.student.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -57,10 +69,13 @@
         <action
             android:id="@+id/action_homeFragment_to_desiresAcceptedFragment"
             app:destination="@id/desiresAcceptedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_examMainForStudentFragment"
+            app:destination="@id/examMainForStudentFragment" />
     </fragment>
     <fragment
         android:id="@+id/recordingDesiresFragment"
-        android:name="com.usama.runtime.fragments.RecordingDesiresFragment"
+        android:name="com.usama.runtime.student.RecordingDesiresFragment"
         android:label="fragment_recording_desires"
         tools:layout="@layout/fragment_recording_desires" >
         <action
@@ -69,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/barCodeFragment"
-        android:name="com.usama.runtime.fragments.BarCodeFragment"
+        android:name="com.usama.runtime.student.BarCodeFragment"
         android:label="fragment_bar_code"
         tools:layout="@layout/fragment_bar_code" >
         <action
@@ -78,44 +93,26 @@
     </fragment>
     <fragment
         android:id="@+id/attendanceCounterFragment"
-        android:name="com.usama.runtime.fragments.AttendanceCounterFragment"
+        android:name="com.usama.runtime.student.AttendanceCounterFragment"
         android:label="fragment_attendence_counter"
         tools:layout="@layout/fragment_attendance_counter" />
     <fragment
         android:id="@+id/addDepartmentFragment"
-        android:name="com.usama.runtime.fragments.department.AddDepartmentFragment"
+        android:name="com.usama.runtime.admin.department.AddDepartmentFragment"
         android:label="fragment_add_department"
         tools:layout="@layout/fragment_add_department" >
         <action
-            android:id="@+id/action_addDepartmentFragment_to_buttonAdminFragment"
-            app:destination="@id/buttonAdminFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/buttonAdminFragment"
-        android:name="com.usama.runtime.fragments.ButtonAdminFragment"
-        android:label="fragment_button_admin"
-        tools:layout="@layout/fragment_button_admin" >
-        <action
-            android:id="@+id/action_buttonAdminFragment_to_addDepartmentFragment"
-            app:destination="@id/addDepartmentFragment" />
-        <action
-            android:id="@+id/action_buttonAdminFragment_to_showDepartmentFragment"
-            app:destination="@id/showDepartmentFragment" />
-        <action
-            android:id="@+id/action_buttonAdminFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_buttonAdminFragment_to_showAllStudentFragment"
-            app:destination="@id/showAllStudentFragment" />
+            android:id="@+id/action_addDepartmentFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewPostFragment"
-        android:name="com.usama.runtime.fragments.AddNewPostFragment"
+        android:name="com.usama.runtime.doctor.AddNewPostFragment"
         android:label="fragment_add_new_post"
         tools:layout="@layout/fragment_add_new_post" />
     <fragment
         android:id="@+id/showDepartmentFragment"
-        android:name="com.usama.runtime.fragments.department.ShowDepartmentFragment"
+        android:name="com.usama.runtime.admin.department.ShowDepartmentFragment"
         android:label="fragment_show_department"
         tools:layout="@layout/fragment_show_department" >
         <action
@@ -124,7 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/editDepartmentDataFragment"
-        android:name="com.usama.runtime.fragments.department.EditDepartmentDataFragment"
+        android:name="com.usama.runtime.admin.department.EditDepartmentDataFragment"
         android:label="fragment_edit_department_data"
         tools:layout="@layout/fragment_edit_department_data" >
         <argument
@@ -153,16 +150,215 @@
     </fragment>
     <fragment
         android:id="@+id/showAllStudentFragment"
-        android:name="com.usama.runtime.fragments.ShowAllStudentFragment"
+        android:name="com.usama.runtime.admin.ShowAllStudentFragment"
         android:label="fragment_show_all_student"
         tools:layout="@layout/fragment_show_all_student" />
     <fragment
         android:id="@+id/desiresAcceptedFragment"
-        android:name="com.usama.runtime.fragments.DesiresAcceptedFragment"
+        android:name="com.usama.runtime.student.DesiresAcceptedFragment"
         android:label="fragment_desires_accepted"
         tools:layout="@layout/fragment_desires_accepted" >
         <argument
             android:name="finalDesires"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorHomeFragment"
+        android:name="com.usama.runtime.doctor.DoctorHomeFragment"
+        android:label="doctor_home_fragment"
+        tools:layout="@layout/doctor_home_fragment" >
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_addNewPostFragment"
+            app:destination="@id/addNewPostFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_specificSubjectFragment"
+            app:destination="@id/specificSubjectFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_chooseLevelToShowSubjectFragment"
+            app:destination="@id/chooseLevelToShowSubjectFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_infoOfExamFragment"
+            app:destination="@id/infoOfExamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/specificSubjectFragment"
+        android:name="com.usama.runtime.doctor.addQuestion.SpecificSubjectFragment"
+        android:label="fragment_specific_subject"
+        tools:layout="@layout/fragment_specific_subject" >
+        <action
+            android:id="@+id/action_specificSubjectFragment_to_addQuestionFragment"
+            app:destination="@id/addQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addQuestionFragment"
+        android:name="com.usama.runtime.doctor.addQuestion.AddQuestionFragment"
+        android:label="fragment_add_question"
+        tools:layout="@layout/fragment_add_question" >
+        <argument
+            android:name="chapter"
+            app:argType="string" />
+        <argument
+            android:name="level"
+            app:argType="string" />
+        <argument android:name="subject"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addQuestionFragment_self"
+            app:destination="@id/addQuestionFragment" />
+        <argument android:name="department"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeExamFragment"
+        android:name="com.usama.runtime.doctor.makeExam.MakeExamFragment"
+        android:label="fragment_make_exam"
+        tools:layout="@layout/fragment_make_exam" >
+        <argument
+            android:name="level"
+            app:argType="string" />
+        <argument android:name="department"
+            app:argType="string" />
+        <argument android:name="subject"
+            app:argType="string" />
+        <argument
+            android:name="cha1"
+            app:argType="string" />
+        <argument
+            android:name="cha2"
+            app:argType="string" />
+        <argument
+            android:name="cha3"
+            app:argType="string" />
+        <argument
+            android:name="cha4"
+            app:argType="string" />
+        <argument
+            android:name="cha5"
+            app:argType="string" />
+        <argument
+            android:name="cha6"
+            app:argType="string" />
+        <argument
+            android:name="numberOfQuestion"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_makeExamFragment_to_testExamFragment2"
+            app:destination="@id/testExamFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/showSubjectFragment"
+        android:name="com.usama.runtime.doctor.ShowSubjectFragment"
+        android:label="fragment_show_subject"
+        tools:layout="@layout/fragment_show_subject" >
+        <argument
+            android:name="level"
+            app:argType="string" />
+        <argument
+            android:name="department"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.usama.runtime.admin.AdminHomeFragment"
+        android:label="fragment_admin_home"
+        tools:layout="@layout/admin_home_fragment" >
+        <action
+            android:id="@+id/action_adminHomeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminOrDoctorLoginFragment"
+            app:destination="@id/adminOrDoctorLoginFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_showDepartmentFragment"
+            app:destination="@id/showDepartmentFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_showAllStudentFragment"
+            app:destination="@id/showAllStudentFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_addDepartmentFragment"
+            app:destination="@id/addDepartmentFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_addSubjectFragment"
+            app:destination="@id/addSubjectFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_chooseLevelToShowSubjectFragment2"
+            app:destination="@id/chooseLevelToShowSubjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSubjectFragment"
+        android:name="com.usama.runtime.admin.AddSubjectFragment"
+        android:label="fragment_add_subject"
+        tools:layout="@layout/fragment_add_subject" >
+        <action
+            android:id="@+id/action_addSubjectFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLevelToShowSubjectFragment"
+        android:name="com.usama.runtime.admin.ChooseLevelToShowSubjectFragment"
+        android:label="fragment_choose_level_to_show_subject"
+        tools:layout="@layout/fragment_choose_level_to_show_subject" >
+        <action
+            android:id="@+id/action_chooseLevelToShowSubjectFragment_to_showSubjectFragment"
+            app:destination="@id/showSubjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoOfExamFragment"
+        android:name="com.usama.runtime.doctor.makeExam.InfoOfExamFragment"
+        android:label="fragment_info_of_exam"
+        tools:layout="@layout/fragment_info_of_exam" >
+        <action
+            android:id="@+id/action_infoOfExamFragment_to_makeExamFragment"
+            app:destination="@id/makeExamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testExamFragment2"
+        android:name="com.usama.runtime.doctor.makeExam.TestExamFragment"
+        android:label="fragment_test_exam"
+        tools:layout="@layout/fragment_test_exam" />
+    <fragment
+        android:id="@+id/examMainForStudentFragment"
+        android:name="com.usama.runtime.student.E_Exam.ExamMainForStudentFragment"
+        android:label="fragment_exam_main_for_student"
+        tools:layout="@layout/fragment_exam_main_for_student" >
+        <argument
+            android:name="department"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_examMainForStudentFragment_to_questionsFragment"
+            app:destination="@id/questionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionsFragment"
+        android:name="com.usama.runtime.student.E_Exam.QuestionsFragment"
+        android:label="fragment_questions"
+        tools:layout="@layout/fragment_questions" >
+        <argument
+            android:name="subject"
+            app:argType="string" />
+        <argument
+            android:name="department"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_questionsFragment_to_showScoreFragment"
+            app:destination="@id/showScoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showScoreFragment"
+        android:name="com.usama.runtime.student.E_Exam.ShowScoreFragment"
+        android:label="fragment_show_score"
+        tools:layout="@layout/fragment_show_score" >
+        <argument
+            android:name="score"
+            app:argType="integer" />
+        <argument
+            android:name="total"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_showScoreFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

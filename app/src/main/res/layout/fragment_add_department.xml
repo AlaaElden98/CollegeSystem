@@ -89,7 +89,7 @@
                 android:hint="choose language"
                 android:textColor="#000"
                 android:textStyle="bold"
-                app:ms_background_color="#11000000" />
+                app:ms_background_color="#F7EBD9D9" />
         </LinearLayout>
 
 

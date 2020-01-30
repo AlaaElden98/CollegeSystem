@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Hello"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/Question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:background="#fff"
+            android:hint="Question"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+        <EditText
+            android:id="@+id/option1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:background="#fff"
+            android:hint="Option 1 "
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+        <EditText
+            android:id="@+id/option2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:background="#fff"
+            android:hint="Option 2"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+        <EditText
+            android:id="@+id/option3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:background="#fff"
+            android:hint="Option 3"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+        <EditText
+            android:id="@+id/option4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:background="#fff"
+            android:hint="Option 4"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_choose_Correct_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="20dp"
+            android:hint="Correct answer"
+            android:textColor="#000"
+            android:textStyle="bold"
+            app:ms_background_color="#F7EBD9D9" />
+
+        <Button
+            android:id="@+id/add_question_btn"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="Add Question"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+</ScrollView>

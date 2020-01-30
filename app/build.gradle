@@ -51,8 +51,10 @@ dependencies {
 
 
     // dependency to barcode activity for test only
+    // to request runtime permission
     implementation 'com.karumi:dexter:5.0.0'
-    implementation 'com.otaliastudios:cameraview:1.0.0'
+    // to easy show camera
+    implementation 'com.otaliastudios:cameraview:1.6.0'
     implementation 'com.github.nisrulz:qreader:2.1.2'
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
     implementation 'com.google.firebase:firebase-ml-vision-barcode-model:16.0.2'
@@ -69,7 +71,7 @@ dependencies {
 
     // add navigation component
     implementation 'com.airbnb.android:lottie:3.0.7'
-    implementation 'androidx.navigation:navigation-fragment:2.1.0'
-    implementation 'androidx.navigation:navigation-ui:2.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.0'
+    implementation 'androidx.navigation:navigation-ui:2.2.0'
 
 }

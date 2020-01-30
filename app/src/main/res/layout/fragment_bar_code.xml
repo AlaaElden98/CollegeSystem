@@ -6,11 +6,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/info">
+        android:layout_height="match_parent">
 
-        <SurfaceView
-            android:id="@+id/cameraView"
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/camera_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -27,28 +26,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
+        android:background="@color/colorPrimary"
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/code_info"
+            android:id="@+id/result_of_barcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Hello"
-            android:textColor="#000"
-            android:textSize="20sp" />
-
-        <ToggleButton
-            android:id="@+id/btn_enable_disable"
-            android:layout_width="200dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button"
+            android:layout_margin="15dp"
             android:enabled="false"
-            android:text="Scan Again" />
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Come close"
+            android:textSize="32sp" />
         <Button
-            android:id="@+id/btnDone"
+            android:id="@+id/btn_done_barcode"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

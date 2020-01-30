@@ -5,20 +5,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.usama.runtime.fragments.department.AddDepartmentFragment;
-import com.usama.runtime.fragments.AdminOrDoctorLoginFragment;
-import com.usama.runtime.fragments.ButtonAdminFragment;
-import com.usama.runtime.fragments.HomeFragment;
-import com.usama.runtime.fragments.department.ShowDepartmentFragment;
-import com.usama.runtime.fragments.StudentLoginFragment;
+import com.usama.runtime.student.HomeFragment;
+import com.usama.runtime.student.StudentLoginFragment;
 
 
 public class MainActivity extends AppCompatActivity implements StudentLoginFragment.OnFragmentInteractionListener,
-        AdminOrDoctorLoginFragment.OnFragmentInteractionListener,
-        HomeFragment.OnFragmentInteractionListener
-        , ButtonAdminFragment.OnFragmentInteractionListener
-        , AddDepartmentFragment.OnFragmentInteractionListener
-        , ShowDepartmentFragment.OnFragmentInteractionListener {
+        AdminOrDoctorLoginFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
