@@ -13,6 +13,6 @@ public class Prevalent {
     // admin side to save current info
     public static Doctors CurrentOnlineAdminOrDoctor;
 
-    public static final String DoctorOrAdminNameKey = "DoctorOrAdminName";
+    public static final String DoctorOrAdminNationalIDKey = "DoctorOrAdminNationalID";
     public static final String DoctorOrAdminPasswordKey = "DoctorOrAdminPassword";
 }

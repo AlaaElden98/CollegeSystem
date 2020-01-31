@@ -114,7 +114,7 @@ public class AddSubjectFragment extends Fragment {
 
     private void addSubject() {
         final String subj = subjectName.getText().toString().trim();
-        String docName = doctorName.getText().toString().trim();
+        final String docName = doctorName.getText().toString().trim();
 
         if (subj == null) {
             Toast.makeText(getContext(), "please write subject name", Toast.LENGTH_SHORT).show();
@@ -135,7 +135,7 @@ public class AddSubjectFragment extends Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Add this Subject is success", Toast.LENGTH_LONG).show();
-                                Navigation.findNavController(getView()).navigate(AddSubjectFragmentDirections.actionAddSubjectFragmentToAdminHomeFragment());
+                                Navigation.findNavController(getView()).navigate(AddSubjectFragmentDirections.actionAddSubjectFragmentToAdminHomeFragment(docName));
                             } else {
                                 Toast.makeText(getActivity(), "Network Error: please try again after some time..", Toast.LENGTH_LONG).show();
                             }

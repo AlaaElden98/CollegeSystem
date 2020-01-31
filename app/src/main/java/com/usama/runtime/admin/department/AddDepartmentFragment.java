@@ -33,7 +33,7 @@ public class AddDepartmentFragment extends Fragment {
     private ProgressDialog loadingBar;
     private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal , getDepartmentDescription;
     private String selectedSubject;
-
+    private String realName;
     public AddDepartmentFragment() {
         // Required empty public constructor
     }
@@ -56,6 +56,10 @@ public class AddDepartmentFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        AddDepartmentFragmentArgs args = AddDepartmentFragmentArgs.fromBundle(getArguments());
+        realName = args.getRealname();
+
         getDepartmentName = getView().findViewById(R.id.getDepartmentName);
         getDepartmentCapacity = getView().findViewById(R.id.getDepartmentCapacity);
         Button buttonAddDepartment = getView().findViewById(R.id.buttonAddDepartment);
@@ -138,7 +142,7 @@ public class AddDepartmentFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getActivity(), "Add this department is success", Toast.LENGTH_LONG).show();
                                         loadingBar.dismiss();
-                                        Navigation.findNavController(getView()).navigate(AddDepartmentFragmentDirections.actionAddDepartmentFragmentToAdminHomeFragment());
+                                        Navigation.findNavController(getView()).navigate(AddDepartmentFragmentDirections.actionAddDepartmentFragmentToAdminHomeFragment(realName));
                                     } else {
                                         loadingBar.dismiss();
                                         Toast.makeText(getActivity(), "Network Error: please try again after some time..", Toast.LENGTH_LONG).show();
@@ -149,7 +153,7 @@ public class AddDepartmentFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "This " + departmentName + " already exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();
-                    Navigation.findNavController(getView()).navigate(AddDepartmentFragmentDirections.actionAddDepartmentFragmentToAdminHomeFragment());
+                    Navigation.findNavController(getView()).navigate(AddDepartmentFragmentDirections.actionAddDepartmentFragmentToAdminHomeFragment(realName));
                 }
             }
 

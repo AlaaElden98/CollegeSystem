@@ -34,15 +34,15 @@ import io.paperdb.Paper;
 
 
 public class AdminOrDoctorLoginFragment extends Fragment {
-    private EditText login_name_et, login_password_et;
+    private EditText login_nationalId_et, login_password_et;
     private Button LoginButton;
     private CheckBox chkBoxRememberMe;
     private ProgressDialog loadingBar;
     private TextView adminLink, doctorLink;
-    private String parentDbName = "Doctors";
+    private String parentDbNationalId = "Doctors", realName;
     private static Doctors doctorsData;
     // variable to use in shared preference
-    private static final String DoctorName = "DoctorName";
+    private static final String DoctorNationalId = "DoctorNationalId";
 
 
     public AdminOrDoctorLoginFragment() {
@@ -63,7 +63,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         LoginButton = Objects.requireNonNull(getView()).findViewById(R.id.login_admin_or_doctor_btn);
-        login_name_et = getView().findViewById(R.id.login_name_et);
+        login_nationalId_et = getView().findViewById(R.id.login_nationalId_doctor_or_admin);
         login_password_et = getView().findViewById(R.id.login_password_et);
         adminLink = getView().findViewById(R.id.admin_link);
         doctorLink = getView().findViewById(R.id.doctor_link);
@@ -91,7 +91,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                 LoginButton.setText("Login Admin");
                 adminLink.setVisibility(View.INVISIBLE);
                 doctorLink.setVisibility(View.VISIBLE);
-                parentDbName = "Admins";
+                parentDbNationalId = "Admins";
             }
         });
 
@@ -102,7 +102,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                 LoginButton.setText("Login Doctors");
                 adminLink.setVisibility(View.VISIBLE);
                 doctorLink.setVisibility(View.INVISIBLE);
-                parentDbName = "Doctors";
+                parentDbNationalId = "Doctors";
             }
         });
 
@@ -110,11 +110,11 @@ public class AdminOrDoctorLoginFragment extends Fragment {
     }
 
     private void LoginDoctor() {
-        String name = login_name_et.getText().toString();
+        String nationalId = login_nationalId_et.getText().toString();
         String password = login_password_et.getText().toString();
 
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getActivity(), "Please write your Name", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(nationalId)) {
+            Toast.makeText(getActivity(), "Please write your NationalId", Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(getActivity(), "Please write your Password....", Toast.LENGTH_LONG).show();
         } else {
@@ -124,19 +124,19 @@ public class AdminOrDoctorLoginFragment extends Fragment {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            AllowAccessToAccount(name, password);
+            AllowAccessToAccount(nationalId, password);
 
         }
     }
 
-    private void AllowAccessToAccount(final String name, final String password) {
+    private void AllowAccessToAccount(final String nationalID, final String password) {
         if (chkBoxRememberMe.isChecked()) {
             // check box return two values true or false :)
             // method write take two parameter is key and value
-            Paper.book().write(Prevalent.DoctorOrAdminNameKey, name);
+            Paper.book().write(Prevalent.DoctorOrAdminNationalIDKey, nationalID);
             Paper.book().write(Prevalent.DoctorOrAdminPasswordKey, password);
 
-            Log.d("TAGFROMADMINOR", name);
+            Log.d("TAGFROMADMINOR", nationalID);
             Log.d("TAGFROMADMINOR", password);
             loadingBar.dismiss();
         }
@@ -146,20 +146,22 @@ public class AdminOrDoctorLoginFragment extends Fragment {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(parentDbName).child(name).exists()) {
-                    doctorsData = dataSnapshot.child(parentDbName).child(name).getValue(Doctors.class);
-                    if (Objects.requireNonNull(doctorsData).getName().equals(name)) {
+                if (dataSnapshot.child(parentDbNationalId).child(nationalID).exists()) {
+                    doctorsData = dataSnapshot.child(parentDbNationalId).child(nationalID).getValue(Doctors.class);
+                    if (Objects.requireNonNull(doctorsData).getNationalId().equals(nationalID)) {
                         if (doctorsData.getPassword().equals(password)) {
-                            if (parentDbName.equals("Doctors")) {
-                                Toast.makeText(getContext(), "Welcome Doctor " + name, Toast.LENGTH_SHORT).show();
+                            if (parentDbNationalId.equals("Doctors")) {
+                                realName = doctorsData.getRealname();
+                                Toast.makeText(getContext(), "Welcome Doctor " + nationalID, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment());
-                            } else if (parentDbName.equals("Admins")) {
-                                Toast.makeText(getContext(), "Welcome Admin " + name, Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName));
+                            } else if (parentDbNationalId.equals("Admins")) {
+                                Toast.makeText(getContext(), "Welcome Admin " + nationalID, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAdminHomeFragment());
+                                realName = doctorsData.getRealname();
+                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAdminHomeFragment(realName));
                             }
                         }
                     } else {
@@ -167,7 +169,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                         Toast.makeText(getContext(), "Password is incorrect.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Account with this " + name + " do not exists.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Account with this " + nationalID + " do not exists.", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

@@ -129,8 +129,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 studentData = dataSnapshot.child(nationalId).getValue(Student.class);
                 studentName = studentData.getName();
                 user_name.setText(studentData.getName());
-
-
             }
 
             @Override
@@ -215,8 +213,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
         } else if (id == R.id.nav_barcode) {
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToBarCodeFragment());
-        } else if (id == R.id.attendance_counter) {
-            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToAttendanceCounterFragment());
         } else if (id == R.id.nav_exam) {
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToExamMainForStudentFragment(finalDesiers));
         } else if (id == R.id.nav_logout) {

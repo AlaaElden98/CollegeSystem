@@ -15,11 +15,6 @@
             android:iconTint="@android:color/white"
             android:title="Barcode" />
         <item
-            android:id="@+id/attendance_counter"
-            android:icon="@drawable/barcode"
-            android:iconTint="@android:color/white"
-            android:title="Your Attendance" />
-        <item
         android:id="@+id/nav_exam"
         android:icon="@drawable/news"
         android:iconTint="@android:color/white"

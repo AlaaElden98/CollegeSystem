@@ -64,9 +64,6 @@
             android:id="@+id/action_homeFragment_to_barCodeFragment"
             app:destination="@id/barCodeFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_attendanceCounterFragment"
-            app:destination="@id/attendanceCounterFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_desiresAcceptedFragment"
             app:destination="@id/desiresAcceptedFragment" />
         <action
@@ -92,11 +89,6 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/attendanceCounterFragment"
-        android:name="com.usama.runtime.student.AttendanceCounterFragment"
-        android:label="fragment_attendence_counter"
-        tools:layout="@layout/fragment_attendance_counter" />
-    <fragment
         android:id="@+id/addDepartmentFragment"
         android:name="com.usama.runtime.admin.department.AddDepartmentFragment"
         android:label="fragment_add_department"
@@ -104,6 +96,7 @@
         <action
             android:id="@+id/action_addDepartmentFragment_to_adminHomeFragment"
             app:destination="@id/adminHomeFragment" />
+        <argument android:name="realname" />
     </fragment>
     <fragment
         android:id="@+id/addNewPostFragment"
@@ -182,6 +175,7 @@
         <action
             android:id="@+id/action_doctorHomeFragment_to_infoOfExamFragment"
             app:destination="@id/infoOfExamFragment" />
+        <argument android:name="realName" />
     </fragment>
     <fragment
         android:id="@+id/specificSubjectFragment"
@@ -286,6 +280,9 @@
         <action
             android:id="@+id/action_adminHomeFragment_to_chooseLevelToShowSubjectFragment2"
             app:destination="@id/chooseLevelToShowSubjectFragment" />
+        <argument
+            android:name="realName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addSubjectFragment"

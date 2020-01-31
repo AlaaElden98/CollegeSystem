@@ -28,6 +28,7 @@ import io.paperdb.Paper;
 
 public class AdminHomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String realName ;
     public AdminHomeFragment() {
         // Required empty public constructor
     }
@@ -50,21 +51,23 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
-        DrawerLayout drawer1 = getView().findViewById(R.id.drawer_layout);
-
-        DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        AdminHomeFragmentArgs args = AdminHomeFragmentArgs.fromBundle(getArguments());
+        realName = args.getRealName();
 
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // put header view
         final View headerView = navigationView.getHeaderView(0);
-        // TODO : PUT NAME OF DOCTOR HERE
         final TextView user_name = headerView.findViewById(R.id.user_profile_name);
+        user_name.setText(realName);
+
+
+        DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
     }
 
@@ -77,7 +80,7 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
 
 
         if (id == R.id.nav_add_department) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDepartmentFragment());
+            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDepartmentFragment(realName));
         } else if (id == R.id.nav_add_subject) {
             Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddSubjectFragment());
         } else if (id == R.id.nav_show_subject) {

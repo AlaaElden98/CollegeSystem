@@ -72,11 +72,11 @@ public class MainFragment extends Fragment {
         adminOrDoctorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String DoctorOrAdminName = Paper.book().read(Prevalent.DoctorOrAdminNameKey);
+                String DoctorOrAdminNationalId = Paper.book().read(Prevalent.DoctorOrAdminNationalIDKey);
                 String DoctorOrAdminPassword = Paper.book().read(Prevalent.DoctorOrAdminPasswordKey);
-                if (DoctorOrAdminName != "" && DoctorOrAdminPassword != "") {
-                    if (!TextUtils.isEmpty(DoctorOrAdminName) && !TextUtils.isEmpty(DoctorOrAdminPassword)) {
-                        AllowAccessDoctor(DoctorOrAdminName, DoctorOrAdminPassword);
+                if (DoctorOrAdminNationalId != "" && DoctorOrAdminPassword != "") {
+                    if (!TextUtils.isEmpty(DoctorOrAdminNationalId) && !TextUtils.isEmpty(DoctorOrAdminPassword)) {
+                        AllowAccessDoctor(DoctorOrAdminNationalId, DoctorOrAdminPassword);
                         loadingBar.setTitle("Already Login");
                         loadingBar.setMessage("please wait .. ");
                         loadingBar.setCanceledOnTouchOutside(false);
@@ -96,7 +96,7 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void AllowAccessDoctor(final String name, final String password) {
+    private void AllowAccessDoctor(final String national, final String password) {
         // make database by a Reference
         final DatabaseReference RootRef;
 
@@ -106,39 +106,41 @@ public class MainFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // here child phone is a unique object
-                if (dataSnapshot.child("Admins").child(name).exists()) {
-                    Doctors doctorData = dataSnapshot.child("Admins").child(name).getValue(Doctors.class);
+                if (dataSnapshot.child("Admins").child(national).exists()) {
+                    Doctors doctorData = dataSnapshot.child("Admins").child(national).getValue(Doctors.class);
 
                     // retrieve the user data
-                    if (doctorData.getName().equals(name)) {
+                    if (doctorData.getNationalId().equals(national)) {
                         if (doctorData.getPassword().equals(password)) {
+                            String realname = doctorData.getRealname();
                             Toast.makeText(getContext(), "you are already login  ... ", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
                             // this line to make sure the app doesn't crash when cloth it and open again
                             // because we use paper library
                             Prevalent.CurrentOnlineAdminOrDoctor = doctorData;
-                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToAdminHomeFragment());
+                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToAdminHomeFragment(realname));
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
 
-                } else if (dataSnapshot.child("Doctors").child(name).exists()) {
-                    Doctors doctorData = dataSnapshot.child("Doctors").child(name).getValue(Doctors.class);
-                    if (doctorData.getName().equals(name)) {
+                } else if (dataSnapshot.child("Doctors").child(national).exists()) {
+                    Doctors doctorData = dataSnapshot.child("Doctors").child(national).getValue(Doctors.class);
+                    if (doctorData.getNationalId().equals(national)) {
                         if (doctorData.getPassword().equals(password)) {
                             Toast.makeText(getContext(), "you are already login ...", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
                             Prevalent.CurrentOnlineAdminOrDoctor = doctorData;
-                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment());
+                            String realName = doctorData.getRealname();
+                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment(realName));
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(getContext(), "Account with this " + name + " number do not exist ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Account with this " + national + " number do not exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();
                 }
             }

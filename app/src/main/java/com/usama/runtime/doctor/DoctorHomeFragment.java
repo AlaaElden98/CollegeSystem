@@ -45,6 +45,18 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        DoctorHomeFragmentArgs args = DoctorHomeFragmentArgs.fromBundle(getArguments());
+        String realName = args.getRealName();
+
+        NavigationView navigationView = getView().findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // put header view
+        final View headerView = navigationView.getHeaderView(0);
+        final TextView user_name = headerView.findViewById(R.id.user_profile_name);
+        user_name.setText(realName);
+
         toolbar = getView().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -55,14 +67,6 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        navigationView = getView().findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // put header view
-        final View headerView = navigationView.getHeaderView(0);
-        // TODO : PUT NAME OF DOCTOR HERE
-        final TextView user_name = headerView.findViewById(R.id.user_profile_name);
 
     }
 
