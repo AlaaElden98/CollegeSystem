@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/same">
@@ -8,7 +9,6 @@
         android:id="@+id/input_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="50dp"
@@ -16,49 +16,54 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/nameOfProfessor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:gravity="center"
-            android:background="@drawable/edit_text_top"
-            android:hint="Name Of Professor"
-            android:padding="15dp"
-            android:textColor="#000" />
-
         <EditText
-            android:id="@+id/nameOfSubject"
-            android:layout_width="match_parent"
+            android:id="@+id/doctor_name_add_doctor"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Name Of Subject"
+            android:hint="Doctor Name"
+            android:inputType="text"
             android:padding="15dp"
-            android:textColor="#000" />
+            android:textColor="#FFFFFF" />
 
         <EditText
-            android:id="@+id/descriptionOfTopic"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:id="@+id/doctor_nationalId__add_doctor"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Topic"
-            android:gravity="start"
+            android:hint="Doctor national ID"
+            android:inputType="number"
             android:padding="15dp"
-            android:textColor="#000" />
+            android:textColor="#FFFFFF"
+
+            />
+
+        <EditText
+            android:id="@+id/doctor_password__add_doctor"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/edit_text_top"
+            android:hint="Doctor password"
+            android:inputType="textPassword"
+            android:padding="15dp"
+            android:textColor="#FFFFFF" />
+
 
         <Button
-            android:id="@+id/addPostBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/add_doctor_btn_add_doctor"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="20dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Add Post"
+            android:text="Add Doctor"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
+
 
     </LinearLayout>
 

@@ -2,15 +2,16 @@ package com.usama.runtime.model;
 
 public class Doctors {
     private static Doctors instance = null ;
-    private String nationalId, password , realname;
+    private String nationalID, password , realName;
 
-    public Doctors(String nationalId, String password, String realname) {
-        this.nationalId = nationalId;
+    public Doctors(String nationalID, String password, String realName) {
+        this.nationalID = nationalID;
         this.password = password;
-        this.realname = realname;
+        this.realName = realName;
     }
 
     public Doctors() {
+
     }
 
     public static Doctors getInstance() {
@@ -21,12 +22,12 @@ public class Doctors {
         Doctors.instance = instance;
     }
 
-    public String getNationalId() {
-        return nationalId;
+    public String getNationalID() {
+        return nationalID;
     }
 
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
+    public void setNationalID(String nationalID) {
+        this.nationalID = nationalID;
     }
 
     public String getPassword() {
@@ -37,11 +38,11 @@ public class Doctors {
         this.password = password;
     }
 
-    public String getRealname() {
-        return realname;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

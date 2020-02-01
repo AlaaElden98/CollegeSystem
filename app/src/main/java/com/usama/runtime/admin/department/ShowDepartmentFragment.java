@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -86,27 +87,16 @@ public class ShowDepartmentFragment extends Fragment {
 
 
                         Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections
-                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name,capacity,minSpecial,total,subject,dec)
+                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name, capacity, minSpecial, total, subject, dec)
                                 .setUID(uID));
-//                        Intent intent = new Intent(ShowDepartmentActivity.this, EditDepartmentData.class);
-//                        intent.putExtra("DepartmentName", model.getName());
-//
-//                        // here you send the user id to the ShowAllStudentFragment
-//                        intent.putExtra("uid", uID);
-//                        Log.d("TAG", uID + " ");
-//                        startActivity(intent);
                     }
                 });
                 holder.Delete_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // display a message
-                        // dialog
                         CharSequence option[] = new CharSequence[]{
-                                // here you put the option you need to show
                                 "Yes",
                                 "No"
-
                         };
                         // alert dialog take a context
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -173,7 +163,6 @@ public class ShowDepartmentFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

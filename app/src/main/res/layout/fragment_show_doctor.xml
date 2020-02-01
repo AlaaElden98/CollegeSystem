@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".admin.student.ShowAllStudentFragment">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/r2"
@@ -13,21 +11,20 @@
         android:background="@drawable/bg">
 
         <TextView
-
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="All Students"
+            android:text="Doctors"
             android:textColor="#dbcdc3"
             android:textSize="25sp" />
 
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Student_list"
+        android:id="@+id/doctor_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#dbcdc3"
         android:layout_below="@+id/r2">
 

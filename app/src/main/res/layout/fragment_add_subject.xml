@@ -38,6 +38,19 @@
         android:textStyle="bold"
         app:ms_background_color="#F7EBD9D9" />
 
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_choose_doctor_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="start"
+        android:hint="Choose doctor name"
+        android:padding="15dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:ms_background_color="#F7EBD9D9" />
 
     <EditText
         android:id="@+id/subjectName"
@@ -53,20 +66,6 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <!--    TODO : HERE WE NEED TO FETCH DATA FROM DOCTORS NAME -->
-    <EditText
-        android:id="@+id/doctorName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edit_text_top"
-        android:gravity="start"
-        android:hint="Doctor Name"
-        android:padding="15dp"
-        android:textColor="#000"
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
 
     <Button

@@ -1,4 +1,4 @@
-package com.usama.runtime.admin;
+package com.usama.runtime.admin.student;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +23,6 @@ import com.usama.runtime.R;
 import com.usama.runtime.model.Student;
 
 public class ShowAllStudentFragment extends Fragment {
-
-    // TODO :  MAKE EDIT IN ALL INFO
-
     private RecyclerView studentList;
     private DatabaseReference studentRef;
 

@@ -17,48 +17,49 @@
 
 
         <TextView
-            android:id="@+id/nameOfProfessor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:gravity="center"
-            android:background="@drawable/edit_text_top"
-            android:hint="Name Of Professor"
-            android:padding="15dp"
-            android:textColor="#000" />
-
-        <EditText
-            android:id="@+id/nameOfSubject"
+            android:id="@+id/edit_doctor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Name Of Subject"
+            android:hint="Doctor Name"
             android:padding="15dp"
             android:textColor="#000" />
 
-        <EditText
-            android:id="@+id/descriptionOfTopic"
+        <TextView
+            android:id="@+id/edit_doctor_national"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_top"
-            android:hint="Topic"
-            android:gravity="start"
+            android:hint="Doctor NationalID"
+            android:padding="15dp"
+            android:textColor="#000" />
+
+
+        <EditText
+            android:id="@+id/edit_doctor_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/edit_text_top"
+            android:hint="Doctor Password"
+            android:inputType="textPassword"
             android:padding="15dp"
             android:textColor="#000" />
 
         <Button
-            android:id="@+id/addPostBtn"
+            android:id="@+id/edit_doctor_info_btn_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Add Post"
+            android:text="Edit Doctor info"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
+
 
     </LinearLayout>
 

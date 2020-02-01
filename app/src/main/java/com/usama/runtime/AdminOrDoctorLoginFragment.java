@@ -148,19 +148,19 @@ public class AdminOrDoctorLoginFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(parentDbNationalId).child(nationalID).exists()) {
                     doctorsData = dataSnapshot.child(parentDbNationalId).child(nationalID).getValue(Doctors.class);
-                    if (Objects.requireNonNull(doctorsData).getNationalId().equals(nationalID)) {
+                    if (Objects.requireNonNull(doctorsData).getNationalID().equals(nationalID)) {
                         if (doctorsData.getPassword().equals(password)) {
                             if (parentDbNationalId.equals("Doctors")) {
-                                realName = doctorsData.getRealname();
+                                realName = doctorsData.getRealName();
                                 Toast.makeText(getContext(), "Welcome Doctor " + nationalID, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName));
+                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName,nationalID));
                             } else if (parentDbNationalId.equals("Admins")) {
                                 Toast.makeText(getContext(), "Welcome Admin " + nationalID, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                realName = doctorsData.getRealname();
+                                realName = doctorsData.getRealName();
                                 Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAdminHomeFragment(realName));
                             }
                         }

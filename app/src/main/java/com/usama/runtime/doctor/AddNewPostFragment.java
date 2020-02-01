@@ -1,6 +1,7 @@
 package com.usama.runtime.doctor;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
@@ -34,8 +35,9 @@ import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
+// TODO : sort the posts .. by date
 public class AddNewPostFragment extends Fragment {
-    private String subject, description, postTimeAndDate;
+    private String subject, description, postTimeAndDate,name , nationalId;
     private Button addPostBtn,showPostBtn;
     private EditText nameOfSubject, descriptionOfTopic;
     private TextView nameOfProfessor;
@@ -76,13 +78,12 @@ public class AddNewPostFragment extends Fragment {
         nameOfSubject = getView().findViewById(R.id.nameOfSubject);
         descriptionOfTopic = getView().findViewById(R.id.descriptionOfTopic);
         loadingBar = new ProgressDialog(getActivity());
-        showPostBtn= getView().findViewById(R.id.showPostBtn);
 
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
-
-        nameOfDoctor= prefs.getString("DoctorName", "No Name");//"No name defined" is the default value.
-        nameOfProfessor.setText(nameOfDoctor);
+        AddNewPostFragmentArgs args = AddNewPostFragmentArgs.fromBundle(getArguments());
+        name = args.getRealName();
+        nationalId = args.getNationalId();
+        nameOfProfessor.setText(name);
 
         addPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,16 +91,6 @@ public class AddNewPostFragment extends Fragment {
                 ValidatePostData();
             }
         });
-        showPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment, new showpostFragment(), "fragment_screen");
-                ft.commit();
-            }
-        });
-
     }
 
 
@@ -111,7 +102,9 @@ public class AddNewPostFragment extends Fragment {
             Toast.makeText(getActivity(), "Please write Name of subject...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(description)) {
             Toast.makeText(getActivity(), "Please write Description...", Toast.LENGTH_SHORT).show();
-        } else {
+        }else if (TextUtils.isEmpty(name)){
+            Toast.makeText(getContext(), "Please check internet .. refresh your app ", Toast.LENGTH_SHORT).show();
+        }else {
             StoreProductInformation();
         }
 
@@ -142,31 +135,23 @@ public class AddNewPostFragment extends Fragment {
         SimpleDateFormat currentDate = new SimpleDateFormat("E, dd MMM .. HH : mm ");
         postTimeAndDate = currentDate.format(calendar.getTime());
 
-        SavePostInfoToDatabase();
+        SavePostInfoToDatabase(name,subject,description);
     }
-    public  TextView  DoctorName1, Post_subject1, Post_description1, post_date1;
-
     //private final int NOTIFICATION_ID=001;
     //  private final String CHANNEL_ID ="personsl_notificstion";
-    private void SavePostInfoToDatabase() {
-        SharedPreferences prefs = getActivity().getSharedPreferences(DoctorName, MODE_PRIVATE);
-
+    private void SavePostInfoToDatabase(String nameS , String subS , String desc ) {
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("dataAndTime", postTimeAndDate);
-        postMap.put("name", prefs.getString("DoctorName", ""));
-        postMap.put("subject", subject);
-        postMap.put("id",prefs.getString("DoctorID", ""));
-        postMap.put("description", description);
+        postMap.put("name", nameS);
+        postMap.put("subject", subS);
+        postMap.put("id",nationalId);
+        postMap.put("description", desc);
         String message = "this is a notification";
         postRef.push().updateChildren(postMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-//                            Intent intent = new Intent(getActivity(), AddNewPostActivity.class);
-//                            startActivity(intent);
-
-
                             loadingBar.dismiss();
                             Toast.makeText(getActivity(), "Post is added successfully..", Toast.LENGTH_SHORT).show();
                         } else {

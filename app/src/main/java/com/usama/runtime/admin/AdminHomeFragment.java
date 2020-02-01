@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,9 +18,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
+import com.usama.runtime.model.Posts;
+import com.usama.runtime.viewHolder.PostsViewHolder;
 
 import java.util.Objects;
 
@@ -27,8 +36,11 @@ import io.paperdb.Paper;
 
 
 public class AdminHomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+    private DatabaseReference postsRef;
+    private RecyclerView recyclerView;
 
-    private String realName ;
+    private String realName;
+
     public AdminHomeFragment() {
         // Required empty public constructor
     }
@@ -48,26 +60,75 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+
+        // make an instance in database
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postsRef.keepSynced(true);
+
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar_admin);
+        toolbar.setTitle("Home");
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-
-        AdminHomeFragmentArgs args = AdminHomeFragmentArgs.fromBundle(getArguments());
-        realName = args.getRealName();
-
-        NavigationView navigationView = getView().findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // put header view
-        final View headerView = navigationView.getHeaderView(0);
-        final TextView user_name = headerView.findViewById(R.id.user_profile_name);
-        user_name.setText(realName);
-
 
         DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        NavigationView navigationView = getView().findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        recyclerView = getView().findViewById(R.id.home_admin_recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        AdminHomeFragmentArgs args = AdminHomeFragmentArgs.fromBundle(getArguments());
+        if (args.getRealName() == null) {
+            Toast.makeText(getContext(), "please check your internet", Toast.LENGTH_SHORT).show();
+        } else {
+            realName = args.getRealName();
+            // put header view
+            final View headerView = navigationView.getHeaderView(0);
+            final TextView user_name = headerView.findViewById(R.id.user_profile_name);
+            user_name.setText(realName);
+        }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //can retrieve all data
+        FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
+                .setQuery(postsRef, Posts.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull Posts posts) {
+                        holder.txtPostSubject.setText(posts.getSubject());
+                        holder.txtPostDescription.setText(posts.getDescription());
+                        holder.txtPostDoctorName.setText(posts.getName());
+                        holder.dateAndTime.setText(posts.getDataAndTime());
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
+                        PostsViewHolder holder = new PostsViewHolder(view);
+                        return holder;
+                    }
+                };
+        // add adapter in recyclerView
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
 
     }
 
@@ -89,6 +150,10 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
             Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDepartmentFragment());
         } else if (id == R.id.nav_show_student) {
             Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowAllStudentFragment());
+        } else if (id == R.id.nav_add_doctor) {
+            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDoctorFragment(realName));
+        } else if (id == R.id.nav_show_doctor) { //TODO
+            Navigation.findNavController(getView()).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDoctorFragment());
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();
@@ -100,7 +165,6 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

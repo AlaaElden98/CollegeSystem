@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">RunTime</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -17,4 +16,11 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="department_name">Department Name</string>
+    <string name="department_capacity">Department Capacity</string>
+    <string name="department_min_total">Department Min Total</string>
+    <string name="min_special">Min Special</string>
+    <string name="choose_language">choose language</string>
+    <string name="department_description">Department Description</string>
+    <string name="add_department">Add Department</string>
 </resources>

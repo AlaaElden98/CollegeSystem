@@ -110,9 +110,9 @@ public class MainFragment extends Fragment {
                     Doctors doctorData = dataSnapshot.child("Admins").child(national).getValue(Doctors.class);
 
                     // retrieve the user data
-                    if (doctorData.getNationalId().equals(national)) {
+                    if (doctorData.getNationalID().equals(national)) {
                         if (doctorData.getPassword().equals(password)) {
-                            String realname = doctorData.getRealname();
+                            String realname = doctorData.getRealName();
                             Toast.makeText(getContext(), "you are already login  ... ", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
                             // this line to make sure the app doesn't crash when cloth it and open again
@@ -127,13 +127,13 @@ public class MainFragment extends Fragment {
 
                 } else if (dataSnapshot.child("Doctors").child(national).exists()) {
                     Doctors doctorData = dataSnapshot.child("Doctors").child(national).getValue(Doctors.class);
-                    if (doctorData.getNationalId().equals(national)) {
+                    if (doctorData.getNationalID().equals(national)) {
                         if (doctorData.getPassword().equals(password)) {
                             Toast.makeText(getContext(), "you are already login ...", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
                             Prevalent.CurrentOnlineAdminOrDoctor = doctorData;
-                            String realName = doctorData.getRealname();
-                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment(realName));
+                            String realName = doctorData.getRealName();
+                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment(realName,national));
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();

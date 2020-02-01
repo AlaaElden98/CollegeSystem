@@ -97,20 +97,29 @@ public class AddDepartmentFragment extends Fragment {
         String departmentMinTotal = getDepartmentMinTotal.getText().toString().trim();
         String departmentMinSpecial = getDepartmentMinSpecial.getText().toString().trim();
         String departmentDescription = getDepartmentDescription.getText().toString().trim();
-
-
         if (selectedSubject == null)
             selectedSubject = "without";
 
-        // wait to check is phone number is available in database
-        loadingBar.setTitle("Add Department");
-        loadingBar.setMessage("please wait , while we are checking the credentials .");
-        loadingBar.setCanceledOnTouchOutside(false);
-        loadingBar.show();
 
-        ValidateDepartment(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial,departmentDescription, selectedSubject);
+        if (departmentName.equals("")){
+            Toast.makeText(getContext(), "please add department name ", Toast.LENGTH_SHORT).show();
+        }else if (departmentCapacity.equals("")){
+            Toast.makeText(getContext(), "please add department capacity", Toast.LENGTH_SHORT).show();
+        }else if (departmentMinTotal.equals("")){
+            Toast.makeText(getContext(), "please add department Min Total", Toast.LENGTH_SHORT).show();
+        }else if (departmentMinSpecial.equals("")){
+            Toast.makeText(getContext(), "please add department Min Special", Toast.LENGTH_SHORT).show();
+        }else if (departmentDescription.equals("")){
+            Toast.makeText(getContext(), "please add department description", Toast.LENGTH_SHORT).show();
+        }else {
+            // wait to check is phone number is available in database
+            loadingBar.setTitle("Add Department");
+            loadingBar.setMessage("please wait , while we are checking the credentials .");
+            loadingBar.setCanceledOnTouchOutside(false);
+            loadingBar.show();
 
-
+            ValidateDepartment(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial,departmentDescription, selectedSubject);
+        }
     }
 
     private void ValidateDepartment(final String departmentName, final String departmentCapacity, final String departmentMinTotal, final String departmentMinSpecial, final String departmentDescription, final String selectedSubject) {
@@ -121,9 +130,6 @@ public class AddDepartmentFragment extends Fragment {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // if this national id  valid create a new Department
-                // i make a national id a unique field in database
-
                 if (!(dataSnapshot.child("departments").child(departmentName).exists())) {
                     // use hashMap to store data into the database (firebase)
                     HashMap<String, Object> departmentDataMap = new HashMap<>();
@@ -167,7 +173,6 @@ public class AddDepartmentFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

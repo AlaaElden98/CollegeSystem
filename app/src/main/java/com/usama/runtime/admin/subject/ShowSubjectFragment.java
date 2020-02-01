@@ -1,4 +1,4 @@
-package com.usama.runtime.doctor;
+package com.usama.runtime.admin.subject;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

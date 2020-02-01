@@ -24,7 +24,6 @@ import java.util.HashMap;
 
 
 public class EditDepartmentDataFragment extends Fragment {
-    // TODO: MAKE EDIT IN ALL INFO << Done<< Alaa
     private Button buttonEditDepartment;
     private TextView getDepartmentName;
     private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial ,getDepartmentDescription ;
@@ -94,7 +93,6 @@ public class EditDepartmentDataFragment extends Fragment {
     }
 
 
-    // TODO : ALAA LOOK HERE AND FIX
     private void editDepartment() {
 
 
@@ -123,7 +121,6 @@ public class EditDepartmentDataFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

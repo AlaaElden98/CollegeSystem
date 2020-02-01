@@ -17,19 +17,28 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
+import com.usama.runtime.model.Posts;
+import com.usama.runtime.viewHolder.PostsViewHolder;
 
 import io.paperdb.Paper;
 
 
 public class DoctorHomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
-    NavigationView navigationView;
-    Toolbar toolbar;
-    DrawerLayout drawer;
-
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private String realName, nationalId;
+    private DatabaseReference postsRef;
+    private RecyclerView recyclerView;
 
     public DoctorHomeFragment() {
 
@@ -46,8 +55,12 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postsRef.keepSynced(true);
+
         DoctorHomeFragmentArgs args = DoctorHomeFragmentArgs.fromBundle(getArguments());
-        String realName = args.getRealName();
+        realName = args.getRealName();
+        nationalId = args.getNationalId();
 
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -57,8 +70,9 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         final TextView user_name = headerView.findViewById(R.id.user_profile_name);
         user_name.setText(realName);
 
-        toolbar = getView().findViewById(R.id.toolbar);
+        toolbar = getView().findViewById(R.id.toolbar_doctor);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Home");
 
         drawer = getView().findViewById(R.id.drawer_layout);
 
@@ -67,6 +81,45 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        recyclerView = getView().findViewById(R.id.home_doctor_recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //can retrieve all data
+        FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
+                .setQuery(postsRef, Posts.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull Posts posts) {
+                        holder.txtPostSubject.setText(posts.getSubject());
+                        holder.txtPostDescription.setText(posts.getDescription());
+                        holder.txtPostDoctorName.setText(posts.getName());
+                        holder.dateAndTime.setText(posts.getDataAndTime());
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
+                        PostsViewHolder holder = new PostsViewHolder(view);
+                        return holder;
+                    }
+                };
+        // add adapter in recyclerView
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
 
     }
 
@@ -79,7 +132,7 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
 
 
         if (id == R.id.nav_add_post) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToAddNewPostFragment());
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToAddNewPostFragment(realName, nationalId));
         } else if (id == R.id.nav_add_question) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToSpecificSubjectFragment());
         } else if (id == R.id.nav_show_subject) {

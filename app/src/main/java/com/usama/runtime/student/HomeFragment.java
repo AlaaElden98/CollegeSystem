@@ -49,14 +49,13 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     private DatabaseReference postsRef;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
 
 
     // TODO : PROCESS TO MAKE FINAL DESIRES
     private HomeActivityViewModel homeActivityViewModel;
     private SharedPreferences prefs;
     private DatabaseReference desiresReference, studentRefrence;
-    private String nationalId, finalDesiers, studentName;
+    private String nationalId, finalDesires, studentName;
     private static final String MY_NATIONAL_ID = "MyNationalId";
     private Student studentData;
 
@@ -108,9 +107,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         // put header view
         final View headerView = navigationView.getHeaderView(0);
         final TextView user_name = headerView.findViewById(R.id.user_profile_name);
-        recyclerView = getView().findViewById(R.id.recycler_menu);
+        recyclerView = getView().findViewById(R.id.home_student_recycler_menu);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
 
@@ -141,18 +140,18 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onChanged(String s) {
 
-                finalDesiers = s;
-                if (finalDesiers != null) {
+                finalDesires = s;
+                if (finalDesires != null) {
                     desiresReference = FirebaseDatabase.getInstance().getReference().child("student_department");
                     HashMap<String, Object> desiresMap = new HashMap<>();
                     desiresMap.put("national_id", nationalId);
                     desiresMap.put("name", studentName);
                     desiresMap.put("id", studentData.getId());
-                    desiresReference.child(finalDesiers).updateChildren(desiresMap);
+                    desiresReference.child(finalDesires).updateChildren(desiresMap);
 
                     // update student child in firebase to add his final desires
                     HashMap<String, Object> departmentMap = new HashMap<>();
-                    departmentMap.put("department", finalDesiers);
+                    departmentMap.put("department", finalDesires);
                     studentRefrence.child(nationalId).updateChildren(departmentMap);
 
 
@@ -205,16 +204,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
 
         if (id == R.id.nav_department_desires) {
-            if (finalDesiers == null) {
+            if (finalDesires == null) {
                 Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToRecordingDesiresFragment());
             } else {
-                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToDesiresAcceptedFragment(finalDesiers));
+                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToDesiresAcceptedFragment(finalDesires));
 
             }
         } else if (id == R.id.nav_barcode) {
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToBarCodeFragment());
         } else if (id == R.id.nav_exam) {
-            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToExamMainForStudentFragment(finalDesiers));
+            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToExamMainForStudentFragment(finalDesires));
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();
