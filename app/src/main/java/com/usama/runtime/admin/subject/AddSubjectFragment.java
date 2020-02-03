@@ -129,7 +129,7 @@ public class AddSubjectFragment extends Fragment {
                 Log.d("TAG", dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Doctors doctorData = snapshot.getValue(Doctors.class);
-                    String name = Objects.requireNonNull(doctorData).getRealName();
+                    String name = doctorData.getRealName();
                     arrayListOfDoctorName.add(name);
                 }
                 loadingBar.dismiss();

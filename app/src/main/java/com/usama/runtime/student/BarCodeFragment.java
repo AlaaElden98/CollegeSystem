@@ -56,16 +56,28 @@ import static android.content.Context.MODE_PRIVATE;
 
 // TODO : generate qr with valid info
 public class BarCodeFragment extends Fragment {
-    // barCode
+    //init barCode firebase
     private FirebaseVisionBarcodeDetector detector;
     private boolean isDetected = false;
-    private TextView result_of_barcode;
-    private String subjectResult, doctorName, uniqueResult, lecNumber;
+    private FirebaseVisionImageMetadata metadata;
+    private byte[] data;
 
+    // init result of barcode
+    private String subjectResult, doctorName, uniqueResult, lecNumber;
+    private TextView result_of_barcode;
+
+    // init camera
+    private CameraView camera_view;
+
+    // init view
+    private Button btnDone;
+    private String studentName, studentNationalId;
+
+
+    // init shared preference
     private static final String MY_NATIONAL_ID = "MyNationalId";
     private HashMap<String, Object> studentMap;
     private DatabaseReference rootRef;
-    private String studentName;
 
     public BarCodeFragment() {
         // Required empty public constructor
@@ -75,34 +87,19 @@ public class BarCodeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bar_code, container, false);
+        View view = inflater.inflate(R.layout.fragment_bar_code, container, false);
+        camera_view = view.findViewById(R.id.camera_view);
+        camera_view.setLifecycleOwner(getViewLifecycleOwner());
+        result_of_barcode = view.findViewById(R.id.result_of_barcode);
+        btnDone = view.findViewById(R.id.btn_done_barcode);
+
+        return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        result_of_barcode = Objects.requireNonNull(getView()).findViewById(R.id.result_of_barcode);
-        Button btnDone = getView().findViewById(R.id.btn_done_barcode);
-//        btnDone.setEnabled(true);
-
-        // make sure user accepted permission camera and record permission
-        Dexter.withActivity(getActivity())
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        setUpCamera();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
-                    }
-                }).check();
-
-
         try {
             //create shared preferences called My prefs
             final SharedPreferences sharedpreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -113,14 +110,13 @@ public class BarCodeFragment extends Fragment {
             LocalTime wait = LocalTime.parse(sharedpreferences.getString("TIMENOW", ""));
             LocalTime now = LocalTime.parse(currentDateAndTime);
             if (wait.isBefore(now)) {
-                Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
                 btnDone.setEnabled(true);
             } else {
                 btnDone.setEnabled(false);
-                Toast.makeText(getActivity(), wait.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Wait until the next lecture to take another QR", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "WELCOME", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "WELCOME", Toast.LENGTH_LONG).show();
         }
 
         SharedPreferences prefs = Objects.requireNonNull(getActivity()).getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
@@ -130,7 +126,8 @@ public class BarCodeFragment extends Fragment {
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                studentName = Objects.requireNonNull(dataSnapshot.getValue(Student.class)).getName();
+                studentName = dataSnapshot.getValue(Student.class).getName();
+                studentNationalId = dataSnapshot.getValue(Student.class).getNational_id();
                 Log.d("TagStudentName", studentName);
             }
 
@@ -143,9 +140,6 @@ public class BarCodeFragment extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (subjectResult == null) {
-                    Toast.makeText(getContext(), "please Come close to the barcode", Toast.LENGTH_SHORT).show();
-                }
                 if (subjectResult == null) {
                     Toast.makeText(getContext(), "please make sure the barcode valid from doctor ", Toast.LENGTH_SHORT).show();
                 } else if (uniqueResult == null) {
@@ -169,9 +163,26 @@ public class BarCodeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // make sure user accepted permission camera and record permission
+        Dexter.withActivity(getActivity())
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        setUpCamera();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+                    }
+                }).check();
+    }
+
     private void setUpCamera() {
-        CameraView camera_view = Objects.requireNonNull(getView()).findViewById(R.id.camera_view);
-        camera_view.setLifecycleOwner(this);
         camera_view.addFrameProcessor(new FrameProcessor() {
             @Override
             public void process(@NonNull Frame frame) {
@@ -212,42 +223,48 @@ public class BarCodeFragment extends Fragment {
                 int value_type = item.getValueType();
                 Log.d("TAG", item.getRawValue() + " ");
                 if (value_type == FirebaseVisionBarcode.TYPE_CONTACT_INFO) {
-                    subjectResult = Objects.requireNonNull(Objects.requireNonNull(item.getContactInfo()).getName()).getFormattedName();
-                    uniqueResult = item.getContactInfo().getTitle();
-                    doctorName = item.getContactInfo().getOrganization();
-                    lecNumber = item.getContactInfo().getPhones().toString();
-                    result_of_barcode.setText(subjectResult);
-                    result_of_barcode.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimaryDark));
+                    doctorName = item.getContactInfo().getName().getFirst();
+                    subjectResult = item.getContactInfo().getName().getLast();
+                    lecNumber = item.getContactInfo().getTitle();
+                    uniqueResult = item.getContactInfo().getOrganization();
+
+                    // first name , last name , title , organization ,
+                    Log.d("TAGBARCODE", doctorName);
+                    Log.d("TAGBARCODE", subjectResult);
+                    Log.d("TAGBARCODE", lecNumber);
+                    Log.d("TAGBARCODE", uniqueResult);
+                    result_of_barcode.setText(doctorName + "\n" + "in subject " + subjectResult);
+                    result_of_barcode.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
 
                 }
             }
         }
     }
 
-    // TODO : STEP 3
-    //create a FirebaseVisionImage object from either a Bitmap, media.Image, ByteBuffer, byte array, or a file on the device.
-    // Then, pass the FirebaseVisionImage object to the FirebaseVisionBarcodeDetector's detectInImage method.
     private FirebaseVisionImage getVisionImageFromFrame(Frame frame) {
         //To create a FirebaseVisionImage object from
         // byte array, first calculate the image rotation as described above for media.Image input
-        byte[] data = frame.getData();
-        FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
+
+        metadata = new FirebaseVisionImageMetadata.Builder()
                 .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
                 .setHeight(frame.getSize().getHeight())
                 .setWidth(frame.getSize().getWidth())
                 .build();
+        Log.d("TAG", frame.getSize().getHeight() + "");
+        Log.d("TAG", frame.getSize().getWidth() + "");
+        data = frame.getData();
+
         return FirebaseVisionImage.fromByteArray(data, metadata);
     }
 
 
-    private void saveAttendOnDataBase(String subName, String unique, String doctor, String lec) {
-        rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(doctor).child(subName).child(lec).child(unique);
+    private void saveAttendOnDataBase(final String subName, final String unique, final String doctor, final String lec) {
+        rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(doctor).child(subName).child(lec).child(unique).child("StudentName");
 
         /*
          * firebase structure
          *  students_attendance
          *      doctorName
-         *          subjectName
          *              lec_one
          *                  uniqueResult
          * */
@@ -255,7 +272,7 @@ public class BarCodeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 studentMap = new HashMap<>();
-                studentMap.put("StudentName", studentName);
+                studentMap.put(studentNationalId, studentName);
                 rootRef.updateChildren(studentMap);
 
                 Toast.makeText(getActivity(), "Thanks:)", Toast.LENGTH_SHORT).show();

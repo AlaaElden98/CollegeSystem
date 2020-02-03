@@ -28,7 +28,7 @@ public class SpecificSubjectFragment extends Fragment {
     private ProgressDialog loadingBar;
     private String levelChoose, departmentChoose, subjectChoose, chapterChoose;
     private ArrayList<String> arrayListOfSubjects;
-    private MaterialSpinner chooseLevel, chooseDepartment, chooseSubject, chooseChapter;
+    private MaterialSpinner spinner_chooseLevel, spinner_chooseDepartment, spinner_chooseSubject, spinner_chooseChapter;
     private ArrayList<String> arrayListOfDepartment;
 
     public SpecificSubjectFragment() {
@@ -51,17 +51,18 @@ public class SpecificSubjectFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         arrayListOfDepartment = new ArrayList<>();
 
-        chooseLevel = getView().findViewById(R.id.spinner_choose_Level_specific_subject);
-        chooseDepartment = getView().findViewById(R.id.spinner_choose_department_specific_subject);
-        chooseSubject = getView().findViewById(R.id.spinner_choose_subject_specific_subject);
-        chooseChapter = getView().findViewById(R.id.spinner_choose_chapter_specific_subject);
+        spinner_chooseLevel = getView().findViewById(R.id.spinner_choose_Level_specific_subject);
+        spinner_chooseDepartment = getView().findViewById(R.id.spinner_choose_department_specific_subject);
+        spinner_chooseSubject = getView().findViewById(R.id.spinner_choose_subject_specific_subject);
+        spinner_chooseChapter = getView().findViewById(R.id.spinner_choose_chapter_specific_subject);
         Button buttonAddQuestion = getView().findViewById(R.id.button_add_question);
 
         loadingBar = new ProgressDialog(getActivity());
         arrayListOfSubjects = new ArrayList<>();
 
-        chooseLevel.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
-        chooseLevel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        chapterChoose = "Choose chapter";
+        spinner_chooseLevel.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
+        spinner_chooseLevel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (item == "Choose Level") {
@@ -77,10 +78,10 @@ public class SpecificSubjectFragment extends Fragment {
                 Log.d("TAG", item.toString());
             }
         });
-        chooseDepartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_chooseDepartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                if (departmentChoose != item){
+                if (departmentChoose != item) {
                     arrayListOfSubjects.clear();
                 }
                 loadingBar.setTitle("Choose Subject available");
@@ -91,17 +92,17 @@ public class SpecificSubjectFragment extends Fragment {
                 getSubject(levelChoose, departmentChoose);
             }
         });
-        chooseSubject.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_chooseSubject.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                if (item == null || subjectChoose == null){
+                if (item == null || subjectChoose == null) {
                     Toast.makeText(getContext(), "Make sure this department have a subject ", Toast.LENGTH_LONG).show();
                 }
                 subjectChoose = item.toString();
             }
         });
 
-        chooseChapter.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_chooseChapter.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 chapterChoose = item.toString();
@@ -111,14 +112,16 @@ public class SpecificSubjectFragment extends Fragment {
         buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (chapterChoose == null
-                        || chooseLevel == null
-                        || chooseSubject == null
-                        || chapterChoose.equals("Choose chapter")
-                        || subjectChoose.equals("Choose Subject")) {
-                    Toast.makeText(getContext(), "please make sure all field is valid", Toast.LENGTH_SHORT).show();
+                if (levelChoose == null) {
+                    Toast.makeText(getActivity(), "Please choose level", Toast.LENGTH_SHORT).show();
+                } else if (departmentChoose == null) {
+                    Toast.makeText(getActivity(), "Please choose department", Toast.LENGTH_SHORT).show();
+                } else if (subjectChoose == null || subjectChoose.equals("Choose Subject")) {
+                    Toast.makeText(getActivity(), "Please choose subject", Toast.LENGTH_SHORT).show();
+                } else if (chapterChoose == null || chapterChoose.equals("Choose chapter")) {
+                    Toast.makeText(getActivity(), "Please choose chapter ", Toast.LENGTH_SHORT).show();
                 } else
-                    Navigation.findNavController(getView()).navigate(SpecificSubjectFragmentDirections.actionSpecificSubjectFragmentToAddQuestionFragment(chapterChoose, levelChoose, subjectChoose , departmentChoose));
+                    Navigation.findNavController(getView()).navigate(SpecificSubjectFragmentDirections.actionSpecificSubjectFragmentToAddQuestionFragment(chapterChoose, levelChoose, subjectChoose, departmentChoose));
             }
         });
     }
@@ -134,7 +137,7 @@ public class SpecificSubjectFragment extends Fragment {
                     arrayListOfDepartment.add(subject);
                 }
                 loadingBar.dismiss();
-                chooseDepartment.setItems(arrayListOfDepartment);
+                spinner_chooseDepartment.setItems(arrayListOfDepartment);
             }
 
             @Override
@@ -147,7 +150,7 @@ public class SpecificSubjectFragment extends Fragment {
     }
 
 
-    private void getSubject(final String levelChoose , final String department) {
+    private void getSubject(final String levelChoose, final String department) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Subjects").child(levelChoose).child(department);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -158,9 +161,9 @@ public class SpecificSubjectFragment extends Fragment {
                     arrayListOfSubjects.add(subject);
                 }
                 loadingBar.dismiss();
-                chooseSubject.setItems("Choose Subject");
-                chooseSubject.setItems(arrayListOfSubjects);
-                chooseChapter.setItems("Choose chapter", "Chapter_one", "Chapter_two", "Chapter_three", "Chapter_four", "Chapter_five", "Chapter_sex");
+                spinner_chooseSubject.setItems("Choose Subject");
+                spinner_chooseSubject.setItems(arrayListOfSubjects);
+                spinner_chooseChapter.setItems("Choose chapter", "Chapter_one", "Chapter_two", "Chapter_three", "Chapter_four", "Chapter_five", "Chapter_sex");
                 loadingBar.dismiss();
             }
 

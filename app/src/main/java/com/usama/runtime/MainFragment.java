@@ -3,6 +3,7 @@ package com.usama.runtime;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,8 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 String DoctorOrAdminNationalId = Paper.book().read(Prevalent.DoctorOrAdminNationalIDKey);
                 String DoctorOrAdminPassword = Paper.book().read(Prevalent.DoctorOrAdminPasswordKey);
-                if (!DoctorOrAdminNationalId.equals("") && !DoctorOrAdminPassword.equals("")) {
+                Log.d("TAG",DoctorOrAdminNationalId + DoctorOrAdminPassword);
+                if (DoctorOrAdminNationalId != null && DoctorOrAdminPassword != null) {
                     if (!TextUtils.isEmpty(DoctorOrAdminNationalId) && !TextUtils.isEmpty(DoctorOrAdminPassword)) {
                         loadingBar.setTitle("Already Login");
                         loadingBar.setMessage("please wait .. ");
