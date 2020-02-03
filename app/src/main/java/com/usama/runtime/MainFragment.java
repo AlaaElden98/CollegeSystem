@@ -54,12 +54,11 @@ public class MainFragment extends Fragment {
                 String StudentSittingNumber = Paper.book().read(Prevalent.StudentSittingNumberKey);
                 if (StudentNationalId != "" && StudentSittingNumber != "") {
                     if (!TextUtils.isEmpty(StudentNationalId) && !TextUtils.isEmpty(StudentSittingNumber)) {
-                        AllowAccessStudent(StudentNationalId, StudentSittingNumber);
                         loadingBar.setTitle("Already Login");
                         loadingBar.setMessage("please wait .. ");
                         loadingBar.setCanceledOnTouchOutside(false);
                         loadingBar.show();
-
+                        AllowAccessStudent(StudentNationalId, StudentSittingNumber);
                     } else {
                         Navigation.findNavController(v).navigate(MainFragmentDirections.actionMainGoToStudentFragment());
                     }
@@ -74,14 +73,13 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 String DoctorOrAdminNationalId = Paper.book().read(Prevalent.DoctorOrAdminNationalIDKey);
                 String DoctorOrAdminPassword = Paper.book().read(Prevalent.DoctorOrAdminPasswordKey);
-                if (DoctorOrAdminNationalId != "" && DoctorOrAdminPassword != "") {
+                if (!DoctorOrAdminNationalId.equals("") && !DoctorOrAdminPassword.equals("")) {
                     if (!TextUtils.isEmpty(DoctorOrAdminNationalId) && !TextUtils.isEmpty(DoctorOrAdminPassword)) {
-                        AllowAccessDoctor(DoctorOrAdminNationalId, DoctorOrAdminPassword);
                         loadingBar.setTitle("Already Login");
                         loadingBar.setMessage("please wait .. ");
                         loadingBar.setCanceledOnTouchOutside(false);
                         loadingBar.show();
-
+                        AllowAccessDoctor(DoctorOrAdminNationalId, DoctorOrAdminPassword);
                     } else {
                         Navigation.findNavController(v).navigate(MainFragmentDirections.actionMainFragmentToAdminOrDoctorLoginFragment());
                     }
@@ -124,7 +122,6 @@ public class MainFragment extends Fragment {
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 } else if (dataSnapshot.child("Doctors").child(national).exists()) {
                     Doctors doctorData = dataSnapshot.child("Doctors").child(national).getValue(Doctors.class);
                     if (doctorData.getNationalID().equals(national)) {
@@ -133,7 +130,7 @@ public class MainFragment extends Fragment {
                             loadingBar.dismiss();
                             Prevalent.CurrentOnlineAdminOrDoctor = doctorData;
                             String realName = doctorData.getRealName();
-                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment(realName,national));
+                            Navigation.findNavController(getView()).navigate(MainFragmentDirections.actionMainFragmentToDoctorHomeFragment(realName, national));
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
@@ -179,7 +176,6 @@ public class MainFragment extends Fragment {
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 } else {
                     Toast.makeText(getContext(), "Account with this " + nationalId + " number do not exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();

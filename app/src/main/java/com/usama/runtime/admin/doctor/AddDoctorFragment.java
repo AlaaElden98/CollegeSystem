@@ -105,8 +105,8 @@ public class AddDoctorFragment extends Fragment {
                 if (!(dataSnapshot.child("Doctors").child(doctorNationalId).exists())) {
                     HashMap<String, Object> doctorDataMap = new HashMap<>();
                     doctorDataMap.put("realName", doctorName);
-                    doctorDataMap.put("password", doctorNationalId);
-                    doctorDataMap.put("nationalID", doctorPassword);
+                    doctorDataMap.put("password", doctorPassword);
+                    doctorDataMap.put("nationalID", doctorNationalId);
                     RootRef.child("Doctors").child(doctorNationalId).updateChildren(doctorDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

@@ -152,12 +152,12 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                         if (doctorsData.getPassword().equals(password)) {
                             if (parentDbNationalId.equals("Doctors")) {
                                 realName = doctorsData.getRealName();
-                                Toast.makeText(getContext(), "Welcome Doctor " + nationalID, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Welcome Doctor " + realName, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
                                 Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName,nationalID));
                             } else if (parentDbNationalId.equals("Admins")) {
-                                Toast.makeText(getContext(), "Welcome Admin " + nationalID, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Welcome Admin " + realName, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
                                 realName = doctorsData.getRealName();

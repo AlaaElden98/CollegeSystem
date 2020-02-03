@@ -87,16 +87,18 @@ public class AddSubjectFragment extends Fragment {
             }
         });
 
-        doctorNameSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                doctorName = item.toString();
-            }
-        });
+
         departmentSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 department = item.toString();
+            }
+        });
+
+        doctorNameSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                doctorName = item.toString();
             }
         });
 
@@ -132,7 +134,6 @@ public class AddSubjectFragment extends Fragment {
                 }
                 loadingBar.dismiss();
                 doctorNameSpinner.setItems(arrayListOfDoctorName);
-
             }
 
             @Override
