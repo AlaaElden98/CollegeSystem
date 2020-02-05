@@ -18,11 +18,11 @@
             android:title="Show Subject" />
         <item
             android:id="@+id/nav_make_exam"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_manage"
             android:title="Make Exam" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/logout"
             android:title="Logout" />
     </group>
 

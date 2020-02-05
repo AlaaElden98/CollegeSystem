@@ -5,6 +5,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@drawable/bg"
         android:layout_height="match_parent">
 
         <com.otaliastudios.cameraview.CameraView
@@ -17,6 +18,7 @@
         <View
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_marginBottom="110dp"
             android:layout_gravity="center"
             android:background="@drawable/rectangle" />
     </FrameLayout>
@@ -26,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/barcode_bottom"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -38,8 +40,10 @@
             android:enabled="false"
             android:gravity="center"
             android:padding="15dp"
-            android:text="Come close"
-            android:textSize="32sp" />
+            android:textColor="#F7EBD9D9"
+            android:fontFamily="@font/capriola"
+            android:text="Come closer"
+            android:textSize="26sp" />
 
         <Button
             android:id="@+id/btn_done_barcode"
@@ -50,6 +54,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/button"
             android:text="Done"
+            android:fontFamily="@font/capriola"
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:textStyle="bold" />

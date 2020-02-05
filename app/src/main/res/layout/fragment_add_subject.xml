@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="25dp"
-    android:layout_marginBottom="50dp"
+    android:background="@drawable/bg"
     android:gravity="center"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="New Subject"
+        android:textColor="#F7EBD9D9"
+        android:textSize="30sp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/berkshire_swash"
+        android:textStyle="bold" />
 
 
     <com.jaredrummler.materialspinner.MaterialSpinner
@@ -16,8 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:gravity="start"
-        android:hint="choose Level"
+        android:hint="Choose Level"
         android:padding="15dp"
         android:textColor="#000"
         android:textSize="16sp"
@@ -30,8 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:gravity="start"
-        android:hint="choose Department"
+        android:hint="Choose Department"
         android:padding="15dp"
         android:textColor="#000"
         android:textSize="16sp"
@@ -44,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:gravity="start"
         android:hint="Choose doctor name"
         android:padding="15dp"
@@ -58,11 +73,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/edit_text_top"
         android:gravity="start"
         android:hint="Subject Name"
         android:padding="15dp"
-        android:textColor="#000"
+        android:textColor="#ffffff"
+        android:textColorHint="#A9FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -76,7 +94,7 @@
         android:background="@drawable/button"
         android:text="Add Subject"
         android:textAllCaps="false"
-        android:textColor="#000"
+        android:textColor="#ffffff"
         android:textSize="17sp" />
 
 

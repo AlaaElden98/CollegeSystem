@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context=".student.DesiresAcceptedFragment">
 
@@ -13,6 +14,8 @@
         android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
         android:text="Name of department"
+        android:textColor="#F7EBD9D9"
+        android:fontFamily="@font/berkshire_swash"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -20,7 +23,11 @@
         android:id="@+id/departmentDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/capriola"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="18sp"
         android:text="Name of department"
         android:textStyle="italic" />

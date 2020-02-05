@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/same">
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:id="@+id/input_group"
@@ -15,28 +15,39 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="New Professor"
+            android:textColor="#F7EBD9D9"
+            android:textSize="30sp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/berkshire_swash"
+            android:textStyle="bold" />
+
 
         <EditText
             android:id="@+id/doctor_name_add_doctor"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Doctor Name"
             android:inputType="text"
             android:padding="15dp"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
         <EditText
             android:id="@+id/doctor_nationalId__add_doctor"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Doctor national ID"
             android:inputType="number"
             android:padding="15dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#000"
 
             />
 
@@ -45,23 +56,24 @@
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Doctor password"
             android:inputType="textPassword"
             android:padding="15dp"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
 
         <Button
             android:id="@+id/add_doctor_btn_add_doctor"
-            android:layout_width="255dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Add Doctor"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:text="save"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
             android:textSize="17sp" />
 
 

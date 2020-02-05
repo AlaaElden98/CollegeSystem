@@ -3,39 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/same">
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:id="@+id/input_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Department"
+            android:textColor="#F7EBD9D9"
+            android:textSize="30sp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/berkshire_swash"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/editDepartmentName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Department Name"
-            android:padding="15dp"
+            android:padding="12dp"
             android:textColor="#000" />
 
         <EditText
             android:id="@+id/editDepartmentCapacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Department Capacity"
             android:inputType="number"
-            android:padding="15dp"
+            android:padding="12dp"
             android:textColor="#000" />
 
 
@@ -43,33 +58,33 @@
             android:id="@+id/editDepartmentMinTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/add_new_edit_text"
             android:hint="Department Min Total"
             android:inputType="number"
-            android:padding="15dp"
+            android:padding="12dp"
             android:textColor="#000" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editDepartmentMinSpecial"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="0.1"
-                android:background="@drawable/edit_text_top"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/add_new_edit_text"
                 android:hint="Min Special"
                 android:inputType="number"
-                android:padding="15dp"
+                android:padding="5dp"
                 android:textColor="#000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -83,12 +98,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="0.8"
+                android:layout_marginBottom="15dp"
                 android:hint="choose language"
                 android:textColor="#000"
                 android:textStyle="bold"
-                app:ms_background_color="#11000000" />
+                app:ms_background_color="#F7EBD9D9" />
         </LinearLayout>
 
 
@@ -96,8 +110,10 @@
             android:id="@+id/editDepartmentDescription"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/edit_text_top"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/add_new_edit_text"
             android:gravity="start"
             android:hint="Department Description"
             android:padding="15dp"
@@ -106,12 +122,13 @@
 
         <Button
             android:id="@+id/editButtonEditDepartment"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/button"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Edit Department"
+            android:text="Save Changes"
+            android:padding="10dp"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />

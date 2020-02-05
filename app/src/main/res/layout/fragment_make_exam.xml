@@ -4,10 +4,8 @@
     android:id="@+id/input_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="25dp"
-    android:layout_marginBottom="50dp"
     android:gravity="center"
+    android:background="@drawable/bg"
     android:orientation="vertical">
 
     <TextView
@@ -17,11 +15,13 @@
         android:layout_marginBottom="50sp"
         android:gravity="center"
         android:text="Choose Information of the exam "
+        android:fontFamily="@font/berkshire_swash"
+        android:textColor="#ffffff"
         android:textSize="24sp" />
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/spinner_choose_Level_info_exam"
-        android:layout_width="255dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
@@ -32,7 +32,7 @@
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/spinner_choose_department_info_exam"
-        android:layout_width="255dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
@@ -43,7 +43,7 @@
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/spinner_choose_subject_info_exam"
-        android:layout_width="255dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
@@ -63,20 +63,26 @@
 
         <CheckBox
             android:id="@+id/checkbox_chapter_one"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
             android:text="Chapter one"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
 
         <CheckBox
             android:id="@+id/checkbox_chapter_two"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Chapter two"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -90,20 +96,26 @@
 
         <CheckBox
             android:id="@+id/checkbox_chapter_three"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
             android:text="Chapter three"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
 
         <CheckBox
             android:id="@+id/checkbox_chapter_four"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Chapter four"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -117,20 +129,26 @@
 
         <CheckBox
             android:id="@+id/checkbox_chapter_five"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
             android:text="Chapter five"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
 
         <CheckBox
             android:id="@+id/checkbox_chapter_sex"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Chapter sex"
+            android:text="Chapter six"
+            android:textColor="#ffffff"
+            android:buttonTint="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>
 

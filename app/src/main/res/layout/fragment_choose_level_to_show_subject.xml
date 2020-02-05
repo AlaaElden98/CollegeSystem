@@ -4,11 +4,19 @@
     android:id="@+id/input_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="25dp"
-    android:layout_marginBottom="50dp"
+   android:background="@drawable/bg"
     android:gravity="center"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="View Courses"
+        android:textColor="#F7EBD9D9"
+        android:textSize="30sp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/berkshire_swash"
+        android:textStyle="bold" />
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/spinner_choose_Level_to_show_subject"

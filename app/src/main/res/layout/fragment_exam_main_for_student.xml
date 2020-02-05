@@ -4,33 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="408dp"
-        android:layout_height="419dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toBottomOf="@+id/quiz_im">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Small Quiz"
+            android:text="Practice Quiz"
+            android:fontFamily="@font/berkshire_swash"
+            android:textColor="#F7EBD9D9"
             android:textSize="42sp"
             android:textStyle="bold" />
-
     </FrameLayout>
 
+    <ImageView
+        android:id="@+id/quiz_im"
+        android:layout_width="178dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/spinner_choose_subject_exam"
         android:layout_width="255dp"
+        android:layout_marginTop="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
         android:hint="choose Subject"
         android:textColor="#000"
         android:textStyle="bold"

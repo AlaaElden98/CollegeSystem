@@ -3,26 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/score_card"
         android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/App_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/app_name"
+            android:text="KFS ARTS"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#254660"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -30,9 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
-            android:text="Score"
+            android:text="Points"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#254660"
             android:textSize="38dp"
             android:textStyle="bold" />
 
@@ -42,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="5"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#CE5179"
             android:textSize="38dp"
             android:textStyle="bold" />
 
@@ -53,26 +59,21 @@
             android:padding="24dp"
             android:text="Out_OF_10"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#254660"
             android:textSize="38dp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
         <Button
             android:id="@+id/done_btn"
-            android:layout_width="120dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/button"
             android:text="Done"
             android:textColor="@android:color/white" />
 
-    </FrameLayout>
+
 
 
 </LinearLayout>

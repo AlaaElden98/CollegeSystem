@@ -20,7 +20,7 @@
     <string name="department_capacity">Department Capacity</string>
     <string name="department_min_total">Department Min Total</string>
     <string name="min_special">Min Special</string>
-    <string name="choose_language">choose language</string>
+    <string name="choose_language">language</string>
     <string name="department_description">Department Description</string>
-    <string name="add_department">Add Department</string>
+    <string name="add_department">Add</string>
 </resources>

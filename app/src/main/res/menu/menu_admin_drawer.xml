@@ -8,11 +8,13 @@
                 <item
                     android:id="@+id/nav_add_department"
                     android:iconTint="@android:color/white"
+                    android:icon="@drawable/add_dept"
                     android:title="Add Department" />
                 <item
                     android:id="@+id/nav_show_department"
+                    android:icon="@drawable/show_dept"
                     android:iconTint="@android:color/white"
-                    android:title="Show and Edit Department" />
+                    android:title="Show or Edit Department" />
             </group>
         </menu>
     </item>
@@ -26,11 +28,13 @@
                 <item
                     android:id="@+id/nav_add_subject"
                     android:iconTint="@android:color/white"
+                    android:icon="@drawable/add_subject"
                     android:title="Add Subject" />
                 <item
                     android:id="@+id/nav_show_subject"
                     android:iconTint="@android:color/white"
-                    android:title="Show Subject" />
+                    android:icon="@drawable/show_subjects"
+                    android:title="Show Subjects" />
             </group>
         </menu>
     </item>
@@ -43,9 +47,11 @@
                 <item
                     android:id="@+id/nav_add_doctor"
                     android:iconTint="@android:color/white"
+                    android:icon="@drawable/add_prof"
                     android:title="Add Doctor" />
                 <item
                     android:id="@+id/nav_show_doctor"
+                    android:icon="@drawable/professor"
                     android:iconTint="@android:color/white"
                     android:title="Show Doctors" />
             </group>
@@ -56,9 +62,11 @@
         <item
             android:id="@+id/nav_show_student"
             android:iconTint="@android:color/white"
-            android:title="Show student" />
+            android:icon="@drawable/student"
+            android:title="Show students" />
         <item
             android:id="@+id/nav_logout"
+            android:icon="@drawable/logout"
             android:iconTint="@android:color/white"
             android:title="Log out" />
     </group>
