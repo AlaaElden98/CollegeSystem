@@ -123,7 +123,7 @@ public class AddDoctorFragment extends Fragment {
                             });
 
                 } else {
-                    Toast.makeText(getActivity(), "This " + doctorNationalId + " already exist ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "the national ID " + doctorNationalId + " already exist ", Toast.LENGTH_LONG).show();
                     loadingBar.dismiss();
                     Navigation.findNavController(getView()).navigate(AddDoctorFragmentDirections.actionAddDoctorFragmentToAdminHomeFragment(realName));
                 }

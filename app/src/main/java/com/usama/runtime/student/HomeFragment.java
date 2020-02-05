@@ -113,7 +113,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         recyclerView.setLayoutManager(layoutManager);
 
 
-        // TODO : VIEW MODEL TO MAKE FINAL DESIRES
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
         prefs = getActivity().getSharedPreferences(MY_NATIONAL_ID, MODE_PRIVATE);
@@ -223,7 +222,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -177,9 +177,6 @@
             android:id="@+id/action_doctorHomeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <action
-            android:id="@+id/action_doctorHomeFragment_to_chooseLevelToShowSubjectFragment"
-            app:destination="@id/chooseLevelToShowSubjectFragment" />
-        <action
             android:id="@+id/action_doctorHomeFragment_to_infoOfExamFragment"
             app:destination="@id/infoOfExamFragment" />
         <argument android:name="realName"
@@ -187,6 +184,9 @@
         <argument
             android:name="nationalId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_chooseLevelToShowSubjectToDoctorFragment"
+            app:destination="@id/chooseLevelToShowSubjectToDoctorFragment" />
     </fragment>
     <fragment
         android:id="@+id/specificSubjectFragment"
@@ -384,5 +384,30 @@
             android:name="UID"
             app:argType="string"
             android:defaultValue="1" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLevelToShowSubjectToDoctorFragment"
+        android:name="com.usama.runtime.doctor.subject.ChooseLevelToShowSubjectToDoctorFragment"
+        android:label="fragment_choose_level_to_show_subject_to_doctor"
+        tools:layout="@layout/fragment_choose_level_to_show_subject_to_doctor" >
+        <argument
+            android:name="doctorName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_chooseLevelToShowSubjectToDoctorFragment_to_showSubjectToDoctorFragment"
+            app:destination="@id/showSubjectToDoctorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showSubjectToDoctorFragment"
+        android:name="com.usama.runtime.doctor.subject.ShowSubjectToDoctorFragment"
+        android:label="fragment_show_subject_to_doctor"
+        tools:layout="@layout/fragment_show_subject_to_doctor" >
+        <argument
+            android:name="department"
+            app:argType="string" />
+        <argument
+            android:name="level"
+            app:argType="string" />
+        <argument android:name="doctorName" />
     </fragment>
 </navigation>

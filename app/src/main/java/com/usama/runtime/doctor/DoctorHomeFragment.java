@@ -136,7 +136,7 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         } else if (id == R.id.nav_add_question) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToSpecificSubjectFragment());
         } else if (id == R.id.nav_show_subject) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectFragment());
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectToDoctorFragment(realName));
         } else if (id == R.id.nav_make_exam) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment(nationalId , realName));
         } else if (id == R.id.nav_logout) {

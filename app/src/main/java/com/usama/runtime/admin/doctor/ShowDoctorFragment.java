@@ -74,7 +74,7 @@ public class ShowDoctorFragment extends Fragment {
                         String password = model.getPassword();
 
 
-                        Navigation.findNavController(getView()).navigate(ShowDoctorFragmentDirections.actionShowDoctorFragmentToEditDoctorDataFragment(name,national,password).setUID(uID));
+                        Navigation.findNavController(getView()).navigate(ShowDoctorFragmentDirections.actionShowDoctorFragmentToEditDoctorDataFragment(password,name,national).setUID(uID));
                     }
                 });
                 holder.delete_doctor_btn.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class ShowDoctorFragment extends Fragment {
                         };
                         // alert dialog take a context
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Are you sure !! you will delete this department ");
+                        builder.setTitle("Are you sure !! you will delete this doctor ");
 
                         // here you show the option in dialog yes or no with on click listener
                         // here you have a int as a position

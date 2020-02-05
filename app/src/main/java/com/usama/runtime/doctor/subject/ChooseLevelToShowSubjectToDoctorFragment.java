@@ -1,4 +1,4 @@
-package com.usama.runtime.admin.subject;
+package com.usama.runtime.doctor.subject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -25,16 +25,16 @@ import com.usama.runtime.model.Department;
 
 import java.util.ArrayList;
 
-
-public class ChooseLevelToShowSubjectFragment extends Fragment {
-    private String levelChoose, departmentChoose;
-    private MaterialSpinner chooseLevel, chooseDepartment;
+public class ChooseLevelToShowSubjectToDoctorFragment extends Fragment {
+    private String levelChoose, departmentChoose, doctorName;
+    private MaterialSpinner spinner_choose_level, spinner_choose_department;
     private Button buttonShowSubject;
     private ArrayList<String> arrayListOfDepartment;
     private ProgressDialog loadingBar;
 
-    public ChooseLevelToShowSubjectFragment() {
-        // Required empty public constructor
+
+    public ChooseLevelToShowSubjectToDoctorFragment() {
+
     }
 
     @Override
@@ -45,26 +45,26 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_level_to_show_subject, container, false);
-        chooseLevel = view.findViewById(R.id.spinner_choose_Level_to_show_subject);
-        chooseDepartment = view.findViewById(R.id.spinner_choose_department_to_show_subject);
-        buttonShowSubject = view.findViewById(R.id.buttonShowSubject);
-
+        View view = inflater.inflate(R.layout.fragment_choose_level_to_show_subject_to_doctor, container, false);
+        spinner_choose_level = view.findViewById(R.id.spinner_choose_Level_to_show_subject_to_doctor);
+        spinner_choose_department = view.findViewById(R.id.spinner_choose_department_to_show_subject_to_doctor);
+        buttonShowSubject = view.findViewById(R.id.show_subject_to_doctor_btn);
 
         return view;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ChooseLevelToShowSubjectToDoctorFragmentArgs args = ChooseLevelToShowSubjectToDoctorFragmentArgs.fromBundle(getArguments());
+        doctorName = args.getDoctorName();
         loadingBar = new ProgressDialog(getContext());
         arrayListOfDepartment = new ArrayList<>();
 
 
-        chooseLevel.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
-        chooseLevel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_choose_level.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
+        spinner_choose_level.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (item == "Choose Level") {
@@ -80,7 +80,7 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
                 Log.d("TAG", item.toString());
             }
         });
-        chooseDepartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_choose_department.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (item == null) {
@@ -94,10 +94,10 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
         buttonShowSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (chooseLevel == null) {
+                if (levelChoose == null) {
                     Toast.makeText(getContext(), "please make sure all field is valid", Toast.LENGTH_SHORT).show();
                 } else {
-                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectFragmentDirections.actionChooseLevelToShowSubjectFragmentToShowSubjectFragment(levelChoose, departmentChoose));
+                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectToDoctorFragmentDirections.actionChooseLevelToShowSubjectToDoctorFragmentToShowSubjectToDoctorFragment(departmentChoose, levelChoose, doctorName));
                 }
             }
         });
@@ -114,8 +114,7 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
                     arrayListOfDepartment.add(departmentName);
                 }
                 loadingBar.dismiss();
-                chooseDepartment.setItems(arrayListOfDepartment);
-
+                spinner_choose_department.setItems(arrayListOfDepartment);
             }
 
             @Override

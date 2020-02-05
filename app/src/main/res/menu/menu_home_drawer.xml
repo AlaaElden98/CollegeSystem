@@ -8,17 +8,17 @@
             android:id="@+id/nav_department_desires"
             android:icon="@drawable/department"
             android:iconTint="@android:color/white"
-            android:title="Recording_Desires" />
+            android:title="Department" />
         <item
             android:id="@+id/nav_barcode"
             android:icon="@drawable/barcode"
             android:iconTint="@android:color/white"
             android:title="Barcode" />
         <item
-        android:id="@+id/nav_exam"
-        android:icon="@drawable/news"
-        android:iconTint="@android:color/white"
-        android:title="Small Exam" />
+            android:id="@+id/nav_exam"
+            android:icon="@drawable/news"
+            android:iconTint="@android:color/white"
+            android:title="Small Exam" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

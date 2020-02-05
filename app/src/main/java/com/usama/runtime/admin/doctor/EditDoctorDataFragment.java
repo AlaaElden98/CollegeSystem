@@ -25,7 +25,9 @@ import java.util.Objects;
 public class EditDoctorDataFragment extends Fragment {
     private TextView getDoctorName, getDoctorNational;
     private EditText getDoctorPassword;
+    private Button buttonEditDoctorData ;
 
+    private String name , nationalID ;
     public EditDoctorDataFragment() {
     }
 
@@ -37,21 +39,23 @@ public class EditDoctorDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_doctor_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_doctor_data, container, false);
+
+        getDoctorName = view.findViewById(R.id.edit_doctor_name);
+        getDoctorPassword = view.findViewById(R.id.edit_doctor_pass);
+        getDoctorNational = view.findViewById(R.id.edit_doctor_national);
+        buttonEditDoctorData = view.findViewById(R.id.edit_doctor_info_btn_item);
+
+        return view ;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         EditDoctorDataFragmentArgs args = EditDoctorDataFragmentArgs.fromBundle(Objects.requireNonNull(getArguments()));
-        String name = args.getRealName();
-        String nationalID = args.getNationalId();
+        name = args.getRealName();
+        nationalID = args.getNationalId();
         String password = args.getPassword();
-
-        getDoctorName = Objects.requireNonNull(getView()).findViewById(R.id.edit_doctor_name);
-        getDoctorPassword = getView().findViewById(R.id.edit_doctor_pass);
-        getDoctorNational = getView().findViewById(R.id.edit_doctor_national);
-        Button buttonEditDoctorData = getView().findViewById(R.id.edit_doctor_info_btn_item);
 
         getDoctorName.setText(name);
         getDoctorNational.setText(nationalID);
@@ -68,11 +72,8 @@ public class EditDoctorDataFragment extends Fragment {
 
 
     private void editDepartment() {
-
-
-        String doctorName = getDoctorName.getText().toString().trim();
-        String doctorNationalId = getDoctorNational.getText().toString().trim();
         String doctorPassword = getDoctorPassword.getText().toString().trim();
+
         if (doctorPassword.equals("")) {
             Toast.makeText(getContext(), "please write doctor password", Toast.LENGTH_SHORT).show();
         } else {
@@ -80,10 +81,10 @@ public class EditDoctorDataFragment extends Fragment {
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Doctors");
             HashMap<String, Object> doctorMap = new HashMap<>();
-            doctorMap.put("nationalID", doctorNationalId);
-            doctorMap.put("realName", doctorName);
+            doctorMap.put("nationalID", nationalID);
+            doctorMap.put("realName", name);
             doctorMap.put("password", doctorPassword);
-            ref.child(doctorNationalId).updateChildren(doctorMap);
+            ref.child(nationalID).updateChildren(doctorMap);
 
             Toast.makeText(getActivity(), "Doctor info update successfully.", Toast.LENGTH_LONG).show();
 

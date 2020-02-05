@@ -33,11 +33,11 @@ import java.util.Objects;
 public class AddSubjectFragment extends Fragment {
 
     private EditText subjectName;
+    private Button buttonAddSubject;
     private String level, department, doctorName, subj;
     private ProgressDialog loadingBar;
     private ArrayList<String> arrayListOfDepartment, arrayListOfDoctorName;
-    private MaterialSpinner departmentSpinner;
-    private MaterialSpinner doctorNameSpinner;
+    private MaterialSpinner departmentSpinner, spinner_doctor_name, spinner_level;
 
     public AddSubjectFragment() {
         // Required empty public constructor
@@ -47,23 +47,25 @@ public class AddSubjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_subject, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_subject, container, false);
+        loadingBar = new ProgressDialog(getActivity());
+        subjectName = view.findViewById(R.id.subjectName);
+        spinner_doctor_name = view.findViewById(R.id.spinner_choose_doctor_name);
+        spinner_level = view.findViewById(R.id.spinner_choose_subject);
+        departmentSpinner = view.findViewById(R.id.spinner_choose_department);
+        buttonAddSubject = view.findViewById(R.id.buttonAddSubject);
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadingBar = new ProgressDialog(getContext());
-        subjectName = Objects.requireNonNull(getView()).findViewById(R.id.subjectName);
-        doctorNameSpinner = getView().findViewById(R.id.spinner_choose_doctor_name);
-        MaterialSpinner levelSpinner = getView().findViewById(R.id.spinner_choose_subject);
-        departmentSpinner = getView().findViewById(R.id.spinner_choose_department);
-        Button buttonAddSubject = getView().findViewById(R.id.buttonAddSubject);
         arrayListOfDepartment = new ArrayList<>();
         arrayListOfDoctorName = new ArrayList<>();
 
-        levelSpinner.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
-        levelSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_level.setItems("Choose Level", "Level_One", "Level_Two", "Level_Three", "Level_Four");
+        spinner_level.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (level != item) {
@@ -95,7 +97,7 @@ public class AddSubjectFragment extends Fragment {
             }
         });
 
-        doctorNameSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_doctor_name.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 doctorName = item.toString();
@@ -106,13 +108,14 @@ public class AddSubjectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 subj = subjectName.getText().toString().trim();
-                if (department.equals("")) {
+                Log.d("TAGSUBJECT", subj);
+                if (department == null) {
                     Toast.makeText(getContext(), "please choose department ", Toast.LENGTH_SHORT).show();
-                } else if (subj.equals("")) {
+                } else if (subj.equals("") || subj == null) {
                     Toast.makeText(getContext(), "Please write subject name ", Toast.LENGTH_SHORT).show();
-                } else if (level.equals("")) {
+                } else if (level == null) {
                     Toast.makeText(getContext(), "please choose level ", Toast.LENGTH_SHORT).show();
-                } else if (doctorName.equals("")) {
+                } else if (doctorName == null) {
                     Toast.makeText(getContext(), "please choose doctor name ", Toast.LENGTH_SHORT).show();
                 } else {
                     addSubject(department, subj, level, doctorName);
@@ -133,7 +136,7 @@ public class AddSubjectFragment extends Fragment {
                     arrayListOfDoctorName.add(name);
                 }
                 loadingBar.dismiss();
-                doctorNameSpinner.setItems(arrayListOfDoctorName);
+                spinner_doctor_name.setItems(arrayListOfDoctorName);
             }
 
             @Override
