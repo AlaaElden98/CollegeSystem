@@ -29,10 +29,10 @@ import java.util.ArrayList;
 public class ExamMainForStudentFragment extends Fragment {
 
 
-    private Exam examData;
-    private MaterialSpinner spinner_subject;
+    private MaterialSpinner spinner_choose_subject;
     private ArrayList<String> arrayListOfSubjects;
-    private String subjectChoose;
+    private String subjectChoose, department;
+    private Button startQuiz;
 
     public ExamMainForStudentFragment() {
         // Required empty public constructor
@@ -47,52 +47,39 @@ public class ExamMainForStudentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_exam_main_for_student, container, false);
+        View view = inflater.inflate(R.layout.fragment_exam_main_for_student, container, false);
+        // init view
+        startQuiz = view.findViewById(R.id.start_quiz_btn);
+        spinner_choose_subject = view.findViewById(R.id.spinner_choose_subject_exam);
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        subjectChoose = "choose subject";
+
         arrayListOfSubjects = new ArrayList<>();
-        spinner_subject = getView().findViewById(R.id.spinner_choose_subject_exam);
         ExamMainForStudentFragmentArgs args = ExamMainForStudentFragmentArgs.fromBundle(getArguments());
-        final String department = args.getDepartment();
+        department = args.getDepartment();
 
 
         getSubject(department);
-
-        spinner_subject.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spinner_choose_subject.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 subjectChoose = item.toString();
+                checkIfHaveExam(subjectChoose);
             }
         });
 
-        // TODo  : delete this
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Exam").child("Level_One");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // TODO : replace it with department
-                if (dataSnapshot.child("English language and Literature").exists()) {
-                    Log.d("TAG_EXAM", dataSnapshot.child("English language and Literature").getChildren() + "");
-                } else {
-                    Toast.makeText(getContext(), department + " don't have exam ", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        Button startQuiz = getView().findViewById(R.id.start_quiz_btn);
         startQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (subjectChoose != null) {
+                if (subjectChoose != null && !subjectChoose.equals("choose subject")) {
                     Navigation.findNavController(getView()).navigate(ExamMainForStudentFragmentDirections.actionExamMainForStudentFragmentToQuestionsFragment(subjectChoose, department));
                 } else {
                     Toast.makeText(getContext(), "Make sure you choose subject", Toast.LENGTH_SHORT).show();
@@ -101,6 +88,7 @@ public class ExamMainForStudentFragment extends Fragment {
         });
     }
 
+    // return all subject find in department
     private void getSubject(final String department) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Subjects").child("Level_One").child(department);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -111,7 +99,7 @@ public class ExamMainForStudentFragment extends Fragment {
                     String subject = snapshot.getKey();
                     arrayListOfSubjects.add(subject);
                 }
-                spinner_subject.setItems(arrayListOfSubjects);
+                spinner_choose_subject.setItems(arrayListOfSubjects);
             }
 
             @Override
@@ -120,6 +108,30 @@ public class ExamMainForStudentFragment extends Fragment {
             }
         });
     }
+
+    // return if this department have an exam
+    private void checkIfHaveExam(final String subjectChoose) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Exam").child("Level_One");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // TODO : replace it with department
+                if (dataSnapshot.child(department).child(subjectChoose).exists()) {
+                    startQuiz.setEnabled(true);
+                } else {
+                    Toast.makeText(getContext(), department + " don't have exam ", Toast.LENGTH_SHORT).show();
+                    startQuiz.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

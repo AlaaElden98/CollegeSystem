@@ -13,8 +13,6 @@ import androidx.navigation.Navigation;
 
 import com.usama.runtime.R;
 
-
-// TODO : save the result of the exam in the firebase
 public class ShowScoreFragment extends Fragment {
 
     private TextView scored, total;

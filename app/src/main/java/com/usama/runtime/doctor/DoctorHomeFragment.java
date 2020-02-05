@@ -138,7 +138,7 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         } else if (id == R.id.nav_show_subject) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectFragment());
         } else if (id == R.id.nav_make_exam) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment());
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment(nationalId , realName));
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();

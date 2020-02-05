@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                     desiresMap.put("national_id", nationalId);
                     desiresMap.put("name", studentName);
                     desiresMap.put("id", studentData.getId());
-                    desiresReference.child(finalDesires).updateChildren(desiresMap);
+                    desiresReference.child(finalDesires).child(nationalId).updateChildren(desiresMap);
 
                     // update student child in firebase to add his final desires
                     HashMap<String, Object> departmentMap = new HashMap<>();

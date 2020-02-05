@@ -217,43 +217,6 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/makeExamFragment"
-        android:name="com.usama.runtime.doctor.makeExam.MakeExamFragment"
-        android:label="fragment_make_exam"
-        tools:layout="@layout/fragment_make_exam" >
-        <argument
-            android:name="level"
-            app:argType="string" />
-        <argument android:name="department"
-            app:argType="string" />
-        <argument android:name="subject"
-            app:argType="string" />
-        <argument
-            android:name="cha1"
-            app:argType="string" />
-        <argument
-            android:name="cha2"
-            app:argType="string" />
-        <argument
-            android:name="cha3"
-            app:argType="string" />
-        <argument
-            android:name="cha4"
-            app:argType="string" />
-        <argument
-            android:name="cha5"
-            app:argType="string" />
-        <argument
-            android:name="cha6"
-            app:argType="string" />
-        <argument
-            android:name="numberOfQuestion"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_makeExamFragment_to_testExamFragment2"
-            app:destination="@id/testExamFragment2" />
-    </fragment>
-    <fragment
         android:id="@+id/showSubjectFragment"
         android:name="com.usama.runtime.admin.subject.ShowSubjectFragment"
         android:label="fragment_show_subject"
@@ -321,18 +284,19 @@
     </fragment>
     <fragment
         android:id="@+id/infoOfExamFragment"
-        android:name="com.usama.runtime.doctor.makeExam.InfoOfExamFragment"
-        android:label="fragment_info_of_exam"
-        tools:layout="@layout/fragment_info_of_exam" >
+        android:name="com.usama.runtime.doctor.makeExam.MakeExamFragment"
+        android:label="fragment_make_exam"
+        tools:layout="@layout/fragment_make_exam">
         <action
-            android:id="@+id/action_infoOfExamFragment_to_makeExamFragment"
-            app:destination="@id/makeExamFragment" />
+            android:id="@+id/action_infoOfExamFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
+        <argument
+            android:name="nationalId"
+            app:argType="string" />
+        <argument
+            android:name="reakName"
+            app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/testExamFragment2"
-        android:name="com.usama.runtime.doctor.makeExam.TestExamFragment"
-        android:label="fragment_test_exam"
-        tools:layout="@layout/fragment_test_exam" />
     <fragment
         android:id="@+id/examMainForStudentFragment"
         android:name="com.usama.runtime.student.E_Exam.ExamMainForStudentFragment"

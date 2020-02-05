@@ -32,15 +32,13 @@ import com.usama.runtime.model.QuestionModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class QuestionsFragment extends Fragment {
 
-    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, degree_of_exam, department, level, num_of_question, subject;
+    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, degree_of_exam, department, level, num_of_question, subject, chapter_number;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference();
 
     private Exam examData;
-    private ArrayList<String> arrayOfNumberOfChapter;
 
     private List<QuestionModel> list;
     private TextView question, noIndecate;
@@ -51,10 +49,7 @@ public class QuestionsFragment extends Fragment {
     private int position = 0;
     private int score = 0;
 
-    private String category;
-    private int setNo;
-
-    private Dialog loadingdialog;
+    private Dialog loadingDialog;
 
 
     public QuestionsFragment() {
@@ -70,8 +65,17 @@ public class QuestionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_questions, container, false);
+        View view = inflater.inflate(R.layout.fragment_questions, container, false);
+        // init view
+        question = view.findViewById(R.id.question);
+        noIndecate = view.findViewById(R.id.no_indicator);
+        optionsContain = view.findViewById(R.id.option_container);
+        nextBtn = view.findViewById(R.id.next_btn);
+
+
+        loadingDialog = new Dialog(getActivity());
+
+        return view;
     }
 
     @Override
@@ -81,43 +85,65 @@ public class QuestionsFragment extends Fragment {
         subject = args.getSubject();
         department = args.getDepartment();
 
-        question = getView().findViewById(R.id.question);
-        noIndecate = getView().findViewById(R.id.no_indicator);
-        optionsContain = getView().findViewById(R.id.option_container);
-        nextBtn = getView().findViewById(R.id.next_btn);
 
-        arrayOfNumberOfChapter = new ArrayList<>();
-
-
-        loadingdialog = new Dialog(getContext());
-        loadingdialog.setContentView(R.layout.loading);
-        loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        loadingdialog.setCancelable(false);
+        loadingDialog.setContentView(R.layout.loading);
+        loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        loadingDialog.setCancelable(false);
 
         // TODO : first we fetch data from Exam node
         // TODO : don't mess this line ... replace it by real data
-        myRef.child("Exam").child("Level_One").child("English language and Literature").child("English").addValueEventListener(new ValueEventListener() {
+        myRef.child("Exam").child("Level_One").child(department).child(subject).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 examData = dataSnapshot.getValue(Exam.class);
                 Chapter_one = examData.getChapter_one();
-                if (Chapter_one != null) arrayOfNumberOfChapter.add(Chapter_one);
+                if (Chapter_one != null) {
+                    chapter_number = Chapter_one;
+                    getQuestionOfChapterNumber(chapter_number, 1);
+                    Log.d("NUM", 1 + "");
+                }
                 Chapter_two = examData.getChapter_two();
-                if (Chapter_two != null) arrayOfNumberOfChapter.add(Chapter_two);
+                if (Chapter_two != null) {
+                    chapter_number = Chapter_two;
+                    getQuestionOfChapterNumber(chapter_number, 2);
+                    Log.d("NUM", 2 + "");
+
+                }
                 Chapter_three = examData.getChapter_three();
-                if (Chapter_three != null) arrayOfNumberOfChapter.add(Chapter_three);
+                if (Chapter_three != null) {
+                    chapter_number = Chapter_three;
+                    getQuestionOfChapterNumber(chapter_number, 3);
+                    Log.d("NUM", 3 + "");
+
+                }
                 Chapter_four = examData.getChapter_four();
-                if (Chapter_four != null) arrayOfNumberOfChapter.add(Chapter_four);
+                if (Chapter_four != null) {
+                    chapter_number = Chapter_four;
+                    getQuestionOfChapterNumber(chapter_number, 4);
+                    Log.d("NUM", 4 + "");
+
+                }
                 Chapter_five = examData.getChapter_five();
-                if (Chapter_five != null) arrayOfNumberOfChapter.add(Chapter_five);
+                if (Chapter_five != null) {
+                    chapter_number = Chapter_five;
+                    getQuestionOfChapterNumber(chapter_number, 5);
+                    Log.d("NUM", 5 + "");
+
+                }
                 Chapter_sex = examData.getChapter_sex();
-                if (Chapter_sex != null) arrayOfNumberOfChapter.add(Chapter_sex);
+                if (Chapter_sex != null) {
+                    chapter_number = Chapter_sex;
+                    getQuestionOfChapterNumber(chapter_number, 6);
+                    Log.d("NUM", 6 + "");
+
+                }
+
                 degree_of_exam = examData.getDegree_of_exam();
+
                 department = examData.getDepartment();
                 level = examData.getLevel();
                 num_of_question = examData.getNum_of_question();
                 subject = examData.getSubject();
-                Log.d("EXAMDATA", examData + Chapter_one + Chapter_two + Chapter_three + Chapter_four + Chapter_five + Chapter_sex);
             }
 
             @Override
@@ -126,59 +152,69 @@ public class QuestionsFragment extends Fragment {
             }
         });
 
-
         list = new ArrayList<>();
-        loadingdialog.show();
-        // TODO : make level is public
-        myRef.child("Questions").child("Level_One").child("English language and Literature").child("English").child("Chapter_one").orderByChild("Chapter_one").equalTo(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        loadingDialog.show();
+
+    }
+
+    private void getQuestionOfChapterNumber(String chapter_number, int numberOfSubject) {
+        // get questions
+        myRef.child("Questions").child("Level_One").child(department).child(subject).child(chapter_number).orderByChild(chapter_number).equalTo(numberOfSubject).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     list.add(snapshot.getValue(QuestionModel.class));
-                    Log.d("TAGCORRECT", snapshot.getValue(QuestionModel.class).getCorrectANS());
+                    Log.d("TAGSIZE", list.size() + "");
                 }
-
                 if (list.size() > 0) {
-                    for (int i = 0; i < 4; i++) {
-                        optionsContain.getChildAt(i).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                checkAnswer((Button) v);
-                            }
-                        });
-                    }
-                    playAnim(question, 0, list.get(position).getQuestion());
-                    nextBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            nextBtn.setEnabled(false);
-                            nextBtn.setAlpha(0.7f);
-                            enableOption(true);
-                            position++;
-                            if (position == list.size()) {
-                                Navigation.findNavController(getView()).navigate(QuestionsFragmentDirections.actionQuestionsFragmentToShowScoreFragment(score, list.size()));
-                                return;
-                            }
-                            count = 0;
-                            playAnim(question, 0, list.get(position).getQuestion());
-                        }
-                    });
-                } else {
-                    getActivity().finish();
-                    Toast.makeText(getContext(), "no questions ", Toast.LENGTH_SHORT).show();
+                    startExam();
                 }
-                loadingdialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                loadingdialog.dismiss();
+                loadingDialog.dismiss();
                 getActivity().finish();
             }
         });
 
     }
+
+    private void startExam() {
+        loadingDialog.dismiss();
+        if (list.size() > 0) {
+            for (int i = 0; i < 4; i++) {
+                optionsContain.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkAnswer((Button) v);
+                    }
+                });
+            }
+            playAnim(question, 0, list.get(position).getQuestion());
+            nextBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nextBtn.setEnabled(false);
+                    nextBtn.setAlpha(0.7f);
+                    enableOption(true);
+                    position++;
+                    if (position == list.size()) {
+                        Navigation.findNavController(getView()).navigate(QuestionsFragmentDirections.actionQuestionsFragmentToShowScoreFragment(score, list.size()));
+                        return;
+                    }
+                    count = 0;
+                    playAnim(question, 0, list.get(position).getQuestion());
+                }
+            });
+        } else {
+            getActivity().finish();
+            Toast.makeText(getContext(), "no questions ", Toast.LENGTH_SHORT).show();
+        }
+        loadingDialog.dismiss();
+    }
+
 
     private void playAnim(final View view, final int value, final String data) {
         view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100)
@@ -186,7 +222,6 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void onAnimationStart(Animator animation) {
                 if (value == 0 && count < 4) {
-                    // TODO : VIDEO NUM 5
                     String option = "";
                     if (count == 0) {
                         option = list.get(position).getOptionA();

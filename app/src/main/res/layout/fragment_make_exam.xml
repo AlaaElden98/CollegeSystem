@@ -11,55 +11,137 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/info_exam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:text="Number of Question in the exam"
-        android:textSize="20sp" />
+        android:layout_marginBottom="50sp"
+        android:gravity="center"
+        android:text="Choose Information of the exam "
+        android:textSize="24sp" />
 
     <com.jaredrummler.materialspinner.MaterialSpinner
-        android:id="@+id/spinner_choose_number_of_question"
-        android:layout_width="match_parent"
+        android:id="@+id/spinner_choose_Level_info_exam"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="20dp"
-        android:hint="choose number of question"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Choose Level"
         android:textColor="#000"
         android:textStyle="bold"
         app:ms_background_color="#F7EBD9D9" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:text="The degree of the exam"
-        android:textSize="20sp" />
-
     <com.jaredrummler.materialspinner.MaterialSpinner
-        android:id="@+id/spinner_choose_degree_of_the_exam"
-        android:layout_width="match_parent"
+        android:id="@+id/spinner_choose_department_info_exam"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="20dp"
-        android:hint="Degree of the exam"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Choose Department"
         android:textColor="#000"
         android:textStyle="bold"
         app:ms_background_color="#F7EBD9D9" />
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_choose_subject_info_exam"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Choose Subject"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:ms_background_color="#F7EBD9D9" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:text="Chapter one"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chapter two"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:text="Chapter three"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chapter four"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:text="Chapter five"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chapter_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chapter sex"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/publish_exam_btn"
+        android:id="@+id/button_make_exam"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/button"
         android:foreground="?android:attr/selectableItemBackground"
-        android:text="publish the exam"
+        android:text="Make exam"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="17sp" />
