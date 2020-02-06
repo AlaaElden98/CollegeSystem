@@ -29,7 +29,13 @@ public class ShowScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show_score, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_score, container, false);
+
+        scored = view.findViewById(R.id.scored);
+        total = view.findViewById(R.id.total);
+        doneBtn = view.findViewById(R.id.done_btn);
+
+        return view;
     }
 
     @Override
@@ -39,9 +45,6 @@ public class ShowScoreFragment extends Fragment {
 
         int score = args.getScore();
         int totalInt = args.getTotal();
-        scored = getView().findViewById(R.id.scored);
-        total = getView().findViewById(R.id.total);
-        doneBtn = getView().findViewById(R.id.done_btn);
 
         scored.setText(String.valueOf(score));
         total.setText("Out of " + totalInt);

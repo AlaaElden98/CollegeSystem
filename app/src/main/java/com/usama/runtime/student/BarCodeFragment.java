@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -37,12 +38,14 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.otaliastudios.cameraview.CameraView;
 import com.otaliastudios.cameraview.Frame;
 import com.otaliastudios.cameraview.FrameProcessor;
 import com.usama.runtime.R;
+import com.usama.runtime.doctor.addQuestion.SpecificSubjectFragmentDirections;
 import com.usama.runtime.model.Student;
 
 import java.text.SimpleDateFormat;
@@ -54,7 +57,6 @@ import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
-// TODO : generate qr with valid info
 public class BarCodeFragment extends Fragment {
     //init barCode firebase
     private FirebaseVisionBarcodeDetector detector;
@@ -79,15 +81,29 @@ public class BarCodeFragment extends Fragment {
     private HashMap<String, Object> studentMap;
     private DatabaseReference rootRef;
 
+    private View view;
+
     public BarCodeFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(BarCodeFragmentDirections.actionBarCodeFragmentToHomeFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bar_code, container, false);
+        view = inflater.inflate(R.layout.fragment_bar_code, container, false);
         camera_view = view.findViewById(R.id.camera_view);
         camera_view.setLifecycleOwner(getViewLifecycleOwner());
         result_of_barcode = view.findViewById(R.id.result_of_barcode);
@@ -102,7 +118,7 @@ public class BarCodeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         try {
             //create shared preferences called My prefs
-            final SharedPreferences sharedpreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            final SharedPreferences sharedpreferences = (getActivity()).getSharedPreferences("MyPrefs", MODE_PRIVATE);
             // get the time now
             @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             final String currentDateAndTime = sdf.format(new Date());
@@ -172,12 +188,17 @@ public class BarCodeFragment extends Fragment {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        setUpCamera();
+                        if (report.areAllPermissionsGranted()) {
+                            setUpCamera();
+                        }
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            Toast.makeText(getActivity(), "you should accept all permission", Toast.LENGTH_SHORT).show();
+                            onStart();
+                        }
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
                     }
                 }).check();
     }
@@ -287,7 +308,6 @@ public class BarCodeFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

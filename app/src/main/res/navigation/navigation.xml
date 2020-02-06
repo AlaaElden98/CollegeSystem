@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_studentLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_studentLoginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminOrDoctorLoginFragment"
@@ -48,15 +51,15 @@
         <action
             android:id="@+id/action_adminOrDoctorLoginFragment_to_adminHomeFragment"
             app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminOrDoctorLoginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.usama.runtime.student.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
         <action
             android:id="@+id/action_homeFragment_to_recordingDesiresFragment"
             app:destination="@id/recordingDesiresFragment" />
@@ -69,6 +72,9 @@
         <action
             android:id="@+id/action_homeFragment_to_examMainForStudentFragment"
             app:destination="@id/examMainForStudentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_studentLoginFragment"
+            app:destination="@id/studentLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/recordingDesiresFragment"
@@ -109,6 +115,9 @@
         <argument
             android:name="nationalId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addNewPostFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/showDepartmentFragment"
@@ -118,6 +127,12 @@
         <action
             android:id="@+id/action_showDepartmentFragment_to_editDepartmentDataFragment"
             app:destination="@id/editDepartmentDataFragment" />
+        <action
+            android:id="@+id/action_showDepartmentFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <argument
+            android:name="realName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/editDepartmentDataFragment"
@@ -147,6 +162,7 @@
         <argument
             android:name="departmentDescription"
             app:argType="string" />
+        <argument android:name="realName" />
     </fragment>
     <fragment
         android:id="@+id/showAllStudentFragment"
@@ -196,6 +212,14 @@
         <action
             android:id="@+id/action_specificSubjectFragment_to_addQuestionFragment"
             app:destination="@id/addQuestionFragment" />
+        <action
+            android:id="@+id/action_specificSubjectFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
+        <argument
+            android:name="antionalId"
+            app:argType="string" />
+        <argument android:name="realName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addQuestionFragment"
@@ -215,6 +239,14 @@
             app:destination="@id/addQuestionFragment" />
         <argument android:name="department"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addQuestionFragment_to_specificSubjectFragment"
+            app:destination="@id/specificSubjectFragment" />
+        <argument
+            android:name="realName"
+            app:argType="string" />
+        <argument android:name="nationalId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showSubjectFragment"
@@ -227,6 +259,10 @@
         <argument
             android:name="department"
             app:argType="string" />
+        <action
+            android:id="@+id/action_showSubjectFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <argument android:name="realName" />
     </fragment>
     <fragment
         android:id="@+id/adminHomeFragment"
@@ -281,6 +317,7 @@
         <action
             android:id="@+id/action_chooseLevelToShowSubjectFragment_to_showSubjectFragment"
             app:destination="@id/showSubjectFragment" />
+        <argument android:name="doctorName" />
     </fragment>
     <fragment
         android:id="@+id/infoOfExamFragment"

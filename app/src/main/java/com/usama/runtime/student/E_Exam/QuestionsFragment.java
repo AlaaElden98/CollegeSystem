@@ -90,8 +90,6 @@ public class QuestionsFragment extends Fragment {
         loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingDialog.setCancelable(false);
 
-        // TODO : first we fetch data from Exam node
-        // TODO : don't mess this line ... replace it by real data
         myRef.child("Exam").child("Level_One").child(department).child(subject).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -164,7 +162,6 @@ public class QuestionsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     list.add(snapshot.getValue(QuestionModel.class));
-                    Log.d("TAGSIZE", list.size() + "");
                 }
                 if (list.size() > 0) {
                     startExam();

@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,8 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Subject;
 
+import java.util.Objects;
+
 public class ShowSubjectFragment extends Fragment {
     private DatabaseReference subjectRef;
+    private String doctorName;
 
     public ShowSubjectFragment() {
         // Required empty public constructor
@@ -34,6 +39,14 @@ public class ShowSubjectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(ShowSubjectFragmentDirections.actionShowSubjectFragmentToAdminHomeFragment(doctorName));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -50,7 +63,7 @@ public class ShowSubjectFragment extends Fragment {
         ShowSubjectFragmentArgs args = ShowSubjectFragmentArgs.fromBundle(getArguments());
         String level = args.getLevel();
         String department = args.getDepartment();
-
+        doctorName = args.getRealName();
         subjectRef = FirebaseDatabase.getInstance().getReference().child("Subjects").child(level).child(department);
 
         RecyclerView subjectList = getView().findViewById(R.id.subject_list);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,7 +27,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.usama.runtime.R;
+import com.usama.runtime.admin.subject.ShowSubjectFragmentDirections;
 import com.usama.runtime.model.Posts;
 import com.usama.runtime.viewHolder.PostsViewHolder;
 
@@ -37,9 +40,11 @@ import io.paperdb.Paper;
 
 public class AdminHomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseReference postsRef;
-    private RecyclerView recyclerView;
-
+    private RecyclerView admin_recycler_view;
+    private Toolbar toolbar;
     private String realName;
+    private DrawerLayout drawer;
+    private View view;
 
     public AdminHomeFragment() {
         // Required empty public constructor
@@ -48,13 +53,27 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.admin_home_fragment, container, false);
+        view = inflater.inflate(R.layout.admin_home_fragment, container, false);
+
+        toolbar = view.findViewById(R.id.toolbar_admin);
+        toolbar.setTitle("Home");
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
+
+        drawer = view.findViewById(R.id.drawer_layout);
+
+        return view;
     }
 
     @Override
@@ -65,11 +84,6 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
         postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         postsRef.keepSynced(true);
 
-        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar_admin);
-        toolbar.setTitle("Home");
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -79,10 +93,12 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
         NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = getView().findViewById(R.id.home_admin_recycler_menu);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        admin_recycler_view = getView().findViewById(R.id.home_admin_recycler_menu);
+        admin_recycler_view.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        admin_recycler_view.setLayoutManager(linearLayoutManager);
 
 
         AdminHomeFragmentArgs args = AdminHomeFragmentArgs.fromBundle(getArguments());
@@ -102,9 +118,13 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
     @Override
     public void onStart() {
         super.onStart();
-        //can retrieve all data
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postsRef.keepSynced(true);
+
+        Query query = postsRef.orderByChild("counter");
+
         FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
-                .setQuery(postsRef, Posts.class)
+                .setQuery(query, Posts.class)
                 .build();
 
         FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
@@ -127,7 +147,7 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
                     }
                 };
         // add adapter in recyclerView
-        recyclerView.setAdapter(adapter);
+        admin_recycler_view.setAdapter(adapter);
         adapter.startListening();
 
     }
@@ -141,25 +161,24 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
 
 
         if (id == R.id.nav_add_department) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDepartmentFragment(realName));
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDepartmentFragment(realName));
         } else if (id == R.id.nav_add_subject) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddSubjectFragment());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddSubjectFragment());
         } else if (id == R.id.nav_show_subject) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToChooseLevelToShowSubjectFragment2());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToChooseLevelToShowSubjectFragment2(realName));
         } else if (id == R.id.nav_show_department) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDepartmentFragment());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDepartmentFragment(realName));
         } else if (id == R.id.nav_show_student) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowAllStudentFragment());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowAllStudentFragment());
         } else if (id == R.id.nav_add_doctor) {
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDoctorFragment(realName));
-        } else if (id == R.id.nav_show_doctor) { //TODO
-            Navigation.findNavController(getView()).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDoctorFragment());
+            Navigation.findNavController((view)).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDoctorFragment(realName));
+        } else if (id == R.id.nav_show_doctor) {
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToShowDoctorFragment());
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToMainFragment());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToMainFragment());
         }
-        DrawerLayout drawer = Objects.requireNonNull(getView()).findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

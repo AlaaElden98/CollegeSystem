@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.Prevalent.Prevalent;
+import com.usama.runtime.admin.department.AddDepartmentFragmentDirections;
 import com.usama.runtime.model.Doctors;
 import com.usama.runtime.model.Student;
 
@@ -29,22 +31,39 @@ import java.util.Objects;
 import io.paperdb.Paper;
 
 
-// main fragment --> contain two button moved to student , admin or doctor login
 public class MainFragment extends Fragment {
     private ProgressDialog loadingBar;
     private Button studentBtn, adminOrDoctorBtn;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // handel back press .. when admin click back he will go to home fragment
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        View view =  inflater.inflate(R.layout.main_fragment, container, false);
+
+        studentBtn = view.findViewById(R.id.main_student_login_btn);
+        adminOrDoctorBtn = view.findViewById(R.id.main_doctors_admins_btn);
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        studentBtn = Objects.requireNonNull(getView()).findViewById(R.id.main_student_login_btn);
-        adminOrDoctorBtn = getView().findViewById(R.id.main_doctors_admins_btn);
         Paper.init(getContext());
         loadingBar = new ProgressDialog(getContext());
 

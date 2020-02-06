@@ -94,7 +94,6 @@ public class ExamMainForStudentFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("TAG", dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String subject = snapshot.getKey();
                     arrayListOfSubjects.add(subject);
@@ -109,14 +108,12 @@ public class ExamMainForStudentFragment extends Fragment {
         });
     }
 
-    // return if this department have an exam
     private void checkIfHaveExam(final String subjectChoose) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Exam").child("Level_One");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // TODO : replace it with department
                 if (dataSnapshot.child(department).child(subjectChoose).exists()) {
                     startQuiz.setEnabled(true);
                 } else {
@@ -134,7 +131,6 @@ public class ExamMainForStudentFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

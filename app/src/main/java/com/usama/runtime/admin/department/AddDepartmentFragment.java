@@ -1,5 +1,6 @@
 package com.usama.runtime.admin.department;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,17 +26,43 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+import com.usama.runtime.doctor.AddNewPostFragmentDirections;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class AddDepartmentFragment extends Fragment {
+    // init progress dialog
     private ProgressDialog loadingBar;
-    private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal , getDepartmentDescription;
-    private String selectedSubject;
-    private String realName;
+
+    // init editText and Button
+    private EditText getDepartmentCapacity, getDepartmentName, getDepartmentMinSpecial, getDepartmentMinTotal, getDepartmentDescription;
+    private Button buttonAddDepartment;
+
+    // init String used
+    private String selectedSubject, realName;
+
+    // inti spinner show subject available
+    private MaterialSpinner subjectSpinner;
+
+
     public AddDepartmentFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // handel back press .. when admin click back he will go to home fragment
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddDepartmentFragmentDirections.actionAddDepartmentFragmentToAdminHomeFragment(realName));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
 
@@ -43,13 +70,21 @@ public class AddDepartmentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_department, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_add_department, container, false);
+
+        AddDepartmentFragmentArgs args = AddDepartmentFragmentArgs.fromBundle(getArguments());
+        realName = args.getRealname();
+
+        getDepartmentName = view.findViewById(R.id.getDepartmentName);
+        getDepartmentCapacity = view.findViewById(R.id.getDepartmentCapacity);
+        buttonAddDepartment = view.findViewById(R.id.buttonAddDepartment);
+        subjectSpinner = view.findViewById(R.id.spinner_choose_subject);
+        getDepartmentMinSpecial = view.findViewById(R.id.getDepartmentMinSpecial);
+        getDepartmentMinTotal = view.findViewById(R.id.getDepartmentMinTotal);
+        getDepartmentDescription = view.findViewById(R.id.getDepartmentDescription);
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return view;
     }
 
 
@@ -57,16 +92,7 @@ public class AddDepartmentFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        AddDepartmentFragmentArgs args = AddDepartmentFragmentArgs.fromBundle(getArguments());
-        realName = args.getRealname();
-
-        getDepartmentName = getView().findViewById(R.id.getDepartmentName);
-        getDepartmentCapacity = getView().findViewById(R.id.getDepartmentCapacity);
-        Button buttonAddDepartment = getView().findViewById(R.id.buttonAddDepartment);
-        MaterialSpinner subjectSpinner = getView().findViewById(R.id.spinner_choose_subject);
-        getDepartmentMinSpecial = getView().findViewById(R.id.getDepartmentMinSpecial);
-        getDepartmentMinTotal = getView().findViewById(R.id.getDepartmentMinTotal);
-        getDepartmentDescription = getView().findViewById(R.id.getDepartmentDescription);
+        loadingBar = new ProgressDialog(getActivity());
 
 
         subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
@@ -77,9 +103,6 @@ public class AddDepartmentFragment extends Fragment {
                 Log.d("SpinnerTAG", selectedSubject);
             }
         });
-
-
-        loadingBar = new ProgressDialog(getActivity());
 
         buttonAddDepartment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,24 +124,24 @@ public class AddDepartmentFragment extends Fragment {
             selectedSubject = "without";
 
 
-        if (departmentName.equals("")){
+        if (departmentName.equals("")) {
             Toast.makeText(getContext(), "please add department name ", Toast.LENGTH_SHORT).show();
-        }else if (departmentCapacity.equals("")){
+        } else if (departmentCapacity.equals("")) {
             Toast.makeText(getContext(), "please add department capacity", Toast.LENGTH_SHORT).show();
-        }else if (departmentMinTotal.equals("")){
+        } else if (departmentMinTotal.equals("")) {
             Toast.makeText(getContext(), "please add department Min Total", Toast.LENGTH_SHORT).show();
-        }else if (departmentMinSpecial.equals("")){
+        } else if (departmentMinSpecial.equals("")) {
             Toast.makeText(getContext(), "please add department Min Special", Toast.LENGTH_SHORT).show();
-        }else if (departmentDescription.equals("")){
+        } else if (departmentDescription.equals("")) {
             Toast.makeText(getContext(), "please add department description", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             // wait to check is phone number is available in database
             loadingBar.setTitle("Add Department");
             loadingBar.setMessage("please wait , while we are checking the credentials .");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            ValidateDepartment(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial,departmentDescription, selectedSubject);
+            ValidateDepartment(departmentName, departmentCapacity, departmentMinTotal, departmentMinSpecial, departmentDescription, selectedSubject);
         }
     }
 

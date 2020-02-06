@@ -1,5 +1,6 @@
 package com.usama.runtime.admin.department;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+import com.usama.runtime.admin.doctor.EditDoctorDataFragmentDirections;
+import com.usama.runtime.doctor.AddNewPostFragmentDirections;
 
 import java.util.HashMap;
 
@@ -27,7 +30,7 @@ public class EditDepartmentDataFragment extends Fragment {
     private Button buttonEditDepartment;
     private TextView getDepartmentName;
     private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial ,getDepartmentDescription ;
-    private String selectedSubject;
+    private String selectedSubject , doctorName;
 
     public EditDepartmentDataFragment() {
         // Required empty public constructor
@@ -37,13 +40,30 @@ public class EditDepartmentDataFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(EditDoctorDataFragmentDirections.actionEditDoctorDataFragmentToShowDoctorFragment());
+                Toast.makeText(getActivity(), "Nothing changed.", Toast.LENGTH_SHORT).show();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_department_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_department_data, container, false);
+
+        getDepartmentName = view.findViewById(R.id.editDepartmentName);
+        getDepartmentCapacity = view.findViewById(R.id.editDepartmentCapacity);
+        getDepartmentMinTotal = view.findViewById(R.id.editDepartmentMinTotal);
+        getDepartmentMinSpecial = view.findViewById(R.id.editDepartmentMinSpecial);
+        getDepartmentDescription = view.findViewById(R.id.editDepartmentDescription);
+        buttonEditDepartment = view.findViewById(R.id.editButtonEditDepartment);
+
+        return view;
     }
 
     @Override
@@ -56,13 +76,8 @@ public class EditDepartmentDataFragment extends Fragment {
         String minSpecial = args.getDepartmentMinSpecial();
         String specialSubject = args.getDepartmentSpecialSubject();
         String dec = args.getDepartmentDescription();
+        doctorName = args.getRealName();
 
-        getDepartmentName = getView().findViewById(R.id.editDepartmentName);
-        getDepartmentCapacity = getView().findViewById(R.id.editDepartmentCapacity);
-        getDepartmentMinTotal = getView().findViewById(R.id.editDepartmentMinTotal);
-        getDepartmentMinSpecial = getView().findViewById(R.id.editDepartmentMinSpecial);
-        getDepartmentDescription = getView().findViewById(R.id.editDepartmentDescription);
-        buttonEditDepartment = getView().findViewById(R.id.editButtonEditDepartment);
         MaterialSpinner subjectSpinner = getView().findViewById(R.id.edit_spinner_choose_subject);
         subjectSpinner.setItems("Without", "arabic", "english", "french", "geography", "history", "philosophy", "psychology");
 
@@ -86,7 +101,7 @@ public class EditDepartmentDataFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editDepartment();
-                Navigation.findNavController(getView()).navigate(EditDepartmentDataFragmentDirections.actionEditDepartmentDataFragmentToShowDepartmentFragment());
+                Navigation.findNavController(getView()).navigate(EditDepartmentDataFragmentDirections.actionEditDepartmentDataFragmentToShowDepartmentFragment(doctorName));
             }
         });
 

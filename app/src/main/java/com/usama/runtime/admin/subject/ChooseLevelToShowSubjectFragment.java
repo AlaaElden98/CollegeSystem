@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,13 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+import com.usama.runtime.doctor.AddNewPostFragmentDirections;
+import com.usama.runtime.doctor.subject.ChooseLevelToShowSubjectToDoctorFragmentArgs;
 import com.usama.runtime.model.Department;
 
 import java.util.ArrayList;
 
 
 public class ChooseLevelToShowSubjectFragment extends Fragment {
-    private String levelChoose, departmentChoose;
+    private String levelChoose, departmentChoose, doctorName;
     private MaterialSpinner chooseLevel, chooseDepartment;
     private Button buttonShowSubject;
     private ArrayList<String> arrayListOfDepartment;
@@ -58,6 +61,9 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ChooseLevelToShowSubjectToDoctorFragmentArgs args = ChooseLevelToShowSubjectToDoctorFragmentArgs.fromBundle(getArguments());
+        doctorName = args.getDoctorName();
 
         loadingBar = new ProgressDialog(getContext());
         arrayListOfDepartment = new ArrayList<>();
@@ -97,7 +103,7 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
                 if (chooseLevel == null) {
                     Toast.makeText(getContext(), "please make sure all field is valid", Toast.LENGTH_SHORT).show();
                 } else {
-                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectFragmentDirections.actionChooseLevelToShowSubjectFragmentToShowSubjectFragment(levelChoose, departmentChoose));
+                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectFragmentDirections.actionChooseLevelToShowSubjectFragmentToShowSubjectFragment(levelChoose, departmentChoose , doctorName));
                 }
             }
         });

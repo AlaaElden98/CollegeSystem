@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Posts;
@@ -48,10 +50,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
 
     private DatabaseReference postsRef;
-    private RecyclerView recyclerView;
+    private RecyclerView postRecyclerView;
 
 
-    // TODO : PROCESS TO MAKE FINAL DESIRES
     private HomeActivityViewModel homeActivityViewModel;
     private SharedPreferences prefs;
     private DatabaseReference desiresReference, studentRefrence;
@@ -67,15 +68,22 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
+        return view;
     }
 
 
@@ -83,14 +91,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // make an instance in database
-        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-        postsRef.keepSynced(true);
-
         Toolbar toolbar = getView().findViewById(R.id.toolbar_student);
         toolbar.setTitle("Home");
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         Paper.init(getActivity());
 
@@ -107,10 +111,15 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         // put header view
         final View headerView = navigationView.getHeaderView(0);
         final TextView user_name = headerView.findViewById(R.id.user_profile_name);
-        recyclerView = getView().findViewById(R.id.home_student_recycler_menu);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+
+        // init recycler view
+        postRecyclerView = getView().findViewById(R.id.home_student_recycler_menu);
+        postRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
+        postRecyclerView.setLayoutManager(linearLayoutManager);
 
 
         homeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
@@ -152,9 +161,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                     HashMap<String, Object> departmentMap = new HashMap<>();
                     departmentMap.put("department", finalDesires);
                     studentRefrence.child(nationalId).updateChildren(departmentMap);
-
-
-                    //Todo : we need to show all student in a specific department
                 }
             }
         });
@@ -163,9 +169,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     @Override
     public void onStart() {
         super.onStart();
+        // make an instance in database
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postsRef.keepSynced(true);
+
+        Query query = postsRef.orderByChild("counter");
+
+
         //can retrieve all data
         FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
-                .setQuery(postsRef, Posts.class)
+                .setQuery(query, Posts.class)
                 .build();
 
         FirebaseRecyclerAdapter<Posts, PostsViewHolder> adapter =
@@ -188,7 +201,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                     }
                 };
         // add adapter in recyclerView
-        recyclerView.setAdapter(adapter);
+        postRecyclerView.setAdapter(adapter);
         adapter.startListening();
 
     }
@@ -216,7 +229,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();
-            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToMainFragment());
+            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToStudentLoginFragment());
         }
         return true;
     }

@@ -1,12 +1,11 @@
 package com.usama.runtime.doctor;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,36 +14,36 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.R;
-import com.usama.runtime.student.showpostFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import static android.content.Context.MODE_PRIVATE;
-
-// TODO : sort the posts .. by date
 public class AddNewPostFragment extends Fragment {
-    private String subject, description, postTimeAndDate,name , nationalId;
-    private Button addPostBtn,showPostBtn;
+    private String subject, description, postTimeAndDate, name, nationalId;
+    private Button addPostBtn;
     private EditText nameOfSubject, descriptionOfTopic;
     private TextView nameOfProfessor;
     private DatabaseReference postRef;
     private ProgressDialog loadingBar;
-    String nameOfDoctor ;
-    private static final String DoctorName = "DoctorName";
+
+    private long countPosts = 0;
+    private String saveCurrentDateKey, saveCurrentTimeKey, productRandomKey;
 
 
     public AddNewPostFragment() {
@@ -55,6 +54,14 @@ public class AddNewPostFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(AddNewPostFragmentDirections.actionAddNewPostFragmentToDoctorHomeFragment(name, nationalId));
+                Toast.makeText(getActivity(), "Your post not uploading.", Toast.LENGTH_SHORT).show();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 
@@ -72,7 +79,6 @@ public class AddNewPostFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        postRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         addPostBtn = getView().findViewById(R.id.addPostBtn);
         nameOfProfessor = getView().findViewById(R.id.nameOfProfessor);
         nameOfSubject = getView().findViewById(R.id.nameOfSubject);
@@ -84,6 +90,21 @@ public class AddNewPostFragment extends Fragment {
         name = args.getRealName();
         nationalId = args.getNationalId();
         nameOfProfessor.setText(name);
+
+        postRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
+        postRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                countPosts = dataSnapshot.getChildrenCount();
+                Log.d("counter", countPosts + "");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         addPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +123,9 @@ public class AddNewPostFragment extends Fragment {
             Toast.makeText(getActivity(), "Please write Name of subject...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(description)) {
             Toast.makeText(getActivity(), "Please write Description...", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(name)){
+        } else if (TextUtils.isEmpty(name)) {
             Toast.makeText(getContext(), "Please check internet .. refresh your app ", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             StoreProductInformation();
         }
 
@@ -135,25 +156,39 @@ public class AddNewPostFragment extends Fragment {
         SimpleDateFormat currentDate = new SimpleDateFormat("E, dd MMM .. HH : mm ");
         postTimeAndDate = currentDate.format(calendar.getTime());
 
-        SavePostInfoToDatabase(name,subject,description);
+
+        SimpleDateFormat currentDateToKey = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDateKey = currentDateToKey.format(calendar.getTime());
+
+        SimpleDateFormat currentTimeToKey = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTimeKey = currentTimeToKey.format(calendar.getTime());
+
+        productRandomKey = saveCurrentDateKey + saveCurrentTimeKey;
+
+
+        SavePostInfoToDatabase(name, subject, description);
     }
+
     //private final int NOTIFICATION_ID=001;
     //  private final String CHANNEL_ID ="personsl_notificstion";
-    private void SavePostInfoToDatabase(String nameS , String subS , String desc ) {
+    private void SavePostInfoToDatabase(String nameS, String subS, String desc) {
+
         HashMap<String, Object> postMap = new HashMap<>();
         postMap.put("dataAndTime", postTimeAndDate);
         postMap.put("name", nameS);
         postMap.put("subject", subS);
-        postMap.put("id",nationalId);
+        postMap.put("id", nationalId);
         postMap.put("description", desc);
+        postMap.put("counter", countPosts);
         String message = "this is a notification";
-        postRef.push().updateChildren(postMap)
+        postRef.child(productRandomKey).updateChildren(postMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             loadingBar.dismiss();
                             Toast.makeText(getActivity(), "Post is added successfully..", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(getView()).navigate(AddNewPostFragmentDirections.actionAddNewPostFragmentToDoctorHomeFragment(name, nationalId));
                         } else {
                             loadingBar.dismiss();
                             String message = task.getException().toString();

@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".admin.student.ShowAllStudentFragment">
 
     <RelativeLayout
         android:id="@+id/r2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/bg">
 
-        <TextView
-
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/search_student_name"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/edit_text_top"
             android:fontFamily="@font/berkshire_swash"
-            android:text="All Students"
-            android:textColor="#dbcdc3"
-            android:textSize="25sp" />
+            android:hint="Student Name"
+            android:padding="9dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#56FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/search_student_name"
+            android:background="@drawable/button"
+            android:padding="8dp"
+            android:text="Search"
+            android:layout_marginLeft="20dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Student_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dbcdc3"
-        android:layout_below="@+id/r2">
+        android:layout_below="@+id/r2"
+        android:background="#dbcdc3">
 
     </androidx.recyclerview.widget.RecyclerView>
 

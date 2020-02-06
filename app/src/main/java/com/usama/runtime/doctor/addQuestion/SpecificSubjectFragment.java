@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,13 +24,17 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SpecificSubjectFragment extends Fragment {
     private ProgressDialog loadingBar;
-    private String levelChoose, departmentChoose, subjectChoose, chapterChoose;
+    private String levelChoose, departmentChoose, subjectChoose, chapterChoose, doctorName, nationalId;
     private ArrayList<String> arrayListOfSubjects;
     private MaterialSpinner spinner_chooseLevel, spinner_chooseDepartment, spinner_chooseSubject, spinner_chooseChapter;
     private ArrayList<String> arrayListOfDepartment;
+    private Button buttonAddQuestion;
+    private View view;
+
 
     public SpecificSubjectFragment() {
         // Required empty public constructor
@@ -38,24 +43,41 @@ public class SpecificSubjectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_specific_subject, container, false);
+        view = inflater.inflate(R.layout.fragment_specific_subject, container, false);
+
+        spinner_chooseLevel = view.findViewById(R.id.spinner_choose_Level_specific_subject);
+        spinner_chooseDepartment = view.findViewById(R.id.spinner_choose_department_specific_subject);
+        spinner_chooseSubject = view.findViewById(R.id.spinner_choose_subject_specific_subject);
+        spinner_chooseChapter = view.findViewById(R.id.spinner_choose_chapter_specific_subject);
+        buttonAddQuestion = view.findViewById(R.id.button_add_question);
+
+
+        return view;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(view).navigate(SpecificSubjectFragmentDirections.actionSpecificSubjectFragmentToDoctorHomeFragment(doctorName, nationalId));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        arrayListOfDepartment = new ArrayList<>();
 
-        spinner_chooseLevel = getView().findViewById(R.id.spinner_choose_Level_specific_subject);
-        spinner_chooseDepartment = getView().findViewById(R.id.spinner_choose_department_specific_subject);
-        spinner_chooseSubject = getView().findViewById(R.id.spinner_choose_subject_specific_subject);
-        spinner_chooseChapter = getView().findViewById(R.id.spinner_choose_chapter_specific_subject);
-        Button buttonAddQuestion = getView().findViewById(R.id.button_add_question);
+        SpecificSubjectFragmentArgs args = SpecificSubjectFragmentArgs.fromBundle(getArguments());
+        doctorName = args.getRealName();
+        nationalId = args.getAntionalId();
+
+
+        arrayListOfDepartment = new ArrayList<>();
 
         loadingBar = new ProgressDialog(getActivity());
         arrayListOfSubjects = new ArrayList<>();
@@ -121,7 +143,7 @@ public class SpecificSubjectFragment extends Fragment {
                 } else if (chapterChoose == null || chapterChoose.equals("Choose chapter")) {
                     Toast.makeText(getActivity(), "Please choose chapter ", Toast.LENGTH_SHORT).show();
                 } else
-                    Navigation.findNavController(getView()).navigate(SpecificSubjectFragmentDirections.actionSpecificSubjectFragmentToAddQuestionFragment(chapterChoose, levelChoose, subjectChoose, departmentChoose));
+                    Navigation.findNavController(getView()).navigate(SpecificSubjectFragmentDirections.actionSpecificSubjectFragmentToAddQuestionFragment(chapterChoose, levelChoose, subjectChoose, departmentChoose, doctorName, nationalId));
             }
         });
     }

@@ -13,46 +13,68 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Student;
 
 public class ShowAllStudentFragment extends Fragment {
     private RecyclerView studentList;
     private DatabaseReference studentRef;
+    private Button searchBtn;
+    private EditText inputText;
+
+    private String searchInput;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_show_all_student, container, false);
+
+        studentList = view.findViewById(R.id.Student_list);
+        searchBtn = view.findViewById(R.id.search_btn);
+        inputText = view.findViewById(R.id.search_student_name);
+
+
+        return view;
+    }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         studentRef = FirebaseDatabase.getInstance().getReference().child("students");
 
-        studentList = getView().findViewById(R.id.Student_list);
+
         studentList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchInput = inputText.getText().toString();
+                onStart();
+            }
+        });
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show_all_student, container, false);
-    }
 
     @Override
     public void onStart() {
         super.onStart();
+        Query query = studentRef.orderByChild("name");
         FirebaseRecyclerOptions<Student> options =
                 new FirebaseRecyclerOptions.Builder<Student>()
-                        .setQuery(studentRef, Student.class)
+                        .setQuery(query.startAt(searchInput), Student.class)
                         .build();
 
         FirebaseRecyclerAdapter<Student, ShowAllStudentFragment.StudentViewHolder> adapter
@@ -94,7 +116,6 @@ public class ShowAllStudentFragment extends Fragment {
                                     // this method to remove have one parameter uID --> id of user order (phone)
                                     RemoverDepartment(uID);
                                     // else if the user chick in the no button
-                                } else {
                                 }
                             }
                         });

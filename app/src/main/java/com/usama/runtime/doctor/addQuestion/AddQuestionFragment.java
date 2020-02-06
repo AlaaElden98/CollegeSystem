@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+import com.usama.runtime.admin.subject.AddSubjectFragmentDirections;
+import com.usama.runtime.admin.subject.ShowSubjectFragmentDirections;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -32,39 +35,60 @@ import java.util.Objects;
 public class AddQuestionFragment extends Fragment {
     private EditText question, option1, option2, option3, option4;
     private ProgressDialog loadingBar;
-    private String correct, level, subject, chapter, department;
-
+    private String correct, level, subject, chapter, department, doctorName, nationalId;
+    private TextView subject_name;
+    private Button buttonQuestion;
+    private MaterialSpinner spinner_choose_Correct_answer;
+    private View view;
 
     public AddQuestionFragment() {
         // Required empty public constructor
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(view).navigate(AddQuestionFragmentDirections.actionAddQuestionFragmentToSpecificSubjectFragment(nationalId, doctorName));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_question, container, false);
+        view = inflater.inflate(R.layout.fragment_add_question, container, false);
+
+        subject_name = view.findViewById(R.id.subject_name);
+        question = view.findViewById(R.id.Question);
+        option1 = view.findViewById(R.id.option1);
+        option2 = view.findViewById(R.id.option2);
+        option3 = view.findViewById(R.id.option3);
+        option4 = view.findViewById(R.id.option4);
+
+        spinner_choose_Correct_answer = view.findViewById(R.id.spinner_choose_Correct_answer);
+        buttonQuestion = view.findViewById(R.id.add_question_btn);
+
+        return view;
     }
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TextView subject_name = getView().findViewById(R.id.subject_name);
-        question = getView().findViewById(R.id.Question);
-        option1 = getView().findViewById(R.id.option1);
-        option2 = getView().findViewById(R.id.option2);
-        option3 = getView().findViewById(R.id.option3);
-        option4 = getView().findViewById(R.id.option4);
-
-        MaterialSpinner spinner_choose_Correct_answer = getView().findViewById(R.id.spinner_choose_Correct_answer);
-        Button buttonQuestion = getView().findViewById(R.id.add_question_btn);
 
         AddQuestionFragmentArgs args = AddQuestionFragmentArgs.fromBundle(getArguments());
         level = args.getLevel();
         subject = args.getSubject();
         chapter = args.getChapter();
         department = args.getDepartment();
+        nationalId = args.getNationalId();
+        doctorName = args.getRealName();
+
         subject_name.setText(level + " --> Department" + department + "--> Subject " + subject + " --> chapter " + chapter);
         spinner_choose_Correct_answer.setItems("Correct answer", "optionA", "optionB", "optionC", "optionD");
 
@@ -149,7 +173,7 @@ public class AddQuestionFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Add this Question is success", Toast.LENGTH_LONG).show();
                                     loadingBar.dismiss();
-                                    Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddQuestionFragmentDirections.actionAddQuestionFragmentSelf(chapter, level, subject, department));
+                                    Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddQuestionFragmentDirections.actionAddQuestionFragmentSelf(chapter, level, subject, department, doctorName, nationalId));
                                 } else {
                                     loadingBar.dismiss();
                                     Toast.makeText(getActivity(), "Network Error: please try again after some time..", Toast.LENGTH_LONG).show();
@@ -167,11 +191,5 @@ public class AddQuestionFragment extends Fragment {
 
 
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
 
 }

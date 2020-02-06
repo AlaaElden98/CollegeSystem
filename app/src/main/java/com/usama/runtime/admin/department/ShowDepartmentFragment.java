@@ -1,5 +1,6 @@
 package com.usama.runtime.admin.department;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -25,9 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Department;
 
+import java.util.Objects;
+
 public class ShowDepartmentFragment extends Fragment {
-    private RecyclerView departmentList;
+    private RecyclerView department_list_recycler_view;
     private DatabaseReference departmentRef;
+
+    // init String used
+    private String uID, capacity, total, subject, name, dec, minSpecial, doctorName;
 
     public ShowDepartmentFragment() {
         // Required empty public constructor
@@ -37,14 +43,27 @@ public class ShowDepartmentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(ShowDepartmentFragmentDirections.actionShowDepartmentFragmentToAdminHomeFragment(doctorName));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_show_department, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_department, container, false);
+
+        ShowDepartmentFragmentArgs args = ShowDepartmentFragmentArgs.fromBundle(getArguments());
+        doctorName = args.getRealName();
+
+        department_list_recycler_view = view.findViewById(R.id.department_list);
+
+        return view;
     }
 
     @Override
@@ -52,8 +71,11 @@ public class ShowDepartmentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         departmentRef = FirebaseDatabase.getInstance().getReference().child("departments");
 
-        departmentList = getView().findViewById(R.id.department_list);
-        departmentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        department_list_recycler_view.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        department_list_recycler_view.setLayoutManager(linearLayoutManager);
     }
 
 
@@ -77,17 +99,17 @@ public class ShowDepartmentFragment extends Fragment {
                 holder.show_all_department_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String uID = getRef(position).getKey();
-                        String capacity = model.getDepartmentCapacity();
-                        String total = model.getDepartmentMinTotal();
-                        String subject = model.getDepartmentSpecialSubject();
-                        String name = model.getDepartmentName();
-                        String dec = model.getDepartmentDescription();
-                        String minSpecial = model.getDepartmentMinSpecial();
+                        uID = getRef(position).getKey();
+                        capacity = model.getDepartmentCapacity();
+                        total = model.getDepartmentMinTotal();
+                        subject = model.getDepartmentSpecialSubject();
+                        name = model.getDepartmentName();
+                        dec = model.getDepartmentDescription();
+                        minSpecial = model.getDepartmentMinSpecial();
 
 
                         Navigation.findNavController(getView()).navigate(ShowDepartmentFragmentDirections
-                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name, capacity, minSpecial, total, subject, dec)
+                                .actionShowDepartmentFragmentToEditDepartmentDataFragment(name, capacity, minSpecial, total, subject, dec, doctorName)
                                 .setUID(uID));
                     }
                 });
@@ -115,7 +137,6 @@ public class ShowDepartmentFragment extends Fragment {
                                     // this method to remove have one parameter uID --> id of user order (phone)
                                     RemoverDepartment(uID);
                                     // else if the user chick in the no button
-                                } else {
                                 }
                             }
                         });
@@ -133,7 +154,7 @@ public class ShowDepartmentFragment extends Fragment {
                 return new DepartmentViewHolder(view);
             }
         };
-        departmentList.setAdapter(adapter);
+        department_list_recycler_view.setAdapter(adapter);
         adapter.startListening();
 
     }

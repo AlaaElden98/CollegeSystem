@@ -17,13 +17,10 @@ import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
 
-    DatabaseReference eventIdRef;
+    private DatabaseReference eventIdRef;
 
     public MutableLiveData<List<String>> departmentNameData = new MutableLiveData<>();
-    ArrayList <String> arrayList;
-
-
-
+    private ArrayList <String> arrayList;
 
     public void getArrayOfDepartmentName() {
         eventIdRef = FirebaseDatabase.getInstance().getReference().child("departments");

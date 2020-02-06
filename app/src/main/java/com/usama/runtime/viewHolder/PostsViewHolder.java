@@ -13,7 +13,7 @@ public class PostsViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public TextView txtPostDoctorName, txtPostSubject, txtPostDescription, dateAndTime;
 
     // this is our interface
-    public ItemClickListner listner;
+    private ItemClickListner listner;
 
     public PostsViewHolder(@NonNull View itemView) {
         super(itemView);

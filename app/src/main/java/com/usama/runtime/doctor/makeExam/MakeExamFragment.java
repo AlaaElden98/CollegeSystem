@@ -175,8 +175,6 @@ public class MakeExamFragment extends Fragment {
                         loadingBar.show();
                         publishExam();
 
-                        // TODO : MAKE IT TO HOME
-
                     } else {
                         Toast.makeText(getContext(), "Please choose any chapter ", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();

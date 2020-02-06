@@ -46,19 +46,22 @@ public class AddDoctorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_doctor, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_doctor, container, false);
+
+        doctor_name_et = view.findViewById(R.id.doctor_name_add_doctor);
+        doctor_nationalID_et = view.findViewById(R.id.doctor_nationalId__add_doctor);
+        doctor_password_et = view.findViewById(R.id.doctor_password__add_doctor);
+        add_doctor_btn = view.findViewById(R.id.add_doctor_btn_add_doctor);
+
+        loadingBar = new ProgressDialog(getActivity());
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        doctor_name_et = Objects.requireNonNull(getView()).findViewById(R.id.doctor_name_add_doctor);
-        doctor_nationalID_et = getView().findViewById(R.id.doctor_nationalId__add_doctor);
-        doctor_password_et = getView().findViewById(R.id.doctor_password__add_doctor);
-        add_doctor_btn = getView().findViewById(R.id.add_doctor_btn_add_doctor);
-        loadingBar = new ProgressDialog(getActivity());
 
         AddDepartmentFragmentArgs args = AddDepartmentFragmentArgs.fromBundle(getArguments());
         realName = args.getRealname();

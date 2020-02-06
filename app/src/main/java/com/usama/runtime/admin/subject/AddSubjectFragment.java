@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,22 @@ public class AddSubjectFragment extends Fragment {
 
     public AddSubjectFragment() {
         // Required empty public constructor
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddSubjectFragmentDirections.actionAddSubjectFragmentToAdminHomeFragment(doctorName));
+                Toast.makeText(getActivity(), "Your Subject not added", Toast.LENGTH_SHORT).show();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -109,12 +126,12 @@ public class AddSubjectFragment extends Fragment {
             public void onClick(View v) {
                 subj = subjectName.getText().toString().trim();
                 Log.d("TAGSUBJECT", subj);
-                if (department == null) {
+                if (level == null) {
+                    Toast.makeText(getContext(), "please choose level ", Toast.LENGTH_SHORT).show();
+                } else if (department == null) {
                     Toast.makeText(getContext(), "please choose department ", Toast.LENGTH_SHORT).show();
                 } else if (subj.equals("") || subj == null) {
                     Toast.makeText(getContext(), "Please write subject name ", Toast.LENGTH_SHORT).show();
-                } else if (level == null) {
-                    Toast.makeText(getContext(), "please choose level ", Toast.LENGTH_SHORT).show();
                 } else if (doctorName == null) {
                     Toast.makeText(getContext(), "please choose doctor name ", Toast.LENGTH_SHORT).show();
                 } else {

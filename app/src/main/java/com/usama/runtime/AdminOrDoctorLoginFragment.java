@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.CheckBox;
 import com.usama.runtime.Prevalent.Prevalent;
 import com.usama.runtime.model.Doctors;
+import com.usama.runtime.student.StudentLoginFragmentDirections;
 
 import java.util.Objects;
 
@@ -49,29 +51,41 @@ public class AdminOrDoctorLoginFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // handel back press .. when admin click back he will go to home fragment
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToMainFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_or_doctor_login, container, false);
+         View view = inflater.inflate(R.layout.fragment_admin_or_doctor_login, container, false);
+
+        LoginButton = view.findViewById(R.id.login_admin_or_doctor_btn);
+        login_nationalId_et = view.findViewById(R.id.login_nationalId_doctor_or_admin);
+        login_password_et = view.findViewById(R.id.login_password_et);
+        adminLink = view.findViewById(R.id.admin_link);
+        doctorLink = view.findViewById(R.id.doctor_link);
+        chkBoxRememberMe = view.findViewById(R.id.remember_me_chkb);
+
+        return view ;
     }
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        LoginButton = Objects.requireNonNull(getView()).findViewById(R.id.login_admin_or_doctor_btn);
-        login_nationalId_et = getView().findViewById(R.id.login_nationalId_doctor_or_admin);
-        login_password_et = getView().findViewById(R.id.login_password_et);
-        adminLink = getView().findViewById(R.id.admin_link);
-        doctorLink = getView().findViewById(R.id.doctor_link);
-
         loadingBar = new ProgressDialog(getContext());
 
-
-        chkBoxRememberMe = getView().findViewById(R.id.remember_me_chkb);
         // paper library
         Paper.init(Objects.requireNonNull(getContext()));
 
@@ -99,7 +113,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                LoginButton.setText("Login Doctors");
+                LoginButton.setText("Professor Login");
                 adminLink.setVisibility(View.VISIBLE);
                 doctorLink.setVisibility(View.INVISIBLE);
                 parentDbNationalId = "Doctors";
@@ -155,7 +169,7 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                                 Toast.makeText(getContext(), "Welcome Doctor " + realName, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName,nationalID));
+                                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName, nationalID));
                             } else if (parentDbNationalId.equals("Admins")) {
                                 Toast.makeText(getContext(), "Welcome Admin " + realName, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();

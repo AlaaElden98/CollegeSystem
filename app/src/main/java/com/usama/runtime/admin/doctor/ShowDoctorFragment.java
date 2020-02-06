@@ -43,7 +43,11 @@ public class ShowDoctorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show_doctor, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_doctor, container, false);
+
+        doctorList = view.findViewById(R.id.doctor_list);
+
+        return view;
     }
 
     @Override
@@ -51,7 +55,6 @@ public class ShowDoctorFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         doctorRef = FirebaseDatabase.getInstance().getReference().child("Doctors");
 
-        doctorList = getView().findViewById(R.id.doctor_list);
         doctorList.setLayoutManager(new LinearLayoutManager(getActivity()));
         FirebaseRecyclerOptions<Doctors> options =
                 new FirebaseRecyclerOptions.Builder<Doctors>()
@@ -74,7 +77,7 @@ public class ShowDoctorFragment extends Fragment {
                         String password = model.getPassword();
 
 
-                        Navigation.findNavController(getView()).navigate(ShowDoctorFragmentDirections.actionShowDoctorFragmentToEditDoctorDataFragment(password,name,national).setUID(uID));
+                        Navigation.findNavController(getView()).navigate(ShowDoctorFragmentDirections.actionShowDoctorFragmentToEditDoctorDataFragment(password, name, national).setUID(uID));
                     }
                 });
                 holder.delete_doctor_btn.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,6 @@ public class ShowDoctorFragment extends Fragment {
                                     // this method to remove have one parameter uID --> id of user order (phone)
                                     RemoverDepartment(uID);
                                     // else if the user chick in the no button
-                                } else {
                                 }
                             }
                         });
