@@ -20,6 +20,12 @@
             android:id="@+id/nav_make_exam"
             android:icon="@drawable/ic_menu_manage"
             android:title="Make Exam" />
+
+        <item
+            android:id="@+id/nav_student_attendance"
+            android:icon="@drawable/student"
+            android:title="Student Attendance" />
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

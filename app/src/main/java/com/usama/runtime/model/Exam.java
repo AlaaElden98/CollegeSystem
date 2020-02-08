@@ -1,19 +1,16 @@
 package com.usama.runtime.model;
 
 public class Exam {
-    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, degree_of_exam, department, level, num_of_question, subject;
-
-    public Exam(String chapter_one, String chapter_two, String chapter_three, String chapter_four, String chapter_five, String chapter_sex, String degree_of_exam, String department, String level, String num_of_question, String subject) {
+    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, department, level, subject;
+    public Exam(String chapter_one, String chapter_two, String chapter_three, String chapter_four, String chapter_five, String chapter_sex, String department, String level, String subject) {
         Chapter_one = chapter_one;
         Chapter_two = chapter_two;
         Chapter_three = chapter_three;
         Chapter_four = chapter_four;
         Chapter_five = chapter_five;
         Chapter_sex = chapter_sex;
-        this.degree_of_exam = degree_of_exam;
         this.department = department;
         this.level = level;
-        this.num_of_question = num_of_question;
         this.subject = subject;
     }
 
@@ -68,14 +65,6 @@ public class Exam {
         Chapter_sex = chapter_sex;
     }
 
-    public String getDegree_of_exam() {
-        return degree_of_exam;
-    }
-
-    public void setDegree_of_exam(String degree_of_exam) {
-        this.degree_of_exam = degree_of_exam;
-    }
-
     public String getDepartment() {
         return department;
     }
@@ -92,14 +81,6 @@ public class Exam {
         this.level = level;
     }
 
-    public String getNum_of_question() {
-        return num_of_question;
-    }
-
-    public void setNum_of_question(String num_of_question) {
-        this.num_of_question = num_of_question;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -108,3 +89,4 @@ public class Exam {
         this.subject = subject;
     }
 }
+

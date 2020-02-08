@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,14 @@ public class ExamMainForStudentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(ExamMainForStudentFragmentDirections.actionExamMainForStudentFragmentToHomeFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
     }
 
     @Override
@@ -80,7 +89,7 @@ public class ExamMainForStudentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (subjectChoose != null && !subjectChoose.equals("choose subject")) {
-                    Navigation.findNavController(getView()).navigate(ExamMainForStudentFragmentDirections.actionExamMainForStudentFragmentToQuestionsFragment(subjectChoose, department));
+                    Navigation.findNavController(getView()).navigate(ExamMainForStudentFragmentDirections.examMainToQuestionFragment(subjectChoose, department));
                 } else {
                     Toast.makeText(getContext(), "Make sure you choose subject", Toast.LENGTH_SHORT).show();
                 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -42,6 +43,9 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
     private DatabaseReference postsRef;
     private RecyclerView doctor_recycler_view;
 
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
+
     public DoctorHomeFragment() {
 
     }
@@ -63,7 +67,16 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.doctor_home_fragment, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        View view = inflater.inflate(R.layout.doctor_home_fragment, container, false);
+
+        navigationView = view.findViewById(R.id.nav_view);
+
+        drawer = view.findViewById(R.id.drawer_layout);
+        drawer = view.findViewById(R.id.drawer_layout);
+        toolbar = view.findViewById(R.id.toolbar_doctor);
+
+        return view;
     }
 
     @Override
@@ -74,7 +87,6 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         realName = args.getRealName();
         nationalId = args.getNationalId();
 
-        NavigationView navigationView = getView().findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // put header view
@@ -82,14 +94,10 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         final TextView user_name = headerView.findViewById(R.id.user_profile_name);
         user_name.setText(realName);
 
-        toolbar = getView().findViewById(R.id.toolbar_doctor);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Home");
 
-        drawer = getView().findViewById(R.id.drawer_layout);
-
-        DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -152,11 +160,13 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         if (id == R.id.nav_add_post) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToAddNewPostFragment(realName, nationalId));
         } else if (id == R.id.nav_add_question) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToSpecificSubjectFragment(nationalId , realName));
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToSpecificSubjectFragment(nationalId, realName));
         } else if (id == R.id.nav_show_subject) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectToDoctorFragment(realName));
         } else if (id == R.id.nav_make_exam) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment(nationalId , realName));
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment(nationalId, realName));
+        } else if (id == R.id.nav_student_attendance) {
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseUniqueNumberToShowAttendanceFragment());
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();

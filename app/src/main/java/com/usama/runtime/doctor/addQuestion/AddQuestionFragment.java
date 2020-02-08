@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class AddQuestionFragment extends Fragment {
     private Button buttonQuestion;
     private MaterialSpinner spinner_choose_Correct_answer;
     private View view;
+    private long chapter_number;
 
     public AddQuestionFragment() {
         // Required empty public constructor
@@ -61,6 +63,7 @@ public class AddQuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         view = inflater.inflate(R.layout.fragment_add_question, container, false);
 
         subject_name = view.findViewById(R.id.subject_name);
@@ -154,11 +157,26 @@ public class AddQuestionFragment extends Fragment {
             correct = opt4;
         }
 
+        if (chapter.equals("Chapter_one")){
+            chapter_number = 1;
+        }else if (chapter.equals("Chapter_two")){
+            chapter_number = 2;
+        }else if (chapter.equals("Chapter_three")){
+            chapter_number = 3;
+        }else if (chapter.equals("Chapter_four")){
+            chapter_number = 4;
+        }else if (chapter.equals("Chapter_five")){
+            chapter_number = 5;
+        }else if (chapter.equals("Chapter_sex")){
+            chapter_number = 6;
+        }
+
         final String finalCorrect = correct;
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 HashMap<String, Object> questionDataMap = new HashMap<>();
+                questionDataMap.put(chapter , chapter_number);
                 questionDataMap.put("question", questionS);
                 questionDataMap.put("optionA", opt1);
                 questionDataMap.put("optionB", opt2);
@@ -180,16 +198,11 @@ public class AddQuestionFragment extends Fragment {
                                 }
                             }
                         });
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
-
     }
-
 }

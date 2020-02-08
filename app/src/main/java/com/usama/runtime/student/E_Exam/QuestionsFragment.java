@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,15 +27,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.usama.runtime.R;
+import com.usama.runtime.admin.department.AddDepartmentFragmentDirections;
 import com.usama.runtime.model.Exam;
 import com.usama.runtime.model.QuestionModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class QuestionsFragment extends Fragment {
 
-    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, degree_of_exam, department, level, num_of_question, subject, chapter_number;
+    private String Chapter_one, Chapter_two, Chapter_three, Chapter_four, Chapter_five, Chapter_sex, degree_of_exam, department, level, subject, chapter_number;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference();
 
@@ -51,6 +54,7 @@ public class QuestionsFragment extends Fragment {
 
     private Dialog loadingDialog;
 
+    private View view;
 
     public QuestionsFragment() {
         // Required empty public constructor
@@ -60,12 +64,20 @@ public class QuestionsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(QuestionsFragmentDirections.questionToExam(department));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions, container, false);
+        view = inflater.inflate(R.layout.fragment_questions, container, false);
         // init view
         question = view.findViewById(R.id.question);
         noIndecate = view.findViewById(R.id.no_indicator);
@@ -82,6 +94,7 @@ public class QuestionsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         QuestionsFragmentArgs args = QuestionsFragmentArgs.fromBundle(getArguments());
+
         subject = args.getSubject();
         department = args.getDepartment();
 
@@ -94,54 +107,41 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 examData = dataSnapshot.getValue(Exam.class);
+
+                department = examData.getDepartment();
+                level = examData.getLevel();
+                subject = examData.getSubject();
+
                 Chapter_one = examData.getChapter_one();
                 if (Chapter_one != null) {
                     chapter_number = Chapter_one;
-                    getQuestionOfChapterNumber(chapter_number, 1);
-                    Log.d("NUM", 1 + "");
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 1);
                 }
                 Chapter_two = examData.getChapter_two();
                 if (Chapter_two != null) {
                     chapter_number = Chapter_two;
-                    getQuestionOfChapterNumber(chapter_number, 2);
-                    Log.d("NUM", 2 + "");
-
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 2);
                 }
                 Chapter_three = examData.getChapter_three();
                 if (Chapter_three != null) {
                     chapter_number = Chapter_three;
-                    getQuestionOfChapterNumber(chapter_number, 3);
-                    Log.d("NUM", 3 + "");
-
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 3);
                 }
                 Chapter_four = examData.getChapter_four();
                 if (Chapter_four != null) {
                     chapter_number = Chapter_four;
-                    getQuestionOfChapterNumber(chapter_number, 4);
-                    Log.d("NUM", 4 + "");
-
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 4);
                 }
                 Chapter_five = examData.getChapter_five();
                 if (Chapter_five != null) {
                     chapter_number = Chapter_five;
-                    getQuestionOfChapterNumber(chapter_number, 5);
-                    Log.d("NUM", 5 + "");
-
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 5);
                 }
                 Chapter_sex = examData.getChapter_sex();
                 if (Chapter_sex != null) {
                     chapter_number = Chapter_sex;
-                    getQuestionOfChapterNumber(chapter_number, 6);
-                    Log.d("NUM", 6 + "");
-
+                    getQuestionOfChapterNumber(level, department, subject, chapter_number, 6);
                 }
-
-                degree_of_exam = examData.getDegree_of_exam();
-
-                department = examData.getDepartment();
-                level = examData.getLevel();
-                num_of_question = examData.getNum_of_question();
-                subject = examData.getSubject();
             }
 
             @Override
@@ -155,16 +155,42 @@ public class QuestionsFragment extends Fragment {
 
     }
 
-    private void getQuestionOfChapterNumber(String chapter_number, int numberOfSubject) {
+    private void getQuestionOfChapterNumber(String lev , String dep , String sub , String chapter_number, long numberOfSubject) {
         // get questions
-        myRef.child("Questions").child("Level_One").child(department).child(subject).child(chapter_number).orderByChild(chapter_number).equalTo(numberOfSubject).addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.d("TAGTEST",lev);
+        Log.d("TAGTEST",dep);
+        Log.d("TAGTEST",sub);
+        Log.d("TAGTEST",chapter_number);
+        Log.d("TAGTEST",numberOfSubject + "");
+
+        myRef.child("Questions")
+                .child(lev)
+                .child(dep)
+                .child(sub)
+                .child(chapter_number)
+                .orderByChild(chapter_number)
+                .equalTo(numberOfSubject).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     list.add(snapshot.getValue(QuestionModel.class));
+                    Log.d("ExamTag", QuestionModel.class + "");
+                    Log.d("ExamTag", list.size() + "");
                 }
                 if (list.size() > 0) {
                     startExam();
+                } else {
+                    Toast.makeText(getActivity(), "please ask doctor for more question \n click back to exit", Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismiss();
+                    // handel back press .. when admin click back he will go to home fragment
+                    OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+                        @Override
+                        public void handleOnBackPressed() {
+                            Navigation.findNavController(getView()).navigate(QuestionsFragmentDirections.questionToExam(department));
+                        }
+                    };
+                    requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
                 }
             }
 
@@ -172,7 +198,6 @@ public class QuestionsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 loadingDialog.dismiss();
-                getActivity().finish();
             }
         });
 

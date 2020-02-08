@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         return view;
     }
@@ -225,7 +226,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         } else if (id == R.id.nav_barcode) {
             Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToBarCodeFragment());
         } else if (id == R.id.nav_exam) {
-            Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToExamMainForStudentFragment(finalDesires));
+            if (finalDesires == null) {
+                Toast.makeText(getActivity(), "Please recording your desires and choose your department First", Toast.LENGTH_SHORT).show();
+            }else {
+                Navigation.findNavController(getView()).navigate(HomeFragmentDirections.actionHomeFragmentToExamMainForStudentFragment(finalDesires));
+            }
         } else if (id == R.id.nav_logout) {
             // this line of code to destroy the save current student info
             Paper.book().destroy();

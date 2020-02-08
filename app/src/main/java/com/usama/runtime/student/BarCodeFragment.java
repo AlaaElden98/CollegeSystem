@@ -255,8 +255,6 @@ public class BarCodeFragment extends Fragment {
                     Log.d("TAGBARCODE", lecNumber);
                     Log.d("TAGBARCODE", uniqueResult);
                     result_of_barcode.setText(doctorName + "\n" + "in subject " + subjectResult);
-                    result_of_barcode.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-
                 }
             }
         }
@@ -280,20 +278,24 @@ public class BarCodeFragment extends Fragment {
 
 
     private void saveAttendOnDataBase(final String subName, final String unique, final String doctor, final String lec) {
-        rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(doctor).child(subName).child(lec).child(unique).child("StudentName");
+        rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(unique).child(studentNationalId);
 
         /*
          * firebase structure
          *  students_attendance
-         *      doctorName
-         *              lec_one
-         *                  uniqueResult
+         *      uniqueResult
+         *          subject name
+         *              doctorName
+         *                  lec_one
+         *                      uniqueResult
          * */
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 studentMap = new HashMap<>();
-                studentMap.put(studentNationalId, studentName);
+                studentMap.put("national_id", studentNationalId);
+                studentMap.put("student_name", studentName);
+                studentMap.put("uniqueNumber", unique);
                 rootRef.updateChildren(studentMap);
 
                 Toast.makeText(getActivity(), "Thanks:)", Toast.LENGTH_SHORT).show();

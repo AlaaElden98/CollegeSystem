@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/input_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp"
+    android:layout_marginBottom="50dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_choose_unique_number_to_show_students_attendance"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Choose Unique Number"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:ms_background_color="#F7EBD9D9" />
+
+
+    <Button
+        android:id="@+id/show_students_attendance_btn"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="Students Attendance"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp" />
+</LinearLayout>

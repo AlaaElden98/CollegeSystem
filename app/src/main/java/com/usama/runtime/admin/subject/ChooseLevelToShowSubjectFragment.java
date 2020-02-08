@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class ChooseLevelToShowSubjectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         View view = inflater.inflate(R.layout.fragment_choose_level_to_show_subject, container, false);
         chooseLevel = view.findViewById(R.id.spinner_choose_Level_to_show_subject);
         chooseDepartment = view.findViewById(R.id.spinner_choose_department_to_show_subject);

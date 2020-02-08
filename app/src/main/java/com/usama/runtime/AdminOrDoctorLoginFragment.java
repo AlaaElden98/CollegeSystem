@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -68,7 +69,8 @@ public class AdminOrDoctorLoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.fragment_admin_or_doctor_login, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        View view = inflater.inflate(R.layout.fragment_admin_or_doctor_login, container, false);
 
         LoginButton = view.findViewById(R.id.login_admin_or_doctor_btn);
         login_nationalId_et = view.findViewById(R.id.login_nationalId_doctor_or_admin);
@@ -171,10 +173,11 @@ public class AdminOrDoctorLoginFragment extends Fragment {
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
                                 Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToDoctorHomeFragment(realName, nationalID));
                             } else if (parentDbNationalId.equals("Admins")) {
+                                realName = doctorsData.getRealName();
                                 Toast.makeText(getContext(), "Welcome Admin " + realName, Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                                 Prevalent.CurrentOnlineAdminOrDoctor = doctorsData;
-                                realName = doctorsData.getRealName();
+                                Log.d("TAGREALNAME" , realName);
                                 Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AdminOrDoctorLoginFragmentDirections.actionAdminOrDoctorLoginFragmentToAdminHomeFragment(realName));
                             }
                         }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class MakeExamFragment extends Fragment {
     private MaterialSpinner spinner_chooseLevel, spinner_chooseDepartment, spinner_chooseSubject;
     private String cha1, cha2, cha3, cha4, cha5, cha6;
     private CheckBox chapterOne, chapterTwo, chapterThree, chapterFour, chapterFive, chapterSex;
-
+    private Button buttonAddQuestion;
     private String realName, nationalID;
 
     public MakeExamFragment() {
@@ -53,9 +54,21 @@ public class MakeExamFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_make_exam, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        View view = inflater.inflate(R.layout.fragment_make_exam, container, false);
 
+        spinner_chooseLevel = view.findViewById(R.id.spinner_choose_Level_info_exam);
+        spinner_chooseDepartment = view.findViewById(R.id.spinner_choose_department_info_exam);
+        spinner_chooseSubject = view.findViewById(R.id.spinner_choose_subject_info_exam);
+        chapterOne = view.findViewById(R.id.checkbox_chapter_one);
+        chapterTwo = view.findViewById(R.id.checkbox_chapter_two);
+        chapterThree = view.findViewById(R.id.checkbox_chapter_three);
+        chapterFour = view.findViewById(R.id.checkbox_chapter_four);
+        chapterFive = view.findViewById(R.id.checkbox_chapter_five);
+        chapterSex = view.findViewById(R.id.checkbox_chapter_sex);
+        buttonAddQuestion = view.findViewById(R.id.button_make_exam);
+
+        return view;
     }
 
 
@@ -69,17 +82,6 @@ public class MakeExamFragment extends Fragment {
 
         arrayListOfDepartment = new ArrayList<>();
         arrayListOfChapterCheck = new ArrayList<>();
-
-        spinner_chooseLevel = getView().findViewById(R.id.spinner_choose_Level_info_exam);
-        spinner_chooseDepartment = getView().findViewById(R.id.spinner_choose_department_info_exam);
-        spinner_chooseSubject = getView().findViewById(R.id.spinner_choose_subject_info_exam);
-        chapterOne = getView().findViewById(R.id.checkbox_chapter_one);
-        chapterTwo = getView().findViewById(R.id.checkbox_chapter_two);
-        chapterThree = getView().findViewById(R.id.checkbox_chapter_three);
-        chapterFour = getView().findViewById(R.id.checkbox_chapter_four);
-        chapterFive = getView().findViewById(R.id.checkbox_chapter_five);
-        chapterSex = getView().findViewById(R.id.checkbox_chapter_sex);
-        Button buttonAddQuestion = getView().findViewById(R.id.button_make_exam);
 
         loadingBar = new ProgressDialog(getActivity());
         arrayListOfSubjects = new ArrayList<>();

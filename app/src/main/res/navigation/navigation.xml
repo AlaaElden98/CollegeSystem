@@ -203,6 +203,9 @@
         <action
             android:id="@+id/action_doctorHomeFragment_to_chooseLevelToShowSubjectToDoctorFragment"
             app:destination="@id/chooseLevelToShowSubjectToDoctorFragment" />
+        <action
+            android:id="@+id/action_doctorHomeFragment_to_chooseUniqueNumberToShowAttendanceFragment"
+            app:destination="@id/chooseUniqueNumberToShowAttendanceFragment" />
     </fragment>
     <fragment
         android:id="@+id/specificSubjectFragment"
@@ -343,8 +346,11 @@
             android:name="department"
             app:argType="string" />
         <action
-            android:id="@+id/action_examMainForStudentFragment_to_questionsFragment"
+            android:id="@+id/exam_main_to_question_fragment"
             app:destination="@id/questionsFragment" />
+        <action
+            android:id="@+id/action_examMainForStudentFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/questionsFragment"
@@ -360,6 +366,9 @@
         <action
             android:id="@+id/action_questionsFragment_to_showScoreFragment"
             app:destination="@id/showScoreFragment" />
+        <action
+            android:id="@+id/question_to_exam"
+            app:destination="@id/examMainForStudentFragment" />
     </fragment>
     <fragment
         android:id="@+id/showScoreFragment"
@@ -446,5 +455,26 @@
             android:name="level"
             app:argType="string" />
         <argument android:name="doctorName" />
+    </fragment>
+    <fragment
+        android:id="@+id/showStudentAttendanceFragment"
+        android:name="com.usama.runtime.doctor.showAttendance.ShowStudentAttendanceFragment"
+        android:label="fragment_show_student_attendance"
+        tools:layout="@layout/fragment_show_student_attendance" >
+        <action
+            android:id="@+id/action_showStudentAttendanceFragment_to_chooseUniqueNumberToShowAttendanceFragment"
+            app:destination="@id/chooseUniqueNumberToShowAttendanceFragment" />
+        <argument
+            android:name="uniqueNumber"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseUniqueNumberToShowAttendanceFragment"
+        android:name="com.usama.runtime.doctor.showAttendance.ChooseUniqueNumberToShowAttendanceFragment"
+        android:label="fragment_choose_unique_number_to_show_attendance"
+        tools:layout="@layout/fragment_choose_unique_number_to_show_attendance" >
+        <action
+            android:id="@+id/action_chooseUniqueNumberToShowAttendanceFragment_to_showStudentAttendanceFragment"
+            app:destination="@id/showStudentAttendanceFragment" />
     </fragment>
 </navigation>

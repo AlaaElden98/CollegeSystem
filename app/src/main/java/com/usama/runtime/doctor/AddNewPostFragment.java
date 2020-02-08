@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,9 +70,18 @@ public class AddNewPostFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_new_post, container, false);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        View view = inflater.inflate(R.layout.fragment_add_new_post, container, false);
+
+        addPostBtn = view.findViewById(R.id.addPostBtn);
+        nameOfProfessor = view.findViewById(R.id.nameOfProfessor);
+        nameOfSubject = view.findViewById(R.id.nameOfSubject);
+        descriptionOfTopic = view.findViewById(R.id.descriptionOfTopic);
+
+        return view;
     }
+
 
     // final String CHANNEL_1_ID="channel1";
     //final String CHANNEL_2_ID="channel2";
@@ -79,10 +89,6 @@ public class AddNewPostFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        addPostBtn = getView().findViewById(R.id.addPostBtn);
-        nameOfProfessor = getView().findViewById(R.id.nameOfProfessor);
-        nameOfSubject = getView().findViewById(R.id.nameOfSubject);
-        descriptionOfTopic = getView().findViewById(R.id.descriptionOfTopic);
         loadingBar = new ProgressDialog(getActivity());
 
 
