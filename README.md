@@ -92,7 +92,7 @@ you can download this file and put on firebase runtime as a standard data .
 
 # Blog Application
 
-## navigation component And ViewModel (Architecture competition )
+## navigation component And ViewModel (Architecture competition ) (Stable)
 
 * our app build in one activity and alot of fragmen .
 
@@ -102,7 +102,7 @@ you can download this file and put on firebase runtime as a standard data .
 
 ![Capture](https://user-images.githubusercontent.com/48976562/74080648-f1089f00-4a4e-11ea-9250-59cd5616bbeb.JPG)
 
-### our app split into three parts (Admin , Doctors , Student)
+### our app split into three parts (Admin , Doctors , Student) (Stable)
 
     - Before explain anything we will show how to Login in the app as (Admin , doctor , student)
     - After import the database you will find nationl ID and password For each of them 
@@ -122,7 +122,7 @@ The Home Screen show posts that doctors added and the latest news.
 
 -------------------------------------------------------------------------------------------------
 
-# 1 - Authorities of the admin part
+# 1 - Authorities of the admin part (Stable)
 
 After login as admin
 
@@ -134,7 +134,7 @@ After login as admin
 
 ## Adds, delete and edit departments (Stable)
 
-### add department screen contain
+### add department screen contain (Stable)
 
 1 -  add department name .
 
@@ -148,7 +148,7 @@ After login as admin
 
 <img width="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/48976562/74084275-39878300-4a76-11ea-8570-2fd0008ef688.png">
 
-### delete and edit department
+### delete and edit department (Stable)
 
 1 - show all department
 
@@ -162,7 +162,7 @@ After login as admin
 
 ## Adds, delete and edit subjects (Stable)
 
-### add subject screen contain
+### add subject screen contain (Stable)
 
 1 - choose level of this subject
 
@@ -174,7 +174,7 @@ After login as admin
 
 <img width="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/48976562/74084287-56bc5180-4a76-11ea-920b-69ac63aa3ddf.png">
 
-### edit or delete subject screen contain
+### edit or delete subject screen contain (Stable)
 
 1 - in the first screen choose level and department
 
@@ -188,7 +188,7 @@ After login as admin
 
 ## Adds, delete and edit professors (Stable)
 
-### add new doctor
+### add new doctor (Stable)
 
 1 - doctor name .
 
@@ -198,7 +198,7 @@ After login as admin
 
 <img width="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/48976562/74084841-b1a47780-4a7b-11ea-9a95-465fee51fa1f.png">
 
-### edit and  delete doctor
+### edit and  delete doctor (Stable)
 
 -- in this section admin can show all doctor and have access to delete or edit information.
 
@@ -228,7 +228,7 @@ After login as a doctor
 
 <img width="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/48976562/74084877-34c5cd80-4a7c-11ea-995f-6c828e01adab.jpg">
 
-## add new post
+## add new post (Stable)
 
 1 - doctor name .
 
