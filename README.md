@@ -2,8 +2,29 @@
 
 ## Problem description
 
-Our project will solve a huge problem facing most students specially who joined faculty of arts , concerning selecting desired department process which takes about not less than month at the beginning of each year to distribute students using regular ways and announce the departments results so it will certainly help reduce effort , cost and physical resources used nowadays .
-As well as Attendance recording feature which will help professors logging and following up students presence at lectures in easier and faster way , which in regular may take hours through each term for every single course .  
+1 - Recording desires
+
+* Our project will solve a huge problem facing most students specially who joined faculty of arts.
+
+* concerning selecting desired department process which takes about not less than month at the beginning of each year to distribute students using regular ways and announce the departments results so it will certainly help reduce effort , cost and physical resources used nowadays .
+
+* As well as Attendance recording feature which will help professors logging and following up students presence at lectures in easier and faster way , which in regular may take hours through each term for every single course .  
+
+2 - E-Exam practice
+
+* sometimes student need to improve or test his knowledge in specific subject .
+
+* but he can't find question to testing his information. the app solved this problem by make small exam for any subject or chapter .
+
+* on the end of the exam student will receive score in the same time.
+
+3 - Record attendance
+
+* In any lecture student and doctor wasting alot of time to record attendance.
+
+* The app solved this problem by make attendance system using Machine learning kit from Firebase .
+
+* Making QR for each single lecture, doctor can record and count number of student in single minute.
 
 -------------------------------------------------------------------------------------------------
 
