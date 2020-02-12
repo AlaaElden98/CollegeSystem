@@ -51,11 +51,17 @@ And so for Student affairs office Administrators they can easily add,edit depart
 -------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------
-## App on google play (issues)
+## App on google play (Wait new version)
 
-we are waiting for approval on google play
+[Google Play](https://play.google.com/store/apps/details?id=com.usama.runtime)
 
-<img alt="portfolio_view" src="https://user-images.githubusercontent.com/48976562/74095378-4e0c5f80-4af8-11ea-88e8-4975b660b313.JPG">
+-------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------
+
+## Vidio
+
+Soon ..
 
 -------------------------------------------------------------------------------------------------
 
