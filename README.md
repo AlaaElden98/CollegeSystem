@@ -59,7 +59,7 @@ And so for Student affairs office Administrators they can easily add,edit depart
 
 -------------------------------------------------------------------------------------------------
 
-## Vidio
+## Video
 
 Soon ..
 
