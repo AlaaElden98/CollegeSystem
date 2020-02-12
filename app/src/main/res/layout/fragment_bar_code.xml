@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bg"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
 
         <com.otaliastudios.cameraview.CameraView
             android:id="@+id/camera_view"
-            android:layout_width="wrap_content"
-            android:keepScreenOn="true"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true" />
 
 
         <View
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginBottom="110dp"
             android:layout_gravity="center"
-            android:background="@drawable/rectangle" />
+            android:layout_marginBottom="110dp"
+            android:background="@drawable/rectangle">
+
+        </View>
     </FrameLayout>
 
     <LinearLayout
@@ -38,11 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:enabled="false"
+            android:fontFamily="@font/capriola"
             android:gravity="center"
             android:padding="15dp"
-            android:textColor="#F7EBD9D9"
-            android:fontFamily="@font/capriola"
             android:text="Come closer"
+            android:textColor="#F7EBD9D9"
             android:textSize="26sp" />
 
         <Button
@@ -53,8 +57,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button"
-            android:text="Done"
             android:fontFamily="@font/capriola"
+            android:text="Done"
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:textStyle="bold" />

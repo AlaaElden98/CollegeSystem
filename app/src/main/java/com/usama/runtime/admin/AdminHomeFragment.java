@@ -165,7 +165,7 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
         if (id == R.id.nav_add_department) {
             Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddDepartmentFragment(realName));
         } else if (id == R.id.nav_add_subject) {
-            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddSubjectFragment());
+            Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAddSubjectFragment(realName));
         } else if (id == R.id.nav_show_subject) {
             Navigation.findNavController(view).navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToChooseLevelToShowSubjectFragment2(realName));
         } else if (id == R.id.nav_show_department) {

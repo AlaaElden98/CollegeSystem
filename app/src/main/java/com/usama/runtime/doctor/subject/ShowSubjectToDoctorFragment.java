@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,11 +20,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.usama.runtime.R;
 import com.usama.runtime.model.Subject;
+import com.usama.runtime.student.E_Exam.ExamMainForStudentFragmentDirections;
 
 
 public class ShowSubjectToDoctorFragment extends Fragment {
     private DatabaseReference subjectRef;
     private RecyclerView subjectList;
+
+    private String nationaId, doctorName;
 
     public ShowSubjectToDoctorFragment() {
         // Required empty public constructor
@@ -32,6 +37,14 @@ public class ShowSubjectToDoctorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(ShowSubjectToDoctorFragmentDirections.actionShowSubjectToDoctorFragmentToChooseLevelToShowSubjectToDoctorFragment(doctorName, nationaId));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
     }
 
     @Override
@@ -51,8 +64,8 @@ public class ShowSubjectToDoctorFragment extends Fragment {
         ShowSubjectToDoctorFragmentArgs args = ShowSubjectToDoctorFragmentArgs.fromBundle(getArguments());
         final String level = args.getLevel();
         String department = args.getDepartment();
-        final String doctorName = args.getDoctorName();
-
+        doctorName = args.getDoctorName();
+        nationaId = args.getNationalId();
 
         subjectRef = FirebaseDatabase.getInstance().getReference().child("Subjects").child(level).child(department);
 

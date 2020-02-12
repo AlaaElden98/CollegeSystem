@@ -36,7 +36,7 @@ public class AddSubjectFragment extends Fragment {
 
     private EditText subjectName;
     private Button buttonAddSubject;
-    private String level, department, doctorName, subj;
+    private String level, department, doctorName, subj, realName;
     private ProgressDialog loadingBar;
     private ArrayList<String> arrayListOfDepartment, arrayListOfDoctorName;
     private MaterialSpinner departmentSpinner, spinner_doctor_name, spinner_level;
@@ -53,7 +53,7 @@ public class AddSubjectFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddSubjectFragmentDirections.actionAddSubjectFragmentToAdminHomeFragment(doctorName));
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(AddSubjectFragmentDirections.actionAddSubjectFragmentToAdminHomeFragment(realName));
                 Toast.makeText(getActivity(), "Your Subject not added", Toast.LENGTH_SHORT).show();
             }
         };
@@ -79,6 +79,11 @@ public class AddSubjectFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        AddSubjectFragmentArgs args = AddSubjectFragmentArgs.fromBundle(getArguments());
+
+        realName = args.getRealName();
+
         arrayListOfDepartment = new ArrayList<>();
         arrayListOfDoctorName = new ArrayList<>();
 

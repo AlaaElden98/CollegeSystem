@@ -56,7 +56,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        View view =  inflater.inflate(R.layout.main_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_fragment, container, false);
 
         studentBtn = view.findViewById(R.id.main_student_login_btn);
         adminOrDoctorBtn = view.findViewById(R.id.main_doctors_admins_btn);
@@ -95,7 +95,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 String DoctorOrAdminNationalId = Paper.book().read(Prevalent.DoctorOrAdminNationalIDKey);
                 String DoctorOrAdminPassword = Paper.book().read(Prevalent.DoctorOrAdminPasswordKey);
-                Log.d("TAG",DoctorOrAdminNationalId + DoctorOrAdminPassword);
+                Log.d("TAG", DoctorOrAdminNationalId + DoctorOrAdminPassword);
                 if (DoctorOrAdminNationalId != null && DoctorOrAdminPassword != null) {
                     if (!TextUtils.isEmpty(DoctorOrAdminNationalId) && !TextUtils.isEmpty(DoctorOrAdminPassword)) {
                         loadingBar.setTitle("Already Login");
@@ -143,6 +143,7 @@ public class MainFragment extends Fragment {
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
+                            Paper.book().destroy();
                         }
                     }
                 } else if (dataSnapshot.child("Doctors").child(national).exists()) {
@@ -157,6 +158,7 @@ public class MainFragment extends Fragment {
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
+                            Paper.book().destroy();
                         }
                     }
                 } else {
@@ -197,6 +199,7 @@ public class MainFragment extends Fragment {
                         } else {
                             loadingBar.dismiss();
                             Toast.makeText(getContext(), "Password is incorrect ", Toast.LENGTH_SHORT).show();
+                            Paper.book().destroy();
                         }
                     }
                 } else {

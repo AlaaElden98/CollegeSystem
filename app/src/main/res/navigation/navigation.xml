@@ -311,6 +311,8 @@
         <action
             android:id="@+id/action_addSubjectFragment_to_adminHomeFragment"
             app:destination="@id/adminHomeFragment" />
+        <argument android:name="realName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/chooseLevelToShowSubjectFragment"
@@ -442,6 +444,12 @@
         <action
             android:id="@+id/action_chooseLevelToShowSubjectToDoctorFragment_to_showSubjectToDoctorFragment"
             app:destination="@id/showSubjectToDoctorFragment" />
+        <action
+            android:id="@+id/action_chooseLevelToShowSubjectToDoctorFragment_to_doctorHomeFragment"
+            app:destination="@id/doctorHomeFragment" />
+        <argument
+            android:name="nationalId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showSubjectToDoctorFragment"
@@ -454,7 +462,14 @@
         <argument
             android:name="level"
             app:argType="string" />
-        <argument android:name="doctorName" />
+        <argument android:name="doctorName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_showSubjectToDoctorFragment_to_chooseLevelToShowSubjectToDoctorFragment"
+            app:destination="@id/chooseLevelToShowSubjectToDoctorFragment" />
+        <argument
+            android:name="nationalId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/showStudentAttendanceFragment"

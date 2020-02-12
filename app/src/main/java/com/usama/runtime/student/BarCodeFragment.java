@@ -64,8 +64,10 @@ public class BarCodeFragment extends Fragment {
     private FirebaseVisionImageMetadata metadata;
     private byte[] data;
 
+    private SimpleDateFormat timeNow, date;
+
     // init result of barcode
-    private String subjectResult, doctorName, uniqueResult, lecNumber;
+    private String subjectResult, doctorName, uniqueResult, lecNumber, currentDateAndTime, currentDateAndTimeNow;
     private TextView result_of_barcode;
 
     // init camera
@@ -118,14 +120,27 @@ public class BarCodeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         try {
             //create shared preferences called My prefs
-            final SharedPreferences sharedpreferences = (getActivity()).getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
             // get the time now
-            @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            final String currentDateAndTime = sdf.format(new Date());
+
+            timeNow = new SimpleDateFormat("HH:mm:ss");
+            date = new SimpleDateFormat("dd");
+            int dateOfCurrentDay = Integer.parseInt(date.format(new Date()));
+            Log.d("TAGDateOfDay", "date of day  " + dateOfCurrentDay);
+
+            currentDateAndTimeNow = timeNow.format(new Date());
             //Convert time from string to localtime
-            LocalTime wait = LocalTime.parse(sharedpreferences.getString("TIMENOW", ""));
-            LocalTime now = LocalTime.parse(currentDateAndTime);
-            if (wait.isBefore(now)) {
+            LocalTime wait = LocalTime.parse(sharedpreferences.getString("TimeNow", ""));
+            LocalTime now = LocalTime.parse(currentDateAndTimeNow);
+
+            // get next day from shredPreference
+            int dayFromShredPreference = sharedpreferences.getInt("TomorrowDay", 1);
+            Log.d("TommorowDay", dayFromShredPreference + "");
+
+            Log.d("TAG2", wait + "");
+            Log.d("TAG2", now + "");
+
+            if (wait.isBefore(now) || dateOfCurrentDay == dayFromShredPreference) {
                 btnDone.setEnabled(true);
             } else {
                 btnDone.setEnabled(false);
@@ -165,11 +180,18 @@ public class BarCodeFragment extends Fragment {
                 } else if (lecNumber == null) {
                     Toast.makeText(getContext(), "please make sure the barcode valid from doctor ", Toast.LENGTH_SHORT).show();
                 } else {
-                    final SharedPreferences sharedpreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+                    final SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                    final String currentDateAndTime = sdf.format(new Date(System.currentTimeMillis() + 7200000));
+                    currentDateAndTime = sdf.format(new Date(System.currentTimeMillis() + 2000000));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString("TIMENOW", currentDateAndTime);
+
+                    // date when take barcode
+                    int dateWhenTakeQRString = Integer.parseInt(date.format(new Date()));
+                    dateWhenTakeQRString += 1;
+
+                    editor.putInt("TomorrowDay", dateWhenTakeQRString);
+                    editor.putString("TimeNow", currentDateAndTime);
                     editor.apply();
                     saveAttendOnDataBase(subjectResult, uniqueResult, doctorName, lecNumber);
 
@@ -184,7 +206,7 @@ public class BarCodeFragment extends Fragment {
         super.onStart();
         // make sure user accepted permission camera and record permission
         Dexter.withActivity(getActivity())
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -269,8 +291,6 @@ public class BarCodeFragment extends Fragment {
                 .setHeight(frame.getSize().getHeight())
                 .setWidth(frame.getSize().getWidth())
                 .build();
-        Log.d("TAG", frame.getSize().getHeight() + "");
-        Log.d("TAG", frame.getSize().getWidth() + "");
         data = frame.getData();
 
         return FirebaseVisionImage.fromByteArray(data, metadata);
@@ -280,15 +300,6 @@ public class BarCodeFragment extends Fragment {
     private void saveAttendOnDataBase(final String subName, final String unique, final String doctor, final String lec) {
         rootRef = FirebaseDatabase.getInstance().getReference().child("students_attendance").child(unique).child(studentNationalId);
 
-        /*
-         * firebase structure
-         *  students_attendance
-         *      uniqueResult
-         *          subject name
-         *              doctorName
-         *                  lec_one
-         *                      uniqueResult
-         * */
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -296,6 +307,7 @@ public class BarCodeFragment extends Fragment {
                 studentMap.put("national_id", studentNationalId);
                 studentMap.put("student_name", studentName);
                 studentMap.put("uniqueNumber", unique);
+                studentMap.put("date", currentDateAndTime);
                 rootRef.updateChildren(studentMap);
 
                 Toast.makeText(getActivity(), "Thanks:)", Toast.LENGTH_SHORT).show();

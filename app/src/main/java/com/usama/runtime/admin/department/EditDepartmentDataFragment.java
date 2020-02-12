@@ -30,8 +30,8 @@ import java.util.HashMap;
 public class EditDepartmentDataFragment extends Fragment {
     private Button buttonEditDepartment;
     private TextView getDepartmentName;
-    private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial ,getDepartmentDescription ;
-    private String selectedSubject , doctorName;
+    private EditText getDepartmentCapacity, getDepartmentMinTotal, getDepartmentMinSpecial, getDepartmentDescription;
+    private String selectedSubject, doctorName;
 
     public EditDepartmentDataFragment() {
         // Required empty public constructor
@@ -44,7 +44,7 @@ public class EditDepartmentDataFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Navigation.findNavController(getView()).navigate(EditDoctorDataFragmentDirections.actionEditDoctorDataFragmentToShowDoctorFragment());
+                Navigation.findNavController(getView()).navigate(EditDepartmentDataFragmentDirections.actionEditDepartmentDataFragmentToShowDepartmentFragment(doctorName));
                 Toast.makeText(getActivity(), "Nothing changed.", Toast.LENGTH_SHORT).show();
             }
         };

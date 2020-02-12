@@ -73,7 +73,6 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         navigationView = view.findViewById(R.id.nav_view);
 
         drawer = view.findViewById(R.id.drawer_layout);
-        drawer = view.findViewById(R.id.drawer_layout);
         toolbar = view.findViewById(R.id.toolbar_doctor);
 
         return view;
@@ -162,7 +161,7 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
         } else if (id == R.id.nav_add_question) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToSpecificSubjectFragment(nationalId, realName));
         } else if (id == R.id.nav_show_subject) {
-            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectToDoctorFragment(realName));
+            Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToChooseLevelToShowSubjectToDoctorFragment(realName , nationalId));
         } else if (id == R.id.nav_make_exam) {
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToInfoOfExamFragment(nationalId, realName));
         } else if (id == R.id.nav_student_attendance) {
@@ -172,7 +171,6 @@ public class DoctorHomeFragment extends Fragment implements NavigationView.OnNav
             Paper.book().destroy();
             Navigation.findNavController(getView()).navigate(DoctorHomeFragmentDirections.actionDoctorHomeFragmentToMainFragment());
         }
-        DrawerLayout drawer = getView().findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,12 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.usama.runtime.R;
+import com.usama.runtime.admin.department.AddDepartmentFragmentDirections;
+import com.usama.runtime.admin.subject.ChooseLevelToShowSubjectFragmentDirections;
 import com.usama.runtime.model.Department;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChooseLevelToShowSubjectToDoctorFragment extends Fragment {
-    private String levelChoose, departmentChoose, doctorName;
+    private String levelChoose, departmentChoose, doctorName, nationalID;
     private MaterialSpinner spinner_choose_level, spinner_choose_department;
     private Button buttonShowSubject;
     private ArrayList<String> arrayListOfDepartment;
@@ -40,6 +44,15 @@ public class ChooseLevelToShowSubjectToDoctorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // handel back press .. when admin click back he will go to home fragment
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(Objects.requireNonNull(getView())).navigate(ChooseLevelToShowSubjectToDoctorFragmentDirections.actionChooseLevelToShowSubjectToDoctorFragmentToDoctorHomeFragment(doctorName, nationalID));
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -57,8 +70,10 @@ public class ChooseLevelToShowSubjectToDoctorFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         ChooseLevelToShowSubjectToDoctorFragmentArgs args = ChooseLevelToShowSubjectToDoctorFragmentArgs.fromBundle(getArguments());
         doctorName = args.getDoctorName();
+        nationalID = args.getNationalId();
         loadingBar = new ProgressDialog(getContext());
         arrayListOfDepartment = new ArrayList<>();
 
@@ -97,7 +112,7 @@ public class ChooseLevelToShowSubjectToDoctorFragment extends Fragment {
                 if (levelChoose == null) {
                     Toast.makeText(getContext(), "please make sure all field is valid", Toast.LENGTH_SHORT).show();
                 } else {
-                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectToDoctorFragmentDirections.actionChooseLevelToShowSubjectToDoctorFragmentToShowSubjectToDoctorFragment(departmentChoose, levelChoose, doctorName));
+                    Navigation.findNavController(getView()).navigate(ChooseLevelToShowSubjectToDoctorFragmentDirections.actionChooseLevelToShowSubjectToDoctorFragmentToShowSubjectToDoctorFragment(departmentChoose, levelChoose, doctorName ,nationalID));
                 }
             }
         });
