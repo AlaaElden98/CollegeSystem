@@ -50,6 +50,7 @@ public class AdminHomeFragment extends Fragment implements NavigationView.OnNavi
     public AdminHomeFragment() {
         // Required empty public constructor
     }
+    //add more
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
